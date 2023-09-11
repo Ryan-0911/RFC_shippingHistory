@@ -1,0 +1,13 @@
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe.config
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.pdb
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\sapnco.dll
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\sapnco_utils.dll
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\obj\Debug\RFC_shippingHistory.csproj.AssemblyReference.cache
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\obj\Debug\RFC_shippingHistory.Form1.resources
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\obj\Debug\RFC_shippingHistory.Properties.Resources.resources
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\obj\Debug\RFC_shippingHistory.csproj.GenerateResource.cache
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\obj\Debug\RFC_shippingHistory.csproj.CoreCompileInputs.cache
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\obj\Debug\RFC_shippingHistory.csproj.CopyComplete
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\obj\Debug\RFC_shippingHistory.exe
+C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\obj\Debug\RFC_shippingHistory.pdb
