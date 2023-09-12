@@ -1,4 +1,5 @@
 ﻿using RFC_shippingHistory.Struct.Interface;
+using RFC_shippingHistory.Table;
 using SAP.Middleware.Connector;
 using System;
 using System.Collections.Generic;

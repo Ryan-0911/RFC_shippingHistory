@@ -86,6 +86,7 @@
     <Compile Include="Struct\Interface\IStructBasic.cs" />
     <Compile Include="Struct\SapCommonProcess.cs" />
     <Compile Include="Struct\StructElement.cs" />
+    <Compile Include="Table\IT_HEAD.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,8 +117,6 @@
     <Content Include="bin\Debug\libicudecnumber.dll" />
     <Content Include="bin\Release\libicudecnumber.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Table\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -36,12 +36,11 @@ namespace RFC_shippingHistory.Struct
             return output;
         }
 
-
-        public string GetString(string strGetString)  
-        {
-            string result = IRfcUnitTransfer.GetString(strGetString);
-            return result;
-        }
+        //public string GetString(string strGetString)  
+        //{
+        //    string result = IRfcUnitTransfer.GetString(strGetString);
+        //    return result;
+        //}
 
         public void Invoke()  //執行 RFC
         {
