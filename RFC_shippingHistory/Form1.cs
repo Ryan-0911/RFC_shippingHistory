@@ -34,11 +34,28 @@ namespace RFC_shippingHistory
             RfcRepository repo = dest.Repository;
 
             // 要連線的 RFC 名稱
-            IRfcFunction func = repo.CreateFunction("");
+            IRfcFunction func = repo.CreateFunction("IT_HEAD");
             func.Invoke(dest);
 
             // 要取得 SAP 的哪個表
-            IRfcTable dataTable = func.GetTable("");
+            IRfcTable dataTable = func.GetTable("IT_HEAD");
+
+            List<IT_HEAD> list_IT_HEAD = new List<IT_HEAD>();
+            for(int i = 0; i < dataTable.Count; i++)
+            {
+                list_IT_HEAD.Add(new IT_HEAD()
+                {
+                    ID = dataTable[i].GetString("ID"),
+                    Name = dataTable[i].GetString("Name"),
+                });
+                MessageBox.Show($"{dataTable[i].GetString("ID")} {dataTable[i].GetString("NAME")}");
+            }
+        }
+
+        public class IT_HEAD
+        {
+            public string ID { get; set; }
+            public string Name { get; set; }
         }
     }
 }

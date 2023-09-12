@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace RFC_shippingHistory.Struct.Interface
 {
-    internal class ISapLogin
+    public interface ISapLogin
     {
+        SapCommonProcess sapCommonProcess {  get; set; }    
     }
 }

@@ -7,47 +7,45 @@ using System.Threading.Tasks;
 
 namespace RFC_shippingHistory.Struct
 {
-    internal class SapCommonProcess
+    public class SapCommonProcess
     {
         public IRfcFunction IRfcUnitTransfer { get; private set; }
         public RfcDestination dest { get; private set; }
         public RfcRepository repo { get; private set; }
         public SapCommonProcess(string strCreateFunction)
         {
-            SapLogin.SapConnect(out RfcDestination dest, out RfcRepository repo);
-            IRfcUnitTransfer = repo.CreateFunction(strCreateFunction);
+            SapLogin.SapConnect(out RfcDestination dest, out RfcRepository repo); // 參數設置
+            IRfcUnitTransfer = repo.CreateFunction(strCreateFunction); // 獲取 RFC
             this.dest = dest;
             this.repo = repo;
         }
 
-        public IRfcTable GetTable(string strTableName)
+        public IRfcTable GetTable(string strTableName) // 獲取 table 結構
         {
             return IRfcUnitTransfer.GetTable(strTableName);
         }
 
-        public void SetValue(string strFirst, string strSec)
+        public void SetValue(string strFirst, string strSec)  // 傳入參數給 RFC (key + value)
         {
             IRfcUnitTransfer.SetValue(strFirst, strSec);
         }
 
-        public IRfcTable GetTable(string strTableName)
+        public string GetValue(string strKey) // 用 key 獲取返回值 value
         {
-            return IRfcUnitTransfer.GetTable(strTableName);
+            string output = IRfcUnitTransfer.GetValue(strKey).ToString();
+            return output;
         }
 
-        public IRfcTable GetTable(string strTableName)
+
+        public string GetString(string strGetString)  
         {
-            return IRfcUnitTransfer.GetTable(strTableName);
+            string result = IRfcUnitTransfer.GetString(strGetString);
+            return result;
         }
 
-        public IRfcTable GetTable(string strTableName)
+        public void Invoke()  //執行 RFC
         {
-            return IRfcUnitTransfer.GetTable(strTableName);
-        }
-
-        public voiud Invoke(string strTableName)
-        {
-            return IRfcUnitTransfer.GetTable(strTableName);
+            IRfcUnitTransfer.Invoke(dest);
         }
     }
 }

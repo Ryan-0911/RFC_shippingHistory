@@ -21,13 +21,8 @@ namespace RFC_shippingHistory
             args.Add(RfcConfigParameters.Client, "");
             args.Add(RfcConfigParameters.Language, "ZF");
 
-           dest = RfcDestinationManager.GetDestination(args);
+           dest = RfcDestinationManager.GetDestination(args); 
            repo = dest.Repository;
-
-
-
         }
-
-
     }
 }
