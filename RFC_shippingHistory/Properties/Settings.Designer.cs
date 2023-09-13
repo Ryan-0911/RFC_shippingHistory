@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RFC_shippingHistory.Properties
+namespace RFC_ShippingHistory.Properties
 {
 
 

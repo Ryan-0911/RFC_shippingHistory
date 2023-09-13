@@ -1,0 +1,72 @@
+**** Trace file opened at 2023-09-13 15:48:22+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-13 15:48:22.580
+Failure to create pool for destination 
+SAP.Middleware.Connector.RfcCommunicationException: Connection parameter GATEWAY_HOST missing 
+   於 SAP.Middleware.Connector.CpicConnection.parseConnParameters(Dictionary`2 options)
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-13 15:48:22.588
+SAP.Middleware.Connector.RfcCommunicationException: Connection parameter GATEWAY_HOST missing 
+   於 SAP.Middleware.Connector.CpicConnection.parseConnParameters(Dictionary`2 options)
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-13 15:53:01+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-13 15:53:01.545
+Failure to create pool for destination 
+SAP.Middleware.Connector.RfcCommunicationException: Connection parameter GATEWAY_HOST missing 
+   於 SAP.Middleware.Connector.CpicConnection.parseConnParameters(Dictionary`2 options)
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-13 15:53:01.552
+SAP.Middleware.Connector.RfcCommunicationException: Connection parameter GATEWAY_HOST missing 
+   於 SAP.Middleware.Connector.CpicConnection.parseConnParameters(Dictionary`2 options)
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-13 16:02:05+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-13 16:02:05.880
+Failure to create pool for destination 
+SAP.Middleware.Connector.RfcCommunicationException: Connection parameter GATEWAY_HOST missing 
+   於 SAP.Middleware.Connector.CpicConnection.parseConnParameters(Dictionary`2 options)
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-13 16:02:05.888
+SAP.Middleware.Connector.RfcCommunicationException: Connection parameter GATEWAY_HOST missing 
+   於 SAP.Middleware.Connector.CpicConnection.parseConnParameters(Dictionary`2 options)
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
