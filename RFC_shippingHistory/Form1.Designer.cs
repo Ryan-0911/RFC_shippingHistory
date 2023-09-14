@@ -38,10 +38,14 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lblDate = new System.Windows.Forms.Label();
+            this.btn清空內容 = new System.Windows.Forms.Button();
+            this.iconWrite2SAP = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.iconDB = new System.Windows.Forms.PictureBox();
             this.iconFolder = new System.Windows.Forms.PictureBox();
             this.iconFile = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.iconWrite2SAP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconDB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).BeginInit();
@@ -52,23 +56,23 @@
             // 
             this.lbl請選擇檔案.AutoSize = true;
             this.lbl請選擇檔案.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl請選擇檔案.Location = new System.Drawing.Point(109, 116);
+            this.lbl請選擇檔案.Location = new System.Drawing.Point(307, 116);
             this.lbl請選擇檔案.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl請選擇檔案.Name = "lbl請選擇檔案";
-            this.lbl請選擇檔案.Size = new System.Drawing.Size(73, 20);
+            this.lbl請選擇檔案.Size = new System.Drawing.Size(89, 20);
             this.lbl請選擇檔案.TabIndex = 1;
-            this.lbl請選擇檔案.Text = "選擇檔案";
+            this.lbl請選擇檔案.Text = "從檔案匯入";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label1.Location = new System.Drawing.Point(318, 116);
+            this.label1.Location = new System.Drawing.Point(98, 116);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 20);
+            this.label1.Size = new System.Drawing.Size(105, 20);
             this.label1.TabIndex = 2;
-            this.label1.Text = "選擇資料夾";
+            this.label1.Text = "從資料夾匯入";
             // 
             // label3
             // 
@@ -77,17 +81,17 @@
             this.label3.Location = new System.Drawing.Point(40, 58);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(249, 20);
+            this.label3.Size = new System.Drawing.Size(153, 20);
             this.label3.TabIndex = 8;
-            this.label3.Text = "請點選圖示選擇存入資料庫的來源";
+            this.label3.Text = "請點選圖示執行功能";
             // 
             // pgBar
             // 
             this.pgBar.ForeColor = System.Drawing.Color.Lime;
-            this.pgBar.Location = new System.Drawing.Point(44, 441);
+            this.pgBar.Location = new System.Drawing.Point(40, 441);
             this.pgBar.Margin = new System.Windows.Forms.Padding(2);
             this.pgBar.Name = "pgBar";
-            this.pgBar.Size = new System.Drawing.Size(752, 18);
+            this.pgBar.Size = new System.Drawing.Size(534, 18);
             this.pgBar.TabIndex = 12;
             // 
             // tbLog
@@ -99,7 +103,7 @@
             this.tbLog.Name = "tbLog";
             this.tbLog.ReadOnly = true;
             this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLog.Size = new System.Drawing.Size(756, 259);
+            this.tbLog.Size = new System.Drawing.Size(538, 259);
             this.tbLog.TabIndex = 13;
             // 
             // lblTime
@@ -126,10 +130,32 @@
             this.lblDate.Size = new System.Drawing.Size(0, 17);
             this.lblDate.TabIndex = 15;
             // 
+            // btn清空內容
+            // 
+            this.btn清空內容.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn清空內容.Location = new System.Drawing.Point(481, 475);
+            this.btn清空內容.Name = "btn清空內容";
+            this.btn清空內容.Size = new System.Drawing.Size(97, 39);
+            this.btn清空內容.TabIndex = 17;
+            this.btn清空內容.Text = "清空內容";
+            this.btn清空內容.UseVisualStyleBackColor = true;
+            this.btn清空內容.Click += new System.EventHandler(this.btn清空內容_Click);
+            // 
+            // iconWrite2SAP
+            // 
+            this.iconWrite2SAP.Image = global::RFC_shippingHistory.Properties.Resources.sap;
+            this.iconWrite2SAP.Location = new System.Drawing.Point(646, 183);
+            this.iconWrite2SAP.Name = "iconWrite2SAP";
+            this.iconWrite2SAP.Size = new System.Drawing.Size(87, 61);
+            this.iconWrite2SAP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconWrite2SAP.TabIndex = 18;
+            this.iconWrite2SAP.TabStop = false;
+            this.iconWrite2SAP.Click += new System.EventHandler(this.iconWrite2SAP_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::RFC_shippingHistory.Properties.Resources.time;
-            this.pictureBox1.Location = new System.Drawing.Point(646, 37);
+            this.pictureBox1.Location = new System.Drawing.Point(647, 35);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(30, 34);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -139,10 +165,10 @@
             // iconDB
             // 
             this.iconDB.Image = global::RFC_shippingHistory.Properties.Resources.database;
-            this.iconDB.Location = new System.Drawing.Point(750, 476);
+            this.iconDB.Location = new System.Drawing.Point(40, 475);
             this.iconDB.Margin = new System.Windows.Forms.Padding(2);
             this.iconDB.Name = "iconDB";
-            this.iconDB.Size = new System.Drawing.Size(58, 39);
+            this.iconDB.Size = new System.Drawing.Size(45, 30);
             this.iconDB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconDB.TabIndex = 6;
             this.iconDB.TabStop = false;
@@ -171,11 +197,25 @@
             this.iconFile.TabStop = false;
             this.iconFile.Click += new System.EventHandler(this.iconFile_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label2.Location = new System.Drawing.Point(644, 247);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(89, 20);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "建立出貨單";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(828, 544);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.iconWrite2SAP);
+            this.Controls.Add(this.btn清空內容);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.lblTime);
@@ -193,6 +233,7 @@
             this.Name = "Form1";
             this.Text = "出貨歷史";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.iconWrite2SAP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconDB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).EndInit();
@@ -215,6 +256,9 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btn清空內容;
+        private System.Windows.Forms.PictureBox iconWrite2SAP;
+        private System.Windows.Forms.Label label2;
     }
 }
 

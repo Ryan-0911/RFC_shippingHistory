@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace RFC_shippingHistory
 {
     public partial class Form1 : Form
     {
+        List<string> listCustAddrCode = new List<string>();
+
         public Form1()
         {
             InitializeComponent();
@@ -33,10 +36,29 @@ namespace RFC_shippingHistory
 
         private void iconFile_Click(object sender, EventArgs e)
         {
-
             ImportFile();
+            getCustomerAddressCode();
         }
 
+        private void btn清空內容_Click(object sender, EventArgs e)
+        {
+            tbLog.Text = "";
+        }
+
+        private void iconWrite2SAP_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // 動態時間與日期
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lblTime.Text = DateTime.Now.ToLongTimeString();
+            lblDate.Text = DateTime.Now.ToLongDateString();
+        }
+
+
+        // 匯入檔案
         protected void ImportFile()
         {
             OpenFileDialog dialog = new OpenFileDialog(); //建立檔案選擇視窗
@@ -115,16 +137,16 @@ namespace RFC_shippingHistory
                 lib.Control.ShowLog(tbLog, $"發現文件! 開始讀取 [路徑: {path}] \r\n");
 
                 lib.Control.ShowLog(tbLog, $"[工作表數: {z.ToString()}/ 列數: {rowCount.ToString()}/ 行數: {colCount.ToString()}] \r\n");
-                lib.Control.ShowLog(tbLog, $"------------------------------------------------------------------------------------------------------------------------------------\r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
 
-                for (int i = 1; i <= rowCount; i++)
+                for (int i = 2; i <= rowCount; i++)
                 {
                     for (int j = 1; j <= colCount; j++)
                     {
                         if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
                         {
                             //lib.Control.ShowLog(tbLog, xlRange.Cells[i, j].Value2.ToString() + "|");
-                            Save2DB(fileid, GetFieldName(j, i), xlRange.Cells[i, j].Value2.ToString(), z);
+                            Save2DB(fileid, GetFieldName(i, j), xlRange.Cells[i, j].Value2.ToString(), z);
                         }
                     }
                     lib.Control.ShowPgbar(pgBar, rowCount, i);
@@ -190,19 +212,32 @@ namespace RFC_shippingHistory
                 con.Open();
                 SqlCommand cmd = new SqlCommand(sql, con);
                 cmd.Parameters.AddWithValue("@ef_id", fileid);
-                cmd.Parameters.AddWithValue("@value", field);
-                cmd.Parameters.AddWithValue("@cell", value);
+                cmd.Parameters.AddWithValue("@value", value);
+                cmd.Parameters.AddWithValue("@cell", field);
                 cmd.Parameters.AddWithValue("@sheet", sheet);
                 int rowsAffected = cmd.ExecuteNonQuery();
                 cmd.Cancel();
             }
         }
 
-        // 動態時間與日期
-        private void timer1_Tick(object sender, EventArgs e)
+        // 從資料庫中讀取 Customer Address Code 欄位，去字串前後空白、轉成大寫後，將之儲存在 listCustAddrCode 類別成員
+        private void getCustomerAddressCode()
         {
-            lblTime.Text = DateTime.Now.ToLongTimeString();
-            lblDate.Text = DateTime.Now.ToLongDateString();
+            string sql = "select distinct value from ExcelData where cell like 'F%';";
+            DataTable dt = lib.DB.GetDataTable(sql);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                listCustAddrCode.Add(dt.Rows[i]["value"].ToString().Trim().ToUpper());
+            }
+            //foreach (string code in listCustAddrCode) 
+            //{
+            //    Console.WriteLine(code);
+            //}
         }
+         
+        // 呼叫 RFC【Z_SUMEEKO_001_LAA】，
+
+
+
     }
 }
