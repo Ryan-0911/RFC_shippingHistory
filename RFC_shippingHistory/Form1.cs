@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAP.Middleware.Connector;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -234,10 +235,24 @@ namespace RFC_shippingHistory
             //    Console.WriteLine(code);
             //}
         }
-         
-        // 呼叫 RFC【Z_SUMEEKO_001_LAA】，
+
+        /// <summary>
+        /// 呼叫 RFC【Z_SUMEEKO_001_LAA】，獲取使用者料號
+        /// </summary>
+        /// <returns></returns>
+        // private IRfcTable getCustomerInfo() { };
+
+        /// <summary>
+        /// 處理批次
+        /// </summary>
+        /// <returns></returns>
+        //private IRfcTable dealWithBatch() { };
 
 
-
+        /// <summary>
+        /// 寫入出貨單至SAP
+        /// </summary>
+        /// <returns></returns>
+        //private string WriteShippingOrder2SAP() { };
     }
 }

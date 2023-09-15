@@ -27,6 +27,15 @@ namespace RFC_shippingHistory.lib
             return rfcConfigParameters;
         }
 
+        // 獲取 RfcDestination -> 管理與 SAP 連線的相關工作
+        public static RfcDestination GetDestination()
+        {
+            RfcConfigParameters configParams = GetConfig();
+            RfcDestination dest = RfcDestinationManager.GetDestination(configParams);
+
+            return dest;
+        }
+
         // 將 RfcTable 轉成 DataTable
         public static DataTable ConvertRfcTableToDataTable(IRfcTable rfcTable)
         {
@@ -137,6 +146,33 @@ namespace RFC_shippingHistory.lib
             }
         }
         //--------------------------------------------------------------------------------------------------------------------------------------
+        // 呼叫 RFC【Z_SUMEEKO_001_LAA】
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
