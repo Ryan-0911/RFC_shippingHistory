@@ -15,13 +15,13 @@ namespace RFC_shippingHistory.lib
         {
             RfcConfigParameters rfcConfigParameters = new RfcConfigParameters
             {
-               { RfcConfigParameters.Name, "dev" },
-                { RfcConfigParameters.AppServerHost, "172.16.2.23" },
+                { RfcConfigParameters.Name, "DEV" },
+                { RfcConfigParameters.AppServerHost, "10.10.1.193" },
                 { RfcConfigParameters.SystemNumber, "00" },
-                { RfcConfigParameters.SystemID, "DS4" },
-                { RfcConfigParameters.User, "it01" },
-                { RfcConfigParameters.Password, "12345678" },
-                { RfcConfigParameters.Client, "310" },
+                { RfcConfigParameters.SystemID, "S4H" },
+                { RfcConfigParameters.User, "ztest" },
+                { RfcConfigParameters.Password, "654321" },
+                { RfcConfigParameters.Client, "110" },
                 { RfcConfigParameters.Language, "ZF" }
             };
             return rfcConfigParameters;
@@ -54,6 +54,7 @@ namespace RFC_shippingHistory.lib
                 DataRow newRow = dataTable.NewRow();
                 for (int i = 0; i < currentRow.ElementCount; i++)
                 {
+                    // 等同於 newRow[i] = currentRow.GetString(i);
                     newRow[rfcTable.GetElementMetadata(i).Name] = currentRow.GetString(rfcTable.GetElementMetadata(i).Name);
                 }
                 dataTable.Rows.Add(newRow);
@@ -61,7 +62,7 @@ namespace RFC_shippingHistory.lib
             return dataTable;
         }
 
-        // 建立 IRfcStructure 一列資料
+        // 建立 IRfcStructure 
         public static IRfcStructure CreateRfcStructure(RfcDestination destination, string structureName, Dictionary<string, object> fields)
         {
             IRfcStructure structure = destination.Repository.GetStructureMetadata(structureName).CreateStructure();
@@ -146,7 +147,6 @@ namespace RFC_shippingHistory.lib
             }
         }
         //--------------------------------------------------------------------------------------------------------------------------------------
-        // 呼叫 RFC【Z_SUMEEKO_001_LAA】
 
 
 

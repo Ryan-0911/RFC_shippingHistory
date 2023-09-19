@@ -114,6 +114,8 @@
   <ItemGroup>
     <Content Include="bin\Debug\libicudecnumber.dll" />
     <Content Include="bin\Release\libicudecnumber.dll" />
+    <None Include="Resources\clean.png" />
+    <None Include="Resources\export.png" />
     <None Include="Resources\sap.png" />
     <None Include="Resources\open-folder.png" />
     <None Include="Resources\time.png" />

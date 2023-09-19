@@ -70,3 +70,845 @@ SAP.Middleware.Connector.RfcCommunicationException: Connection parameter GATEWAY
    於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
    於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
    於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 10:15:48+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 10:15:48.642
+Failure to create pool for destination SUMEEKO DEV ztest/654321
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:15:48 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 10:15:48.656
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:15:48 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 10:17:41+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 10:17:41.678
+Failure to create pool for destination SUMEEKO DEV ztest/654321
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:17:41 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 10:17:41.688
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:17:41 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 10:19:03+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 10:19:03.034
+SAP.Middleware.Connector.RfcInvalidParameterException: No destination alias provided. Specify the parameter NAME.
+   於 SAP.Middleware.Connector.RfcDestinationManager.GetDestination(RfcConfigParameters parameters)
+**** Trace file opened at 2023-09-18 10:19:30+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 10:19:30.156
+SAP.Middleware.Connector.RfcInvalidParameterException: No destination alias provided. Specify the parameter NAME.
+   於 SAP.Middleware.Connector.RfcDestinationManager.GetDestination(RfcConfigParameters parameters)
+**** Trace file opened at 2023-09-18 10:21:59+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 10:21:59.789
+Failure to create pool for destination SUMEEKO DEV ztest/654321
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:21:59 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 10:21:59.797
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:21:59 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 10:28:58+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 10:28:58.440
+Failure to create pool for destination SUMEEKO DEV ztest/654321
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:28:58 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 10:28:58.450
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:28:58 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 10:30:51+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 10:30:51.276
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:30:51 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 10:30:51.282
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 10:30:51 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 13:04:13+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 13:04:13.992
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:04:13 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 13:04:13.998
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:04:13 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 13:06:39+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 13:06:39.254
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:06:39 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 13:06:39.260
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:06:39 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 13:07:31+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 13:07:31.569
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:07:31 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 13:07:31.579
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:07:31 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 13:09:12+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 13:09:12.772
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:09:12 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 13:09:12.778
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:09:12 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 13:11:32+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 13:11:32.735
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:11:32 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 13:11:32.749
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 13:11:32 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 16:12:21+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 16:12:21.415
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 16:12:21 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 16:12:21.421
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 16:12:21 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 16:13:13+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 16:13:13.605
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'tcp://10.10.1.193' unknown
+TIME        Mon Sep 18 16:13:13 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: 'tcp://10.10.1.193' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 16:13:13.612
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'tcp://10.10.1.193' unknown
+TIME        Mon Sep 18 16:13:13 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: 'tcp://10.10.1.193' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 16:13:18+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 16:13:18.585
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'tcp://10.10.1.193' unknown
+TIME        Mon Sep 18 16:13:18 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: 'tcp://10.10.1.193' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 16:13:18.592
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'tcp://10.10.1.193' unknown
+TIME        Mon Sep 18 16:13:18 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: 'tcp://10.10.1.193' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 16:13:26+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 16:13:26.174
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'tcp://10.10.1.193' unknown
+TIME        Mon Sep 18 16:13:26 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: 'tcp://10.10.1.193' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 16:13:26.181
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname 'tcp://10.10.1.193' unknown
+TIME        Mon Sep 18 16:13:26 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: 'tcp://10.10.1.193' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 16:13:58+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 16:13:58.632
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 16:13:58 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 16:13:58.638
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 16:13:58 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-18 16:16:46+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-18 16:16:46.242
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 16:16:46 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-18 16:16:46.250
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Mon Sep 18 16:16:46 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
