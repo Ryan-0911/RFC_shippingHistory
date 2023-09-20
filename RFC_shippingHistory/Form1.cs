@@ -20,7 +20,7 @@ namespace RFC_shippingHistory
 {
     public partial class Form1 : Form
     {
-        List<string> listCustAddrCode = new List<string>();
+        List<ShippingInfo> listShippingInfo = new List<ShippingInfo>();
 
         public Form1()
         {
@@ -46,7 +46,6 @@ namespace RFC_shippingHistory
         private void iconFile_Click(object sender, EventArgs e)
         {
             ImportFile();
-            getCustomerAddressCode();
         }
 
         private void iconClear_Click(object sender, EventArgs e)
@@ -68,7 +67,7 @@ namespace RFC_shippingHistory
                 {
                     DataSet ds = new DataSet();
                     ds.Tables.Add(dealWithBatch());
-                    ExportDataSetToExcel(ds, dialog.SelectedPath);      
+                    ExportDataSetToExcel(ds, dialog.SelectedPath);
                 }
             }
         }
@@ -171,23 +170,49 @@ namespace RFC_shippingHistory
                 int rowCount = xlRange.Rows.Count;
                 int colCount = xlRange.Columns.Count;
                 lib.Control.ShowPgbar(pgBar, rowCount, 0);
-                lib.Control.ShowLog(tbLog, $"發現文件! 開始讀取 [路徑: {path}] \r\n");
+                lib.Control.ShowLog(tbLog, $"找到Excel文件! 開始讀取 [路徑: {path}] \r\n");
 
                 lib.Control.ShowLog(tbLog, $"[工作表數: {z.ToString()}/ 列數: {rowCount.ToString()}/ 行數: {colCount.ToString()}] \r\n");
                 lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
 
                 for (int i = 2; i <= rowCount; i++)
                 {
+                    ShippingInfo shippingInfo = new ShippingInfo();
                     for (int j = 1; j <= colCount; j++)
                     {
                         if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
                         {
-                            //lib.Control.ShowLog(tbLog, xlRange.Cells[i, j].Value2.ToString() + "|");
+                            switch (j)
+                            {
+                                case 1: 
+                                    shippingInfo.PartNo = xlRange.Cells[i, 1].Value2.ToString();
+                                    break;
+                                case 4:
+                                    shippingInfo.ShipperNo = xlRange.Cells[i, 4].Value2.ToString();
+                                    break;
+                                case 6: 
+                                    shippingInfo.CustomerAddressCode = xlRange.Cells[i, 6].Value2.ToString().Trim().ToUpper();
+                                    break;
+                                case 7:
+                                    shippingInfo.Quantity = Convert.ToInt32(xlRange.Cells[i, 7].Value2);
+                                    break;
+                            }
                             Save2DB(fileid, GetFieldName(i, j), xlRange.Cells[i, j].Value2.ToString(), z);
                         }
                     }
+                    listShippingInfo.Add(shippingInfo);
                     lib.Control.ShowPgbar(pgBar, rowCount, i);
                 }
+
+                // 依照 ShipperNo 欄位排序
+                IEnumerable<ShippingInfo> result = from s in listShippingInfo orderby s.ShipperNo select s;
+
+
+                //foreach (ShippingInfo shippingInfo in result)
+                //{
+                //    Console.WriteLine($"料號: {shippingInfo.PartNo}、出貨號碼: {shippingInfo.ShipperNo}、客戶地址: {shippingInfo.CustomerAddressCode}、數量: {shippingInfo.Quantity}");
+                //}
+
                 //cleanup
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
@@ -273,21 +298,6 @@ namespace RFC_shippingHistory
             }
         }
 
-        // 從資料庫中讀取 Customer Address Code 欄位，去字串前後空白、轉成大寫後，將之儲存在 listCustAddrCode 類別成員
-        private void getCustomerAddressCode()
-        {
-            string sql = "select distinct value from ExcelData where cell like 'F%';";
-            DataTable dt = lib.DB.GetDataTable(sql);
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                listCustAddrCode.Add(dt.Rows[i]["value"].ToString().Trim().ToUpper());
-            }
-            //foreach (string code in listCustAddrCode) 
-            //{
-            //    Console.WriteLine(code);
-            //}
-        }
-
         /// <summary>
         /// 呼叫 RFC【Z_SUMEEKO_001_LAA】，獲取使用者料號
         /// </summary>
@@ -298,8 +308,8 @@ namespace RFC_shippingHistory
         /// 處理批次
         /// </summary>
         /// <returns></returns>
-        private DataTable dealWithBatch() 
-        { 
+        private DataTable dealWithBatch()
+        {
             DataTable dt = new DataTable();
             dt.Columns.Add("銷售文件類型");
             dt.Columns.Add("買方");
@@ -355,7 +365,7 @@ namespace RFC_shippingHistory
             Excel.Workbook excelWorkBook = excelApp.Workbooks.Add(1);
             foreach (DataTable dtbl in ds.Tables)
             {
-               
+
                 string charTotalCol = ConvertToColumnName(dtbl.Columns.Count);
                 // Create Excel WorkSheet
                 Excel.Worksheet excelWorkSheet = excelWorkBook.Sheets.Add(Default, excelWorkBook.Sheets[excelWorkBook.Sheets.Count], 1, Default);
@@ -380,7 +390,7 @@ namespace RFC_shippingHistory
 
                 // Excel Header
                 Excel.Range cellRang = excelWorkSheet.get_Range("A1", $"{charTotalCol}3");
-                cellRang.Merge(false); 
+                cellRang.Merge(false);
                 cellRang.Interior.Color = Color.White;
                 cellRang.Font.Color = Color.Gray;
                 cellRang.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // xlHAlignLeft 置左、xlHAlignRight 置右
@@ -440,7 +450,5 @@ namespace RFC_shippingHistory
             }
             return columnName;
         }
-
-
     }
 }

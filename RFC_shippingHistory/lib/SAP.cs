@@ -18,9 +18,9 @@ namespace RFC_shippingHistory.lib
                 { RfcConfigParameters.Name, "DEV" },
                 { RfcConfigParameters.AppServerHost, "10.10.1.193" },
                 { RfcConfigParameters.SystemNumber, "00" },
-                { RfcConfigParameters.SystemID, "S4H" },
-                { RfcConfigParameters.User, "ztest" },
-                { RfcConfigParameters.Password, "654321" },
+                { RfcConfigParameters.SystemID, "DS4" },
+                { RfcConfigParameters.User, "S2239002" },
+                { RfcConfigParameters.Password, "S2239002" },
                 { RfcConfigParameters.Client, "110" },
                 { RfcConfigParameters.Language, "ZF" }
             };
