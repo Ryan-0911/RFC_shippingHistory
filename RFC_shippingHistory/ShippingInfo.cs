@@ -25,6 +25,11 @@ namespace RFC_shippingHistory
         /// <summary>
         /// 數量
         /// </summary>
-        public int Quantity { get; set; } 
+        public int Quantity { get; set; }
+
+        /// <summary>
+        /// 客戶代號
+        /// </summary>
+        public string CustomerCode { get; set; }
     }
 }

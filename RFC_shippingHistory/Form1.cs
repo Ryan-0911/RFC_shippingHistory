@@ -20,7 +20,15 @@ namespace RFC_shippingHistory
 {
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         List<ShippingInfo> listShippingInfo = new List<ShippingInfo>();
+
+        /// <summary>
+        /// 最終結果 (1. 轉成 Excel 2. 寫進 Sap 出貨單) 
+        /// </summary>
+        DataTable finalResult = new DataTable();
 
         public Form1()
         {
@@ -30,12 +38,69 @@ namespace RFC_shippingHistory
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Start();
-            //RfcDestination dest = lib.SAP.GetDestination();
-            //IRfcFunction func = dest.Repository.CreateFunction("ZTEST_SAIRPORT");
-            //func.Invoke(dest);
-            //IRfcTable rfcTable = func.GetTable("IT_HEAD");
-            //DataTable result = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
-            //dgvTest.DataSource = result;
+
+            lib.Control.ShowLog(tbLog, "連線至SAP......\n");
+
+            try
+            {
+                RfcDestination rfcDestination = lib.SAP.GetDestination();
+                // 調用 RFC 函数
+                RfcRepository rfcRepository = rfcDestination.Repository;
+                IRfcFunction rfcFunction = rfcRepository.CreateFunction("Z_SUMEEKO_006_PNGETSTK");
+
+                // 設置 RFC 函数的輸入參數
+                rfcFunction.SetValue("I_PN_MATNR", "11601723");
+                rfcFunction.SetValue("I_ADDNAME2", "GENERAL MOTORS LLC");
+
+                lib.Control.ShowLog(tbLog, "連線中......\r\n");
+
+                // 執行 RFC 函数
+                rfcFunction.Invoke(rfcDestination);
+
+                //  RFC 函数獲取输出参数
+                string dataRCode = rfcFunction.GetString("E_RCODE");
+
+                if (dataRCode.Equals("S"))
+                {
+                    lib.Control.ShowLog(tbLog, "連線成功!\r\n");
+                    IRfcTable rfcTable = rfcFunction.GetTable("ET_MSKA");
+                    DataTable result = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
+                    dgvTest.DataSource = result;
+                }
+                else
+                {
+                    lib.Control.ShowLog(tbLog, "連線失敗! \r\n");
+                    string dataEx = rfcFunction.GetString("E_MESSAGE");
+                    lib.Control.ShowLog(tbLog, dataEx + "\r\n");
+                }
+                lib.Control.ShowLog(tbLog, "..........................................\r\n");
+                lib.Control.ShowLog(tbLog, "完成....\r\n");
+            }
+            catch (RfcCommunicationException ex)
+            {
+                lib.Control.ShowLog(tbLog, "RfcCommunicationException\r\n");
+                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
+            }
+            catch (RfcLogonException ex)
+            {
+                lib.Control.ShowLog(tbLog, ".................RfcLogonException.........................\r\n");
+                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
+            }
+            catch (RfcAbapRuntimeException ex)
+            {
+                lib.Control.ShowLog(tbLog, ".................RfcAbapRuntimeException.........................\r\n");
+                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
+            }
+            catch (RfcAbapBaseException ex)
+            {
+                lib.Control.ShowLog(tbLog, ".................RfcAbapBaseException.........................\r\n");
+                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
+            }
+            catch (Exception ex)
+            {
+                lib.Control.ShowLog(tbLog, ".................exception.........................\r\n");
+                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
+            }
         }
 
         private void iconFolder_Click(object sender, EventArgs e)
@@ -60,13 +125,51 @@ namespace RFC_shippingHistory
 
         private void iconExport_Click(object sender, EventArgs e)
         {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("銷售文件類型");
+            dt.Columns.Add("買方");
+            dt.Columns.Add("客戶參考(PN碼)");
+            dt.Columns.Add("銷售文件");
+            dt.Columns.Add("物料VBAP");
+            dt.Columns.Add("客戶物料");
+            dt.Columns.Add("物料MARD");
+            dt.Columns.Add("未限制");
+            dt.Columns.Add("移轉中");
+            dt.Columns.Add("品質檢驗");
+            dt.Columns.Add("限制使用庫存");
+            dt.Columns.Add("已凍結");
+            dt.Columns.Add("物料MSEG");
+            dt.Columns.Add("倉庫地點");
+            dt.Columns.Add("批次");
+            dt.Columns.Add("物料尺寸");
+            dt.Columns.Add("物料說明");
+            dt.Columns.Add("儲存地點");
+            dt.Columns.Add("儲存位置的說明");
+
+            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "AASZZ8M0666NXC003XFP01", "11546396", "AASZZ8M0666NXC003XFP01", 200, 5, null, null, null, "AASZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "AASZZ8M0666NXC003XFP01", "11546396", "AASZZ8M0666NXC003XFP01", 35, 5, null, null, null, "AASZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "BBSZZ8M0666NXC003XFP01", "11546397", "BBSZZ8M0666NXC003XFP01", 77, 5, null, null, null, "BBSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "BBSZZ8M0666NXC003XFP01", "11546397", "BBSZZ8M0666NXC003XFP01", 32, 5, null, null, null, "BBSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "CCSZZ8M0666NXC003XFP01", "11546398", "CCSZZ8M0666NXC003XFP01", 24, 5, null, null, null, "CCSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "DDSZZ8M0666NXC003XFP01", "11546399", "DDSZZ8M0666NXC003XFP01", 15, 5, null, null, null, "DDSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "DDSZZ8M0666NXC003XFP01", "11546399", "DDSZZ8M0666NXC003XFP01", 18, 5, null, null, null, "DDSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "AASZZ8M0666NXC003XFP01", "11546396", "AASZZ8M0666NXC003XFP01", 20, 5, null, null, null, "AASZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "EESZZ8M0666NXC003XFP01", "11546311", "EESZZ8M0666NXC003XFP01", 56, 5, null, null, null, "EESZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "EESZZ8M0666NXC003XFP01", "11546311", "EESZZ8M0666NXC003XFP01", 114, 5, null, null, null, "EESZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "EESZZ8M0666NXC003XFP01", "11546311", "EESZZ8M0666NXC003XFP01", 46, 5, null, null, null, "EESZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58245", "RRSZZ8M0666NXC003XFP01", "11546311", "RRSZZ8M0666NXC003XFP01", 23, 5, null, null, null, "RRSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58245", "RRSZZ8M0666NXC003XFP01", "11546311", "RRSZZ8M0666NXC003XFP01", 24, 5, null, null, null, "RRSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+            dt.Rows.Add(null, "1GMNAO", null, "SH58245", "RRSZZ8M0666NXC003XFP01", "11546311", "RRSZZ8M0666NXC003XFP01", 12, 5, null, null, null, "RRSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
+
+            dgvTest.DataSource = dt;
+
             using (var dialog = new FolderBrowserDialog())
             {
                 DialogResult result = dialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     DataSet ds = new DataSet();
-                    ds.Tables.Add(dealWithBatch());
+                    ds.Tables.Add(dt);
                     ExportDataSetToExcel(ds, dialog.SelectedPath);
                 }
             }
@@ -184,13 +287,13 @@ namespace RFC_shippingHistory
                         {
                             switch (j)
                             {
-                                case 1: 
+                                case 1:
                                     shippingInfo.PartNo = xlRange.Cells[i, 1].Value2.ToString();
                                     break;
                                 case 4:
                                     shippingInfo.ShipperNo = xlRange.Cells[i, 4].Value2.ToString();
                                     break;
-                                case 6: 
+                                case 6:
                                     shippingInfo.CustomerAddressCode = xlRange.Cells[i, 6].Value2.ToString().Trim().ToUpper();
                                     break;
                                 case 7:
@@ -302,52 +405,32 @@ namespace RFC_shippingHistory
         /// 呼叫 RFC【Z_SUMEEKO_001_LAA】，獲取使用者料號
         /// </summary>
         /// <returns></returns>
-        // private IRfcTable getCustomerInfo() { };
+        private void getCustomerCode()
+        {
+            RfcDestination dest = lib.SAP.GetDestination();
+            IRfcFunction func = dest.Repository.CreateFunction("");
+            foreach (ShippingInfo s in listShippingInfo)
+            {
+
+                func.SetValue("", s.CustomerAddressCode);
+                func.Invoke(dest);
+                IRfcTable rfcTable = func.GetTable("");
+                DataTable result = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
+                foreach (DataRow row in result.Rows)
+                {
+                    s.CustomerCode = row["CustomerCode"].ToString();
+                }
+            }
+        }
 
         /// <summary>
         /// 處理批次
         /// </summary>
         /// <returns></returns>
-        private DataTable dealWithBatch()
+        private void dealWithBatch()
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("銷售文件類型");
-            dt.Columns.Add("買方");
-            dt.Columns.Add("客戶參考(PN碼)");
-            dt.Columns.Add("銷售文件");
-            dt.Columns.Add("物料VBAP");
-            dt.Columns.Add("客戶物料");
-            dt.Columns.Add("物料MARD");
-            dt.Columns.Add("未限制");
-            dt.Columns.Add("移轉中");
-            dt.Columns.Add("品質檢驗");
-            dt.Columns.Add("限制使用庫存");
-            dt.Columns.Add("已凍結");
-            dt.Columns.Add("物料MSEG");
-            dt.Columns.Add("倉庫地點");
-            dt.Columns.Add("批次");
-            dt.Columns.Add("物料尺寸");
-            dt.Columns.Add("物料說明");
-            dt.Columns.Add("儲存地點");
-            dt.Columns.Add("儲存位置的說明");
 
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "AASZZ8M0666NXC003XFP01", "11546396", "AASZZ8M0666NXC003XFP01", 200, 5, null, null, null, "AASZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "AASZZ8M0666NXC003XFP01", "11546396", "AASZZ8M0666NXC003XFP01", 35, 5, null, null, null, "AASZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "BBSZZ8M0666NXC003XFP01", "11546397", "BBSZZ8M0666NXC003XFP01", 77, 5, null, null, null, "BBSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "BBSZZ8M0666NXC003XFP01", "11546397", "BBSZZ8M0666NXC003XFP01", 32, 5, null, null, null, "BBSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "CCSZZ8M0666NXC003XFP01", "11546398", "CCSZZ8M0666NXC003XFP01", 24, 5, null, null, null, "CCSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "DDSZZ8M0666NXC003XFP01", "11546399", "DDSZZ8M0666NXC003XFP01", 15, 5, null, null, null, "DDSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "DDSZZ8M0666NXC003XFP01", "11546399", "DDSZZ8M0666NXC003XFP01", 18, 5, null, null, null, "DDSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "AASZZ8M0666NXC003XFP01", "11546396", "AASZZ8M0666NXC003XFP01", 20, 5, null, null, null, "AASZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "EESZZ8M0666NXC003XFP01", "11546311", "EESZZ8M0666NXC003XFP01", 56, 5, null, null, null, "EESZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "EESZZ8M0666NXC003XFP01", "11546311", "EESZZ8M0666NXC003XFP01", 114, 5, null, null, null, "EESZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "EESZZ8M0666NXC003XFP01", "11546311", "EESZZ8M0666NXC003XFP01", 46, 5, null, null, null, "EESZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58245", "RRSZZ8M0666NXC003XFP01", "11546311", "RRSZZ8M0666NXC003XFP01", 23, 5, null, null, null, "RRSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58245", "RRSZZ8M0666NXC003XFP01", "11546311", "RRSZZ8M0666NXC003XFP01", 24, 5, null, null, null, "RRSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58245", "RRSZZ8M0666NXC003XFP01", "11546311", "RRSZZ8M0666NXC003XFP01", 12, 5, null, null, null, "RRSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
 
-            dgvTest.DataSource = dt;
-            return dt;
         }
 
         /// <summary>

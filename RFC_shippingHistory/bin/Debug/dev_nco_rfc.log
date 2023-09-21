@@ -912,3 +912,592 @@ COUNTER     1
    於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
    於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
    於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-21 14:45:35+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 14:45:35.437
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Thu Sep 21 14:45:35 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-21 14:45:35.445
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Thu Sep 21 14:45:35 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-21 14:57:36+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 14:57:36.937
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Thu Sep 21 14:57:36 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-21 14:57:36.944
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Thu Sep 21 14:57:36 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-21 15:26:34+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:26:34.412
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Thu Sep 21 15:26:34 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-21 15:26:34.419
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '10.10.1.193:3300' not reached
+TIME        Thu Sep 21 15:26:34 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3286
+DETAIL      NiPConnect2: 10.10.1.193:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-21 15:30:47+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:30:47.973
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcLogonException
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-21 15:30:47.979
+SAP.Middleware.Connector.RfcLogonException
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-21 15:34:28+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:34:28.679
+error when calling RFC_METADATA_GET via destination DEV (possibly caused by temporary unavailability of system DS4)
+SAP.Middleware.Connector.RfcInvalidParameterException: Element EX_FUNCTIONS of container metadata RFC_METADATA_GET unknown
+   於 SAP.Middleware.Connector.RfcContainerMetadata`1.NameToIndex(String elementName)
+   於 SAP.Middleware.Connector.RfcXRfcParser.ProcessBeginTag()
+   於 SAP.Middleware.Connector.RfcXRfcParser.parse()
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcXmlData(RfcFunction function, RfcParameter& param, Int32 length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+>> Error entry 2023-09-21 15:34:28.691
+SAP.Middleware.Connector.RfcCommunicationException: destination DEV failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+>> Error entry 2023-09-21 15:34:28.691
+SAP.Middleware.Connector.RfcCommunicationException: destination DEV failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.CreateFunction(String name)
+**** Trace file opened at 2023-09-21 15:39:01+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:39:01.617
+error when calling RFC_METADATA_GET via destination DEV (possibly caused by temporary unavailability of system DS4)
+SAP.Middleware.Connector.RfcInvalidParameterException: Element EX_FUNCTIONS of container metadata RFC_METADATA_GET unknown
+   於 SAP.Middleware.Connector.RfcContainerMetadata`1.NameToIndex(String elementName)
+   於 SAP.Middleware.Connector.RfcXRfcParser.ProcessBeginTag()
+   於 SAP.Middleware.Connector.RfcXRfcParser.parse()
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcXmlData(RfcFunction function, RfcParameter& param, Int32 length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+>> Error entry 2023-09-21 15:39:01.623
+SAP.Middleware.Connector.RfcCommunicationException: destination DEV failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+>> Error entry 2023-09-21 15:39:01.623
+SAP.Middleware.Connector.RfcCommunicationException: destination DEV failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.CreateFunction(String name)
+**** Trace file opened at 2023-09-21 15:39:45+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:39:45.647
+error when calling RFC_METADATA_GET via destination dev (possibly caused by temporary unavailability of system PS4)
+SAP.Middleware.Connector.RfcInvalidParameterException: Element EX_FUNCTIONS of container metadata RFC_METADATA_GET unknown
+   於 SAP.Middleware.Connector.RfcContainerMetadata`1.NameToIndex(String elementName)
+   於 SAP.Middleware.Connector.RfcXRfcParser.ProcessBeginTag()
+   於 SAP.Middleware.Connector.RfcXRfcParser.parse()
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcXmlData(RfcFunction function, RfcParameter& param, Int32 length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+>> Error entry 2023-09-21 15:39:45.654
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+>> Error entry 2023-09-21 15:39:45.654
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.CreateFunction(String name)
+**** Trace file opened at 2023-09-21 15:40:06+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:40:06.253
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname '172.16.2.23:8000' unknown
+TIME        Thu Sep 21 15:40:06 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: '172.16.2.23:8000' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-21 15:40:06.260
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname '172.16.2.23:8000' unknown
+TIME        Thu Sep 21 15:40:06 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: '172.16.2.23:8000' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-21 15:40:50+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:40:50.653
+Failure to create pool for destination DEV
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname '172.16.2.23:8000' unknown
+TIME        Thu Sep 21 15:40:50 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: '172.16.2.23:8000' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-21 15:40:50.661
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       hostname '172.16.2.23:8000' unknown
+TIME        Thu Sep 21 15:40:50 2023
+RELEASE     720
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -2
+MODULE      ninti.c
+LINE        895
+DETAIL      NiPGetHostByName: '172.16.2.23:8000' not found
+SYSTEM CALL getaddrinfo
+COUNTER     2
+
+   於 SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options)
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-21 15:41:59+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:41:59.007
+error when calling RFC_METADATA_GET via destination dev (possibly caused by temporary unavailability of system PS4)
+SAP.Middleware.Connector.RfcInvalidParameterException: Element EX_FUNCTIONS of container metadata RFC_METADATA_GET unknown
+   於 SAP.Middleware.Connector.RfcContainerMetadata`1.NameToIndex(String elementName)
+   於 SAP.Middleware.Connector.RfcXRfcParser.ProcessBeginTag()
+   於 SAP.Middleware.Connector.RfcXRfcParser.parse()
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcXmlData(RfcFunction function, RfcParameter& param, Int32 length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+>> Error entry 2023-09-21 15:41:59.015
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+>> Error entry 2023-09-21 15:41:59.015
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.CreateFunction(String name)
+**** Trace file opened at 2023-09-21 15:42:49+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:42:49.786
+Failure to create pool for destination dev
+SAP.Middleware.Connector.RfcLogonException
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+>> Error entry 2023-09-21 15:42:49.794
+SAP.Middleware.Connector.RfcLogonException
+   於 SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcConfigParameters options)
+   於 SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination d, Boolean forRepositoryCalls, String uniqueKey)
+   於 SAP.Middleware.Connector.RfcConnectionManager.GetClient(RfcDestination destination, Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   於 SAP.Middleware.Connector.RfcDestination.SetAttributeValues(RfcSystemAttributes attribs)
+**** Trace file opened at 2023-09-21 15:43:11+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:43:11.761
+error when calling RFC_METADATA_GET via destination DEV (possibly caused by temporary unavailability of system DS4)
+SAP.Middleware.Connector.RfcInvalidParameterException: Element EX_FUNCTIONS of container metadata RFC_METADATA_GET unknown
+   於 SAP.Middleware.Connector.RfcContainerMetadata`1.NameToIndex(String elementName)
+   於 SAP.Middleware.Connector.RfcXRfcParser.ProcessBeginTag()
+   於 SAP.Middleware.Connector.RfcXRfcParser.parse()
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcXmlData(RfcFunction function, RfcParameter& param, Int32 length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+>> Error entry 2023-09-21 15:43:11.768
+SAP.Middleware.Connector.RfcCommunicationException: destination DEV failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+>> Error entry 2023-09-21 15:43:11.768
+SAP.Middleware.Connector.RfcCommunicationException: destination DEV failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.CreateFunction(String name)
+**** Trace file opened at 2023-09-21 15:43:31+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:43:31.390
+error when calling RFC_METADATA_GET via destination DEV (possibly caused by temporary unavailability of system DS4)
+SAP.Middleware.Connector.RfcInvalidParameterException: Element EX_FUNCTIONS of container metadata RFC_METADATA_GET unknown
+   於 SAP.Middleware.Connector.RfcContainerMetadata`1.NameToIndex(String elementName)
+   於 SAP.Middleware.Connector.RfcXRfcParser.ProcessBeginTag()
+   於 SAP.Middleware.Connector.RfcXRfcParser.parse()
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcXmlData(RfcFunction function, RfcParameter& param, Int32 length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+>> Error entry 2023-09-21 15:43:31.396
+SAP.Middleware.Connector.RfcCommunicationException: destination DEV failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+>> Error entry 2023-09-21 15:43:31.396
+SAP.Middleware.Connector.RfcCommunicationException: destination DEV failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.CreateFunction(String name)
+**** Trace file opened at 2023-09-21 15:45:25+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:45:25.542
+error when calling RFC_METADATA_GET via destination dev (possibly caused by temporary unavailability of system DS4)
+SAP.Middleware.Connector.RfcInvalidParameterException: Element EX_FUNCTIONS of container metadata RFC_METADATA_GET unknown
+   於 SAP.Middleware.Connector.RfcContainerMetadata`1.NameToIndex(String elementName)
+   於 SAP.Middleware.Connector.RfcXRfcParser.ProcessBeginTag()
+   於 SAP.Middleware.Connector.RfcXRfcParser.parse()
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcXmlData(RfcFunction function, RfcParameter& param, Int32 length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+>> Error entry 2023-09-21 15:45:25.551
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+>> Error entry 2023-09-21 15:45:25.551
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.CreateFunction(String name)
+**** Trace file opened at 2023-09-21 15:46:45+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:46:45.702
+error when calling RFC_METADATA_GET via destination dev (possibly caused by temporary unavailability of system DS4)
+SAP.Middleware.Connector.RfcInvalidParameterException: Element EX_FUNCTIONS of container metadata RFC_METADATA_GET unknown
+   於 SAP.Middleware.Connector.RfcContainerMetadata`1.NameToIndex(String elementName)
+   於 SAP.Middleware.Connector.RfcXRfcParser.ProcessBeginTag()
+   於 SAP.Middleware.Connector.RfcXRfcParser.parse()
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcXmlData(RfcFunction function, RfcParameter& param, Int32 length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+>> Error entry 2023-09-21 15:46:45.712
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+>> Error entry 2023-09-21 15:46:45.712
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.CreateFunction(String name)
+**** Trace file opened at 2023-09-21 15:47:02+08:00 (台北標準時間)
+	SAP .NET Connector: 3, 0, 1, 0, Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug, Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\Debug\RFC_shippingHistory.exe
+	Hardware: PC with Windows NT, Processor: 8x Intel 80686 (Mod 151 Step 5), Operating system: Microsoft Windows NT 6.2.9200.0, .NET CLR version: 4.0.30319.42000
+ 	SAP release: 720, Kernel release: 720, Kernel patch level: 78
+	Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: 
+
+	Default trace level: None
+
+>> Error entry 2023-09-21 15:47:02.438
+error when calling RFC_METADATA_GET via destination dev (possibly caused by temporary unavailability of system DS4)
+SAP.Middleware.Connector.RfcInvalidParameterException: Element EX_FUNCTIONS of container metadata RFC_METADATA_GET unknown
+   於 SAP.Middleware.Connector.RfcContainerMetadata`1.NameToIndex(String elementName)
+   於 SAP.Middleware.Connector.RfcXRfcParser.ProcessBeginTag()
+   於 SAP.Middleware.Connector.RfcXRfcParser.parse()
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcXmlData(RfcFunction function, RfcParameter& param, Int32 length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+>> Error entry 2023-09-21 15:47:02.443
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+>> Error entry 2023-09-21 15:47:02.444
+SAP.Middleware.Connector.RfcCommunicationException: destination dev failed when calling RFC_METADATA_GET -- see log for details
+   於 SAP.Middleware.Connector.RfcRepository.Execute(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadataNew(String name)
+   於 SAP.Middleware.Connector.RfcRepository.LookupFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.GetFunctionMetadata(String name)
+   於 SAP.Middleware.Connector.RfcRepository.CreateFunction(String name)

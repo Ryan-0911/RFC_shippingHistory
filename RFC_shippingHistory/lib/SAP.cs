@@ -15,14 +15,24 @@ namespace RFC_shippingHistory.lib
         {
             RfcConfigParameters rfcConfigParameters = new RfcConfigParameters
             {
-                { RfcConfigParameters.Name, "DEV" },
-                { RfcConfigParameters.AppServerHost, "10.10.1.193" },
+                { RfcConfigParameters.Name, "dev" },
+                { RfcConfigParameters.AppServerHost, "172.16.2.23" },
                 { RfcConfigParameters.SystemNumber, "00" },
                 { RfcConfigParameters.SystemID, "DS4" },
                 { RfcConfigParameters.User, "S2239002" },
                 { RfcConfigParameters.Password, "S2239002" },
-                { RfcConfigParameters.Client, "110" },
+                { RfcConfigParameters.Client, "330" },
                 { RfcConfigParameters.Language, "ZF" }
+
+                
+                //{ RfcConfigParameters.Name, "dev" },
+                //{ RfcConfigParameters.AppServerHost, "172.16.2.166" },
+                //{ RfcConfigParameters.SystemNumber, "00" },
+                //{ RfcConfigParameters.SystemID, "PS4" },
+                //{ RfcConfigParameters.User, "S2239002" },
+                //{ RfcConfigParameters.Password, "S2239002" },
+                //{ RfcConfigParameters.Client, "800" },
+                //{ RfcConfigParameters.Language, "ZF" }
             };
             return rfcConfigParameters;
         }
@@ -45,7 +55,7 @@ namespace RFC_shippingHistory.lib
             for (int i = 0; i < rfcTable.ElementCount; i++) // ElementCount 行數
             {
                 RfcElementMetadata metadata = rfcTable.GetElementMetadata(i); 
-                dataTable.Columns.Add(metadata.Name, GetDataType(metadata.DataType));
+                dataTable.Columns.Add(metadata.Name); // , GetDataType(metadata.DataType)
             }
 
             // DataTable rows
