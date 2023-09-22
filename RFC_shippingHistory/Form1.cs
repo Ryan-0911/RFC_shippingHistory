@@ -28,7 +28,8 @@ namespace RFC_shippingHistory
         /// <summary>
         /// 最終結果 (1. 轉成 Excel 2. 寫進 Sap 出貨單) 
         /// </summary>
-        DataTable finalResult = new DataTable();
+        DataTable dtResult = new DataTable();
+
 
         public Form1()
         {
@@ -39,68 +40,16 @@ namespace RFC_shippingHistory
         {
             timer1.Start();
 
-            lib.Control.ShowLog(tbLog, "連線至SAP......\n");
-
-            try
-            {
-                RfcDestination rfcDestination = lib.SAP.GetDestination();
-                // 調用 RFC 函数
-                RfcRepository rfcRepository = rfcDestination.Repository;
-                IRfcFunction rfcFunction = rfcRepository.CreateFunction("Z_SUMEEKO_006_PNGETSTK");
-
-                // 設置 RFC 函数的輸入參數
-                rfcFunction.SetValue("I_PN_MATNR", "11601723");
-                rfcFunction.SetValue("I_ADDNAME2", "GENERAL MOTORS LLC");
-
-                lib.Control.ShowLog(tbLog, "連線中......\r\n");
-
-                // 執行 RFC 函数
-                rfcFunction.Invoke(rfcDestination);
-
-                //  RFC 函数獲取输出参数
-                string dataRCode = rfcFunction.GetString("E_RCODE");
-
-                if (dataRCode.Equals("S"))
-                {
-                    lib.Control.ShowLog(tbLog, "連線成功!\r\n");
-                    IRfcTable rfcTable = rfcFunction.GetTable("ET_MSKA");
-                    DataTable result = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
-                    dgvTest.DataSource = result;
-                }
-                else
-                {
-                    lib.Control.ShowLog(tbLog, "連線失敗! \r\n");
-                    string dataEx = rfcFunction.GetString("E_MESSAGE");
-                    lib.Control.ShowLog(tbLog, dataEx + "\r\n");
-                }
-                lib.Control.ShowLog(tbLog, "..........................................\r\n");
-                lib.Control.ShowLog(tbLog, "完成....\r\n");
-            }
-            catch (RfcCommunicationException ex)
-            {
-                lib.Control.ShowLog(tbLog, "RfcCommunicationException\r\n");
-                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
-            }
-            catch (RfcLogonException ex)
-            {
-                lib.Control.ShowLog(tbLog, ".................RfcLogonException.........................\r\n");
-                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
-            }
-            catch (RfcAbapRuntimeException ex)
-            {
-                lib.Control.ShowLog(tbLog, ".................RfcAbapRuntimeException.........................\r\n");
-                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
-            }
-            catch (RfcAbapBaseException ex)
-            {
-                lib.Control.ShowLog(tbLog, ".................RfcAbapBaseException.........................\r\n");
-                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
-            }
-            catch (Exception ex)
-            {
-                lib.Control.ShowLog(tbLog, ".................exception.........................\r\n");
-                lib.Control.ShowLog(tbLog, ex.Message.ToString() + "....\r\n");
-            }
+            dtResult.Columns.Add("銷項交貨");
+            dtResult.Columns.Add("收貨方");
+            dtResult.Columns.Add("實際發貨日期");
+            dtResult.Columns.Add("物料");
+            dtResult.Columns.Add("客戶物料號碼");
+            dtResult.Columns.Add("交貨數量");
+            dtResult.Columns.Add("單位");
+            dtResult.Columns.Add("批次");
+            dtResult.Columns.Add("儲存地點");
+            dtResult.Columns.Add("說明");
         }
 
         private void iconFolder_Click(object sender, EventArgs e)
@@ -120,57 +69,49 @@ namespace RFC_shippingHistory
 
         private void iconWrite2SAP_Click(object sender, EventArgs e)
         {
+            // Step 1: 取得 CustomerCode
+            getCustomerCode();
+
+            // Step 2: 取得某出貨單中某物料的批次狀況、顯示在DataGridViewe供使用者檢視
             dealWithBatch();
+            IEnumerable<ShippingInfo> finalResult = from s in listShippingInfo orderby s.ShipperNo select s;
+            foreach (ShippingInfo s in finalResult)
+            {
+                DataRow dr = dtResult.NewRow();
+                dr["銷項交貨"] = s.ShipperNo;
+                dr["收貨方"] = s.CustomerCode;
+                dr["實際發貨日期"] = s.ShipDate;
+                dr["物料"] = s.PartNo;
+                dr["客戶物料號碼"] = s.CPartNo;
+                dr["交貨數量"] = s.BatchAmount;
+                dr["單位"] = "MPC";
+                dr["批次"] = s.BatchNo;
+                dr["儲存地點"] = s.Repository;
+                dr["說明"] = s.RepositoryDesc;
+                dtResult.Rows.Add(dr);
+            }
+            dgvResult.DataSource = dtResult;
+
+            // Step 3: 寫進 Sap VL01N 出貨單
+
         }
 
+        /// <summary>
+        /// 點擊匯出Excel按鍵的觸發事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iconExport_Click(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("銷售文件類型");
-            dt.Columns.Add("買方");
-            dt.Columns.Add("客戶參考(PN碼)");
-            dt.Columns.Add("銷售文件");
-            dt.Columns.Add("物料VBAP");
-            dt.Columns.Add("客戶物料");
-            dt.Columns.Add("物料MARD");
-            dt.Columns.Add("未限制");
-            dt.Columns.Add("移轉中");
-            dt.Columns.Add("品質檢驗");
-            dt.Columns.Add("限制使用庫存");
-            dt.Columns.Add("已凍結");
-            dt.Columns.Add("物料MSEG");
-            dt.Columns.Add("倉庫地點");
-            dt.Columns.Add("批次");
-            dt.Columns.Add("物料尺寸");
-            dt.Columns.Add("物料說明");
-            dt.Columns.Add("儲存地點");
-            dt.Columns.Add("儲存位置的說明");
-
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "AASZZ8M0666NXC003XFP01", "11546396", "AASZZ8M0666NXC003XFP01", 200, 5, null, null, null, "AASZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "AASZZ8M0666NXC003XFP01", "11546396", "AASZZ8M0666NXC003XFP01", 35, 5, null, null, null, "AASZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "BBSZZ8M0666NXC003XFP01", "11546397", "BBSZZ8M0666NXC003XFP01", 77, 5, null, null, null, "BBSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "BBSZZ8M0666NXC003XFP01", "11546397", "BBSZZ8M0666NXC003XFP01", 32, 5, null, null, null, "BBSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58242", "CCSZZ8M0666NXC003XFP01", "11546398", "CCSZZ8M0666NXC003XFP01", 24, 5, null, null, null, "CCSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "DDSZZ8M0666NXC003XFP01", "11546399", "DDSZZ8M0666NXC003XFP01", 15, 5, null, null, null, "DDSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "DDSZZ8M0666NXC003XFP01", "11546399", "DDSZZ8M0666NXC003XFP01", 18, 5, null, null, null, "DDSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "AASZZ8M0666NXC003XFP01", "11546396", "AASZZ8M0666NXC003XFP01", 20, 5, null, null, null, "AASZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "EESZZ8M0666NXC003XFP01", "11546311", "EESZZ8M0666NXC003XFP01", 56, 5, null, null, null, "EESZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "EESZZ8M0666NXC003XFP01", "11546311", "EESZZ8M0666NXC003XFP01", 114, 5, null, null, null, "EESZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58243", "EESZZ8M0666NXC003XFP01", "11546311", "EESZZ8M0666NXC003XFP01", 46, 5, null, null, null, "EESZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58245", "RRSZZ8M0666NXC003XFP01", "11546311", "RRSZZ8M0666NXC003XFP01", 23, 5, null, null, null, "RRSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58245", "RRSZZ8M0666NXC003XFP01", "11546311", "RRSZZ8M0666NXC003XFP01", 24, 5, null, null, null, "RRSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-            dt.Rows.Add(null, "1GMNAO", null, "SH58245", "RRSZZ8M0666NXC003XFP01", "11546311", "RRSZZ8M0666NXC003XFP01", 12, 5, null, null, null, "RRSZZ8M0666NXC003XFP01", "UF01", "Z00011741", null, null, null, "美國成品倉");
-
-            dgvTest.DataSource = dt;
-
             using (var dialog = new FolderBrowserDialog())
             {
                 DialogResult result = dialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     DataSet ds = new DataSet();
-                    ds.Tables.Add(dt);
-                    ExportDataSetToExcel(ds, dialog.SelectedPath);
+                    ds.Tables.Add(dtResult);
+                    string directoryPath = dialog.SelectedPath;
+                    ExportDataSetToExcel(ds, directoryPath);
                 }
             }
         }
@@ -288,7 +229,10 @@ namespace RFC_shippingHistory
                             switch (j)
                             {
                                 case 1:
-                                    shippingInfo.PartNo = xlRange.Cells[i, 1].Value2.ToString();
+                                    shippingInfo.CPartNo = xlRange.Cells[i, 1].Value2.ToString();
+                                    break;
+                                case 3:
+                                    shippingInfo.ShipDate = xlRange.Cells[i, 3].Value2.ToString();
                                     break;
                                 case 4:
                                     shippingInfo.ShipperNo = xlRange.Cells[i, 4].Value2.ToString();
@@ -311,10 +255,10 @@ namespace RFC_shippingHistory
                 IEnumerable<ShippingInfo> result = from s in listShippingInfo orderby s.ShipperNo select s;
 
 
-                //foreach (ShippingInfo shippingInfo in result)
-                //{
-                //    Console.WriteLine($"料號: {shippingInfo.PartNo}、出貨號碼: {shippingInfo.ShipperNo}、客戶地址: {shippingInfo.CustomerAddressCode}、數量: {shippingInfo.Quantity}");
-                //}
+                foreach (ShippingInfo shippingInfo in result)
+                {
+                    Console.WriteLine($"料號: {shippingInfo.PartNo}、出貨號碼: {shippingInfo.ShipperNo}、客戶地址: {shippingInfo.CustomerAddressCode}、數量: {shippingInfo.Quantity}、出貨日期: {shippingInfo.ShipDate}");
+                }
 
                 //cleanup
                 GC.Collect();
@@ -402,24 +346,75 @@ namespace RFC_shippingHistory
         }
 
         /// <summary>
-        /// 呼叫 RFC【Z_SUMEEKO_001_LAA】，獲取使用者料號
+        /// 呼叫 RFC【Z_SUMEEKO_001_LAA】，獲取使用者代號 (CustomerCode)
         /// </summary>
         /// <returns></returns>
         private void getCustomerCode()
         {
-            RfcDestination dest = lib.SAP.GetDestination();
-            IRfcFunction func = dest.Repository.CreateFunction("");
-            foreach (ShippingInfo s in listShippingInfo)
+            try
             {
+                string FunctionName = "Z_SUMEEKO_005_PLEXTOBP";
+                lib.Control.ShowLog(tbLog, "連線至SAP中......\r\n");
+                RfcDestination rfcDestination = lib.SAP.GetDestination();
+                // 調用 RFC 函数
+                RfcRepository rfcRepository = rfcDestination.Repository;
+                IRfcFunction rfcFunction = rfcRepository.CreateFunction(FunctionName);
 
-                func.SetValue("", s.CustomerAddressCode);
-                func.Invoke(dest);
-                IRfcTable rfcTable = func.GetTable("");
-                DataTable result = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
-                foreach (DataRow row in result.Rows)
+                foreach (ShippingInfo s in listShippingInfo)
                 {
-                    s.CustomerCode = row["CustomerCode"].ToString();
+                    // 輸入 CustomerAddressCode 參數
+                    rfcFunction.SetValue("I_NAME2", s.CustomerAddressCode);
+
+                    // 執行 RFC 函数
+                    rfcFunction.Invoke(rfcDestination);
+
+                    // 從 RFC 函数獲取輸出參數
+                    string dataRCode = rfcFunction.GetString("E_RCODE");
+
+                    if (dataRCode.Equals("S"))
+                    {
+                        lib.Control.ShowLog(tbLog, "連線成功! \r\n");
+                        string customerCode = rfcFunction.GetString("E_BPNO");
+                        // 將「收貨方」存入 listShippingInfo
+                        s.CustomerCode = customerCode;
+                        Console.WriteLine(customerCode);
+                    }
+                    else
+                    {
+                        lib.Control.ShowLog(tbLog, "連線失敗! \r\n");
+                        string dataEx = rfcFunction.GetString("E_MESSAGE");
+                        lib.Control.ShowLog(tbLog, dataEx + "\r\n");
+                    }
+                    lib.Control.ShowLog(tbLog, "完成! \r\n");
+                    lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
                 }
+            }
+            catch (RfcCommunicationException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcCommunicationException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+
+            }
+            catch (RfcLogonException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcLogonException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+
+            }
+            catch (RfcAbapRuntimeException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcAbapRuntimeException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+            }
+            catch (RfcAbapBaseException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcAbapBaseException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+            }
+            catch (Exception ex)
+            {
+                lib.Control.ShowLog(tbLog, $"Exception: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
             }
         }
 
@@ -429,8 +424,75 @@ namespace RFC_shippingHistory
         /// <returns></returns>
         private void dealWithBatch()
         {
+            try
+            {
+                //foreach (ShippingInfo s in listShippingInfo)
+                //{
+                string FunctionName = "Z_SUMEEKO_006_PNGETSTK";
+                lib.Control.ShowLog(tbLog, "連線至SAP中......\r\n");
+                RfcDestination rfcDestination = lib.SAP.GetDestination();
 
+                // 調用 RFC 函数
+                RfcRepository rfcRepository = rfcDestination.Repository;
+                IRfcFunction rfcFunction = rfcRepository.CreateFunction(FunctionName);
 
+                // 設置 RFC 函数的輸入參數 
+                //rfcFunction.SetValue("I_PN_MATNR", s.PartNo);
+                //rfcFunction.SetValue("I_ADDNAME2", s.CustomerAddressCode);
+                rfcFunction.SetValue("I_PN_MATNR", "11601723");
+                rfcFunction.SetValue("I_ADDNAME2", "GENERAL MOTORS LLC");
+
+                // 執行 RFC 函数
+                rfcFunction.Invoke(rfcDestination);
+
+                //  RFC 函数獲取输出参数
+                string dataRCode = rfcFunction.GetString("E_RCODE");
+
+                if (dataRCode.Equals("S"))
+                {
+                    lib.Control.ShowLog(tbLog, "連線成功! \r\n");
+                    IRfcTable rfcTable = rfcFunction.GetTable("ET_MSKA");
+                    DataTable result = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
+                    dgvTest.DataSource = result;
+                }
+                else
+                {
+                    lib.Control.ShowLog(tbLog, "連線失敗! \r\n");
+                    string dataEx = rfcFunction.GetString("E_MESSAGE");
+                    lib.Control.ShowLog(tbLog, dataEx + "\r\n");
+                }
+                lib.Control.ShowLog(tbLog, "完成! \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+                //}
+
+            }
+            catch (RfcCommunicationException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcCommunicationException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+
+            }
+            catch (RfcLogonException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcLogonException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+
+            }
+            catch (RfcAbapRuntimeException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcAbapRuntimeException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+            }
+            catch (RfcAbapBaseException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcAbapBaseException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+            }
+            catch (Exception ex)
+            {
+                lib.Control.ShowLog(tbLog, $"Exception: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+            }
         }
 
         /// <summary>
@@ -443,7 +505,7 @@ namespace RFC_shippingHistory
             int inHeaderLength = 3, inColumn = 0, inRow = 0;
             System.Reflection.Missing Default = System.Reflection.Missing.Value;
             // Create Excel File
-            strPath += @"\ShippingHistory" + Guid.NewGuid().ToString("D") + ".xlsx";
+            strPath += @"\ShippingHistory-" + Guid.NewGuid().ToString("D") + ".xlsx";
             Excel.Application excelApp = new Excel.Application();
             Excel.Workbook excelWorkBook = excelApp.Workbooks.Add(1);
             foreach (DataTable dtbl in ds.Tables)
@@ -465,11 +527,17 @@ namespace RFC_shippingHistory
                     {
                         inColumn = n + 1;
                         inRow = inHeaderLength + 2 + m;
-                        excelWorkSheet.Cells[inRow, inColumn] = dtbl.Rows[m].ItemArray[n].ToString();  // DataRow.ItemArray 透過陣列取得或設定這個資料列的所有值。
-                        if (m % 2 == 0)
-                            excelWorkSheet.get_Range("A" + inRow.ToString(), charTotalCol + inRow.ToString()).Interior.Color = System.Drawing.ColorTranslator.FromHtml("#C5CBD3");
+                        excelWorkSheet.Cells[inRow, inColumn] = dtbl.Rows[m][n].ToString();
+                    }
+
+                    // 若「銷項交貨」的值與上筆一樣就合併儲存格
+                    if (m > 0 && dtbl.Rows[m]["銷項交貨"].ToString() == dtbl.Rows[m - 1]["銷項交貨"].ToString())
+                    {
+                        excelApp.DisplayAlerts = false;
+                        excelWorkSheet.get_Range("A" + inRow.ToString(), "A" + (inRow - 1).ToString()).Merge();
                     }
                 }
+                excelApp.DisplayAlerts = true;
 
                 // Excel Header
                 Excel.Range cellRang = excelWorkSheet.get_Range("A1", $"{charTotalCol}3");
@@ -479,7 +547,7 @@ namespace RFC_shippingHistory
                 cellRang.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter; // xlHAlignLeft 置左、xlHAlignRight 置右
                 cellRang.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;  // xlVAlignTop 置上、xlVAlignBottom 置下
                 cellRang.Font.Size = 26;
-                excelWorkSheet.Cells[1, 1] = "Shpping History (PLEX to SAP)";
+                excelWorkSheet.Cells[1, 1] = "Shipping History (PLEX to SAP)";
 
                 // Style table column names
                 cellRang = excelWorkSheet.get_Range("A4", $"{charTotalCol}4");

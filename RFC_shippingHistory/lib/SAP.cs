@@ -10,7 +10,10 @@ namespace RFC_shippingHistory.lib
 {
     internal class SAP
     {
-        // RFC 連線配置
+        /// <summary>
+        /// RFC 連線配置
+        /// </summary>
+        /// <returns></returns>
         public static RfcConfigParameters GetConfig()
         {
             RfcConfigParameters rfcConfigParameters = new RfcConfigParameters
@@ -23,7 +26,6 @@ namespace RFC_shippingHistory.lib
                 { RfcConfigParameters.Password, "S2239002" },
                 { RfcConfigParameters.Client, "330" },
                 { RfcConfigParameters.Language, "ZF" }
-
                 
                 //{ RfcConfigParameters.Name, "dev" },
                 //{ RfcConfigParameters.AppServerHost, "172.16.2.166" },
@@ -37,7 +39,10 @@ namespace RFC_shippingHistory.lib
             return rfcConfigParameters;
         }
 
-        // 獲取 RfcDestination -> 管理與 SAP 連線的相關工作
+        /// <summary>
+        /// 獲取 RfcDestination (管理與 SAP 連線的相關工作)
+        /// </summary>
+        /// <returns></returns>
         public static RfcDestination GetDestination()
         {
             RfcConfigParameters configParams = GetConfig();
@@ -46,7 +51,11 @@ namespace RFC_shippingHistory.lib
             return dest;
         }
 
-        // 將 RfcTable 轉成 DataTable
+        /// <summary>
+        /// 將 RfcTable 轉成 DataTable
+        /// </summary>
+        /// <param name="rfcTable"></param>
+        /// <returns></returns>
         public static DataTable ConvertRfcTableToDataTable(IRfcTable rfcTable)
         {
             DataTable dataTable = new DataTable();
@@ -55,7 +64,7 @@ namespace RFC_shippingHistory.lib
             for (int i = 0; i < rfcTable.ElementCount; i++) // ElementCount 行數
             {
                 RfcElementMetadata metadata = rfcTable.GetElementMetadata(i); 
-                dataTable.Columns.Add(metadata.Name); // , GetDataType(metadata.DataType)
+                dataTable.Columns.Add(metadata.Name); // ,GetDataType(metadata.DataType)
             }
 
             // DataTable rows
@@ -72,7 +81,13 @@ namespace RFC_shippingHistory.lib
             return dataTable;
         }
 
-        // 建立 IRfcStructure 
+        /// <summary>
+        /// // 建立 IRfcStructure 
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <param name="structureName"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
         public static IRfcStructure CreateRfcStructure(RfcDestination destination, string structureName, Dictionary<string, object> fields)
         {
             IRfcStructure structure = destination.Repository.GetStructureMetadata(structureName).CreateStructure();
@@ -84,7 +99,15 @@ namespace RFC_shippingHistory.lib
             return structure;
         }
 
-        // 將 DataTable 轉成 RfcTable
+        /// <summary>
+        /// 將 DataTable 轉成 RfcTable
+        /// </summary>
+        /// <param name="dataTable"></param>
+        /// <param name="destination"></param>
+        /// <param name="rfcTableName"></param>
+        /// <param name="rfcName"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public static IRfcTable ConvertDataTableToRfcTable(DataTable dataTable, RfcDestination destination, string rfcTableName, string rfcName)
         {
             IRfcFunction function = destination.Repository.CreateFunction(rfcName);
@@ -115,7 +138,11 @@ namespace RFC_shippingHistory.lib
             return rfcTable;
         }
 
-        // 將 RFC 數據類型轉換為 .NET 數據類型
+        /// <summary>
+        /// 將 RFC 數據類型轉換為 .NET 數據類型
+        /// </summary>
+        /// <param name="rfcDataType"></param>
+        /// <returns></returns>
         private static Type GetDataType(RfcDataType rfcDataType)
         {
             switch (rfcDataType)
@@ -156,33 +183,5 @@ namespace RFC_shippingHistory.lib
                     return typeof(string);
             }
         }
-        //--------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
