@@ -26,13 +26,13 @@ namespace RFC_shippingHistory.lib
                 { RfcConfigParameters.Password, "S2239002" },
                 { RfcConfigParameters.Client, "330" },
                 { RfcConfigParameters.Language, "ZF" }
-                
+
                 //{ RfcConfigParameters.Name, "dev" },
                 //{ RfcConfigParameters.AppServerHost, "172.16.2.166" },
                 //{ RfcConfigParameters.SystemNumber, "00" },
                 //{ RfcConfigParameters.SystemID, "PS4" },
-                //{ RfcConfigParameters.User, "S2239002" },
-                //{ RfcConfigParameters.Password, "S2239002" },
+                //{ RfcConfigParameters.User, "sumeeko01" },
+                //{ RfcConfigParameters.Password, "@Sap22546808@" },
                 //{ RfcConfigParameters.Client, "800" },
                 //{ RfcConfigParameters.Language, "ZF" }
             };
@@ -79,24 +79,6 @@ namespace RFC_shippingHistory.lib
                 dataTable.Rows.Add(newRow);
             }
             return dataTable;
-        }
-
-        /// <summary>
-        /// // 建立 IRfcStructure 
-        /// </summary>
-        /// <param name="destination"></param>
-        /// <param name="structureName"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        public static IRfcStructure CreateRfcStructure(RfcDestination destination, string structureName, Dictionary<string, object> fields)
-        {
-            IRfcStructure structure = destination.Repository.GetStructureMetadata(structureName).CreateStructure();
-
-            foreach (var field in fields)
-            {
-                structure.SetValue(field.Key, field.Value);
-            }
-            return structure;
         }
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace RFC_shippingHistory
         public string BatchNo { get; set; }
 
         /// <summary>
-        /// 交貨數量 【RFC2】
+        /// 未限制使用庫存 【RFC2】
         /// </summary>
         public int BatchAmount { get; set; }
 
@@ -67,8 +67,5 @@ namespace RFC_shippingHistory
         /// Sales & Distribution 文件 【RFC2】
         /// </summary>
         public string SD { get; set; }
-
-
-
     }
 }

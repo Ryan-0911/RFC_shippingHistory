@@ -117,6 +117,15 @@
   <ItemGroup>
     <Content Include="bin\Debug\libicudecnumber.dll" />
     <Content Include="bin\Release\libicudecnumber.dll" />
+    <None Include="Resources\edit.png" />
+    <None Include="Resources\fast-forward.png" />
+    <None Include="Resources\left-arrow %281%29.png" />
+    <None Include="Resources\right-arrow %281%29.png" />
+    <None Include="Resources\rewind.png" />
+    <None Include="Resources\back.png" />
+    <None Include="Resources\left-arrow.png" />
+    <None Include="Resources\fast-forward-double-right-arrows-symbol.png" />
+    <None Include="Resources\right-arrow.png" />
     <None Include="Resources\clean.png" />
     <None Include="Resources\export.png" />
     <None Include="Resources\sap.png" />

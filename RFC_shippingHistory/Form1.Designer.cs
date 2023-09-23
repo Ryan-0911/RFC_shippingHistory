@@ -39,24 +39,35 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lblDate = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.dgvTest = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.dgvResult = new System.Windows.Forms.DataGridView();
+            this.lblPage = new System.Windows.Forms.Label();
+            this.iconEdit = new System.Windows.Forms.PictureBox();
+            this.iconPrevious = new System.Windows.Forms.PictureBox();
+            this.iconLast = new System.Windows.Forms.PictureBox();
+            this.iconNext = new System.Windows.Forms.PictureBox();
+            this.icobFirst = new System.Windows.Forms.PictureBox();
+            this.iconClear = new System.Windows.Forms.PictureBox();
             this.iconExport = new System.Windows.Forms.PictureBox();
             this.iconWrite2SAP = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.iconFolder = new System.Windows.Forms.PictureBox();
             this.iconFile = new System.Windows.Forms.PictureBox();
-            this.iconClear = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.dgvResult = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTest)).BeginInit();
+            this.dgvEdit = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconEdit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPrevious)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconLast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconNext)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.icobFirst)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconClear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconWrite2SAP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconClear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEdit)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl請選擇檔案
@@ -105,13 +116,13 @@
             // tbLog
             // 
             this.tbLog.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbLog.Location = new System.Drawing.Point(44, 182);
+            this.tbLog.Location = new System.Drawing.Point(44, 162);
             this.tbLog.Margin = new System.Windows.Forms.Padding(2);
             this.tbLog.Multiline = true;
             this.tbLog.Name = "tbLog";
             this.tbLog.ReadOnly = true;
             this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLog.Size = new System.Drawing.Size(538, 392);
+            this.tbLog.Size = new System.Drawing.Size(538, 396);
             this.tbLog.TabIndex = 13;
             // 
             // lblTime
@@ -142,40 +153,126 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label2.Location = new System.Drawing.Point(711, 116);
+            this.label2.Location = new System.Drawing.Point(687, 116);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 20);
             this.label2.TabIndex = 19;
-            this.label2.Text = "產生出貨單";
-            // 
-            // dgvTest
-            // 
-            this.dgvTest.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTest.Location = new System.Drawing.Point(619, 182);
-            this.dgvTest.Name = "dgvTest";
-            this.dgvTest.ReadOnly = true;
-            this.dgvTest.RowTemplate.Height = 24;
-            this.dgvTest.Size = new System.Drawing.Size(775, 186);
-            this.dgvTest.TabIndex = 20;
+            this.label2.Text = "建立出貨單";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(1295, 129);
+            this.label4.Location = new System.Drawing.Point(1295, 116);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(99, 20);
             this.label4.TabIndex = 21;
             this.label4.Text = "匯出成 Excel";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label5.Location = new System.Drawing.Point(509, 621);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(0, 20);
+            this.label5.TabIndex = 24;
+            // 
+            // dgvResult
+            // 
+            this.dgvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResult.Location = new System.Drawing.Point(619, 162);
+            this.dgvResult.Name = "dgvResult";
+            this.dgvResult.ReadOnly = true;
+            this.dgvResult.RowTemplate.Height = 24;
+            this.dgvResult.Size = new System.Drawing.Size(775, 434);
+            this.dgvResult.TabIndex = 25;
+            // 
+            // lblPage
+            // 
+            this.lblPage.AutoSize = true;
+            this.lblPage.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblPage.Location = new System.Drawing.Point(1282, 621);
+            this.lblPage.Name = "lblPage";
+            this.lblPage.Size = new System.Drawing.Size(112, 20);
+            this.lblPage.TabIndex = 26;
+            this.lblPage.Text = "第幾筆/共幾筆";
+            // 
+            // iconEdit
+            // 
+            this.iconEdit.Image = global::RFC_shippingHistory.Properties.Resources.edit;
+            this.iconEdit.Location = new System.Drawing.Point(996, 607);
+            this.iconEdit.Name = "iconEdit";
+            this.iconEdit.Size = new System.Drawing.Size(54, 39);
+            this.iconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconEdit.TabIndex = 31;
+            this.iconEdit.TabStop = false;
+            this.iconEdit.Click += new System.EventHandler(this.iconEdit_Click);
+            // 
+            // iconPrevious
+            // 
+            this.iconPrevious.Image = global::RFC_shippingHistory.Properties.Resources.left_arrow__1_;
+            this.iconPrevious.Location = new System.Drawing.Point(921, 611);
+            this.iconPrevious.Name = "iconPrevious";
+            this.iconPrevious.Size = new System.Drawing.Size(36, 30);
+            this.iconPrevious.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconPrevious.TabIndex = 30;
+            this.iconPrevious.TabStop = false;
+            this.iconPrevious.Click += new System.EventHandler(this.iconPrevous_Click);
+            // 
+            // iconLast
+            // 
+            this.iconLast.Image = global::RFC_shippingHistory.Properties.Resources.fast_forward;
+            this.iconLast.Location = new System.Drawing.Point(1135, 612);
+            this.iconLast.Name = "iconLast";
+            this.iconLast.Size = new System.Drawing.Size(41, 30);
+            this.iconLast.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconLast.TabIndex = 29;
+            this.iconLast.TabStop = false;
+            this.iconLast.Click += new System.EventHandler(this.iconLast_Click);
+            // 
+            // iconNext
+            // 
+            this.iconNext.Image = global::RFC_shippingHistory.Properties.Resources.right_arrow__1_;
+            this.iconNext.Location = new System.Drawing.Point(1079, 611);
+            this.iconNext.Name = "iconNext";
+            this.iconNext.Size = new System.Drawing.Size(35, 30);
+            this.iconNext.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconNext.TabIndex = 28;
+            this.iconNext.TabStop = false;
+            this.iconNext.Click += new System.EventHandler(this.iconNext_Click);
+            // 
+            // icobFirst
+            // 
+            this.icobFirst.Image = global::RFC_shippingHistory.Properties.Resources.rewind;
+            this.icobFirst.Location = new System.Drawing.Point(869, 612);
+            this.icobFirst.Name = "icobFirst";
+            this.icobFirst.Size = new System.Drawing.Size(46, 30);
+            this.icobFirst.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.icobFirst.TabIndex = 27;
+            this.icobFirst.TabStop = false;
+            this.icobFirst.Click += new System.EventHandler(this.icobFirst_Click);
+            // 
+            // iconClear
+            // 
+            this.iconClear.Image = global::RFC_shippingHistory.Properties.Resources.clean;
+            this.iconClear.Location = new System.Drawing.Point(524, 612);
+            this.iconClear.Name = "iconClear";
+            this.iconClear.Size = new System.Drawing.Size(58, 40);
+            this.iconClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconClear.TabIndex = 23;
+            this.iconClear.TabStop = false;
+            this.iconClear.Click += new System.EventHandler(this.iconClear_Click);
+            // 
             // iconExport
             // 
             this.iconExport.Image = global::RFC_shippingHistory.Properties.Resources.export;
-            this.iconExport.Location = new System.Drawing.Point(1235, 110);
+            this.iconExport.Location = new System.Drawing.Point(1246, 99);
             this.iconExport.Name = "iconExport";
-            this.iconExport.Size = new System.Drawing.Size(40, 50);
+            this.iconExport.Size = new System.Drawing.Size(42, 57);
             this.iconExport.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconExport.TabIndex = 22;
             this.iconExport.TabStop = false;
@@ -184,9 +281,9 @@
             // iconWrite2SAP
             // 
             this.iconWrite2SAP.Image = global::RFC_shippingHistory.Properties.Resources.sap;
-            this.iconWrite2SAP.Location = new System.Drawing.Point(619, 93);
+            this.iconWrite2SAP.Location = new System.Drawing.Point(619, 100);
             this.iconWrite2SAP.Name = "iconWrite2SAP";
-            this.iconWrite2SAP.Size = new System.Drawing.Size(87, 61);
+            this.iconWrite2SAP.Size = new System.Drawing.Size(63, 56);
             this.iconWrite2SAP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconWrite2SAP.TabIndex = 18;
             this.iconWrite2SAP.TabStop = false;
@@ -226,49 +323,33 @@
             this.iconFile.TabStop = false;
             this.iconFile.Click += new System.EventHandler(this.iconFile_Click);
             // 
-            // iconClear
+            // dgvEdit
             // 
-            this.iconClear.Image = global::RFC_shippingHistory.Properties.Resources.clean;
-            this.iconClear.Location = new System.Drawing.Point(446, 611);
-            this.iconClear.Name = "iconClear";
-            this.iconClear.Size = new System.Drawing.Size(58, 40);
-            this.iconClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconClear.TabIndex = 23;
-            this.iconClear.TabStop = false;
-            this.iconClear.Click += new System.EventHandler(this.iconClear_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label5.Location = new System.Drawing.Point(509, 621);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 20);
-            this.label5.TabIndex = 24;
-            this.label5.Text = "清空內容";
-            // 
-            // dgvResult
-            // 
-            this.dgvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResult.Location = new System.Drawing.Point(619, 394);
-            this.dgvResult.Name = "dgvResult";
-            this.dgvResult.ReadOnly = true;
-            this.dgvResult.RowTemplate.Height = 24;
-            this.dgvResult.Size = new System.Drawing.Size(775, 180);
-            this.dgvResult.TabIndex = 25;
+            this.dgvEdit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEdit.Location = new System.Drawing.Point(132, 294);
+            this.dgvEdit.Name = "dgvEdit";
+            this.dgvEdit.ReadOnly = true;
+            this.dgvEdit.RowTemplate.Height = 24;
+            this.dgvEdit.Size = new System.Drawing.Size(441, 264);
+            this.dgvEdit.TabIndex = 20;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1473, 698);
+            this.Controls.Add(this.iconEdit);
+            this.Controls.Add(this.iconPrevious);
+            this.Controls.Add(this.iconLast);
+            this.Controls.Add(this.iconNext);
+            this.Controls.Add(this.icobFirst);
+            this.Controls.Add(this.lblPage);
             this.Controls.Add(this.dgvResult);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.iconClear);
             this.Controls.Add(this.iconExport);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.dgvTest);
+            this.Controls.Add(this.dgvEdit);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.iconWrite2SAP);
             this.Controls.Add(this.pictureBox1);
@@ -287,14 +368,19 @@
             this.Name = "Form1";
             this.Text = "出貨歷史";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTest)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconEdit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPrevious)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconLast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconNext)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.icobFirst)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconClear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconWrite2SAP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconClear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEdit)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,12 +400,18 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox iconWrite2SAP;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridView dgvTest;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox iconExport;
         private System.Windows.Forms.PictureBox iconClear;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dgvResult;
+        private System.Windows.Forms.Label lblPage;
+        private System.Windows.Forms.PictureBox icobFirst;
+        private System.Windows.Forms.PictureBox iconNext;
+        private System.Windows.Forms.PictureBox iconLast;
+        private System.Windows.Forms.PictureBox iconPrevious;
+        private System.Windows.Forms.PictureBox iconEdit;
+        private System.Windows.Forms.DataGridView dgvEdit;
     }
 }
 
