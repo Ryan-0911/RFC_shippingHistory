@@ -50,6 +50,16 @@ namespace RFC_shippingHistory
         /// </summary>
         int currentPage = 1;
 
+        /// <summary>
+        /// 客戶地址搜尋
+        /// </summary>
+        string CAddrCodeSearch = "";
+
+        /// <summary>
+        /// 客戶料號搜尋
+        /// </summary>
+        string CPartNoSearch = "";
+
 
         public Form1()
         {
@@ -70,43 +80,6 @@ namespace RFC_shippingHistory
             dtEdit.Columns.Add("批次");
             dtEdit.Columns.Add("儲存地點");
             dtEdit.Columns.Add("說明");
-
-            // Test: 批次狀況---------------------------------------------------------------------------------------
-            // 建立假資料 (呼叫 RFC2 回傳的結果)
-            //DataTable dtBatch = new DataTable();
-            //dtBatch.Columns.Add("MANDT"); // 用戶端
-            //dtBatch.Columns.Add("VBELN"); // 銷售與配銷文件號碼
-            //dtBatch.Columns.Add("MATNR"); // 物料號碼
-            //dtBatch.Columns.Add("AUART"); // 銷售文件類型
-            //dtBatch.Columns.Add("KUNNR"); // 客戶號碼
-            //dtBatch.Columns.Add("BSTNK"); // 客戶參考
-            //dtBatch.Columns.Add("KDMAT"); // 客戶物料
-            //dtBatch.Columns.Add("LGORT"); // 儲存地點
-            //dtBatch.Columns.Add("MEINH"); // 作業的計量單位
-            //dtBatch.Columns.Add("LABST"); // 評價的未限制使用庫存
-            //dtBatch.Columns.Add("UMLME"); // 移轉中庫存（工廠到工廠）
-            //dtBatch.Columns.Add("INSME"); // 品質檢驗中的庫存
-            //dtBatch.Columns.Add("EINME"); // 所有限制批次的總計庫存
-            //dtBatch.Columns.Add("SPEME"); // 凍結庫存
-            //dtBatch.Columns.Add("RETME"); // 凍結庫存退貨
-            //dtBatch.Columns.Add("CHARG"); // 批次號碼
-            //dtBatch.Columns.Add("GROES"); // Dimensions
-            //dtBatch.Columns.Add("MAKTX"); // 物料說明
-            //dtBatch.Columns.Add("LGOBE"); // 儲存地點說明
-
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-            //dtBatch.Rows.Add("330", "SD12345", "DFVSDVDVFGVFB", null, "1GMNAO", null, "15032594", "UF01", "MPC", 0.6000, 0.000, 0.000, 0.000, 0.000, "Z00001043", null, "梅花孔六角輪緣頭", "美國成品倉");
-
-            //dgvTest.DataSource = dtBatch;
         }
 
         private void iconFolder_Click(object sender, EventArgs e)
@@ -133,6 +106,11 @@ namespace RFC_shippingHistory
             dealWithBatch();
 
             // Step 3: 寫進 SAP VL01N 出貨單
+
+        }
+
+        private void iconSearch_Click(object sender, EventArgs e)
+        {
 
         }
 
@@ -582,13 +560,12 @@ namespace RFC_shippingHistory
                         {
                             // 將這筆 ShippingInfo 的 CPartNo 加入 list
                             listCPartNo.Add(s.CPartNo);
-                            Console.WriteLine($"查不到【{s.CPartNo}】的批次庫存");
+                            lib.Control.ShowLog(tbLog, $"查不到【{s.CPartNo}】的批次庫存\r\n");
                             return;
                         }
 
                         // 查詢 "LABST" (評價的未限制使用庫存) 欄位值大於等於 ShippingInfo.Quantity 的紀錄
                         DataTable result = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
-                        dgvEdit.DataSource = result;
 
                         DataRow query = (from batch in result.AsEnumerable()
                                          where Convert.ToInt32(batch.Field<int>("LABST") * 100) >= s.Quantity
