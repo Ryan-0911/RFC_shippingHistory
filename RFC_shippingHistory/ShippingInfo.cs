@@ -16,7 +16,7 @@ namespace RFC_shippingHistory
         /// <summary>
         /// 物料號碼
         /// </summary>
-        public int PartNo { get; set; }
+        public string PartNo { get; set; }
 
         /// <summary>
         /// 銷項交貨
