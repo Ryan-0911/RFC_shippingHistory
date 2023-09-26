@@ -53,12 +53,10 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.iconFolder = new System.Windows.Forms.PictureBox();
             this.iconFile = new System.Windows.Forms.PictureBox();
-            this.comboCPartNo = new System.Windows.Forms.ComboBox();
-            this.comboCAddress = new System.Windows.Forms.ComboBox();
+            this.comboSearch = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.iconSearch = new System.Windows.Forms.PictureBox();
-            this.dgvUserSelect = new System.Windows.Forms.DataGridView();
             this.dgvSystemSelect = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconEdit)).BeginInit();
@@ -73,7 +71,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUserSelect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSystemSelect)).BeginInit();
             this.SuspendLayout();
             // 
@@ -319,47 +316,36 @@
             this.iconFile.TabStop = false;
             this.iconFile.Click += new System.EventHandler(this.iconFile_Click);
             // 
-            // comboCPartNo
+            // comboSearch
             // 
-            this.comboCPartNo.Font = new System.Drawing.Font("微軟正黑體 Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.comboCPartNo.FormattingEnabled = true;
-            this.comboCPartNo.Location = new System.Drawing.Point(829, 106);
-            this.comboCPartNo.Margin = new System.Windows.Forms.Padding(2);
-            this.comboCPartNo.Name = "comboCPartNo";
-            this.comboCPartNo.Size = new System.Drawing.Size(199, 28);
-            this.comboCPartNo.TabIndex = 33;
-            // 
-            // comboCAddress
-            // 
-            this.comboCAddress.Font = new System.Drawing.Font("微軟正黑體 Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.comboCAddress.FormattingEnabled = true;
-            this.comboCAddress.Location = new System.Drawing.Point(1127, 104);
-            this.comboCAddress.Margin = new System.Windows.Forms.Padding(2);
-            this.comboCAddress.Name = "comboCAddress";
-            this.comboCAddress.Size = new System.Drawing.Size(199, 28);
-            this.comboCAddress.TabIndex = 34;
+            this.comboSearch.Font = new System.Drawing.Font("微軟正黑體 Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.comboSearch.FormattingEnabled = true;
+            this.comboSearch.Location = new System.Drawing.Point(829, 102);
+            this.comboSearch.Margin = new System.Windows.Forms.Padding(2);
+            this.comboSearch.Name = "comboSearch";
+            this.comboSearch.Size = new System.Drawing.Size(505, 28);
+            this.comboSearch.TabIndex = 33;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label6.Location = new System.Drawing.Point(1046, 108);
+            this.label6.Location = new System.Drawing.Point(844, 110);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(73, 20);
+            this.label6.Size = new System.Drawing.Size(0, 20);
             this.label6.TabIndex = 35;
-            this.label6.Text = "客戶地址";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label7.Location = new System.Drawing.Point(748, 108);
+            this.label7.Location = new System.Drawing.Point(669, 108);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(73, 20);
+            this.label7.Size = new System.Drawing.Size(144, 20);
             this.label7.TabIndex = 36;
-            this.label7.Text = "客戶料號";
+            this.label7.Text = "客戶料號/客戶地址";
             // 
             // iconSearch
             // 
@@ -372,23 +358,14 @@
             this.iconSearch.TabStop = false;
             this.iconSearch.Click += new System.EventHandler(this.iconSearch_Click);
             // 
-            // dgvUserSelect
-            // 
-            this.dgvUserSelect.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUserSelect.Location = new System.Drawing.Point(44, 698);
-            this.dgvUserSelect.Name = "dgvUserSelect";
-            this.dgvUserSelect.RowTemplate.Height = 24;
-            this.dgvUserSelect.Size = new System.Drawing.Size(538, 310);
-            this.dgvUserSelect.TabIndex = 38;
-            // 
             // dgvSystemSelect
             // 
             this.dgvSystemSelect.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSystemSelect.Location = new System.Drawing.Point(619, 698);
+            this.dgvSystemSelect.Location = new System.Drawing.Point(34, 681);
             this.dgvSystemSelect.Name = "dgvSystemSelect";
             this.dgvSystemSelect.RowTemplate.Height = 24;
-            this.dgvSystemSelect.Size = new System.Drawing.Size(538, 310);
-            this.dgvSystemSelect.TabIndex = 39;
+            this.dgvSystemSelect.Size = new System.Drawing.Size(1350, 310);
+            this.dgvSystemSelect.TabIndex = 38;
             // 
             // Form1
             // 
@@ -397,12 +374,10 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1443, 1061);
             this.Controls.Add(this.dgvSystemSelect);
-            this.Controls.Add(this.dgvUserSelect);
             this.Controls.Add(this.iconSearch);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.comboCAddress);
-            this.Controls.Add(this.comboCPartNo);
+            this.Controls.Add(this.comboSearch);
             this.Controls.Add(this.iconEdit);
             this.Controls.Add(this.iconPrevious);
             this.Controls.Add(this.iconLast);
@@ -444,7 +419,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUserSelect)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSystemSelect)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -475,12 +449,10 @@
         private System.Windows.Forms.PictureBox iconLast;
         private System.Windows.Forms.PictureBox iconPrevious;
         private System.Windows.Forms.PictureBox iconEdit;
-        private System.Windows.Forms.ComboBox comboCPartNo;
-        private System.Windows.Forms.ComboBox comboCAddress;
+        private System.Windows.Forms.ComboBox comboSearch;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.PictureBox iconSearch;
-        private System.Windows.Forms.DataGridView dgvUserSelect;
         private System.Windows.Forms.DataGridView dgvSystemSelect;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,11 +13,6 @@ namespace RFC_shippingHistory
         /// 客戶物料號碼
         /// </summary>
         public string CPartNo { get; set; }
-
-        /// <summary>
-        /// 物料號碼
-        /// </summary>
-        public string PartNo { get; set; }
 
         /// <summary>
         /// 銷項交貨
@@ -39,9 +35,19 @@ namespace RFC_shippingHistory
         public string ShipDate { get; set; }
 
         /// <summary>
+        /// 兩個RFC的資料是否都有查詢到
+        /// </summary>
+        public bool ok { get; set; } = true;
+
+        /// <summary>
         /// 收貨方【RFC1】
         /// </summary>
         public string CustomerCode { get; set; }
+
+        /// <summary>
+        /// 物料號碼【RFC2】
+        /// </summary>
+        public string PartNo { get; set; }
 
         /// <summary>
         /// 批次號碼 【RFC2】
@@ -51,7 +57,7 @@ namespace RFC_shippingHistory
         /// <summary>
         /// 未限制使用庫存 【RFC2】
         /// </summary>
-        public int BatchAmount { get; set; }
+        public float BatchAmount { get; set; }
 
         /// <summary>
         /// 儲存地點 【RFC2】
