@@ -10,7 +10,7 @@ namespace RFC_shippingHistory
     internal class ShippingInfo
     {
         /// <summary>
-        /// 客戶物料號碼
+        /// 客戶料號
         /// </summary>
         public string CPartNo { get; set; }
 

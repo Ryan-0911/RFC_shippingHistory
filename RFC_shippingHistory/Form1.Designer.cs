@@ -37,11 +37,14 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lblDate = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dgvResult = new System.Windows.Forms.DataGridView();
             this.lblPage = new System.Windows.Forms.Label();
+            this.comboSearch = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.iconSearch = new System.Windows.Forms.PictureBox();
             this.iconEdit = new System.Windows.Forms.PictureBox();
             this.iconPrevious = new System.Windows.Forms.PictureBox();
             this.iconLast = new System.Windows.Forms.PictureBox();
@@ -49,16 +52,11 @@
             this.icobFirst = new System.Windows.Forms.PictureBox();
             this.iconClear = new System.Windows.Forms.PictureBox();
             this.iconExport = new System.Windows.Forms.PictureBox();
-            this.iconWrite2SAP = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.iconFolder = new System.Windows.Forms.PictureBox();
             this.iconFile = new System.Windows.Forms.PictureBox();
-            this.comboSearch = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.iconSearch = new System.Windows.Forms.PictureBox();
-            this.dgvSystemSelect = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPrevious)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconLast)).BeginInit();
@@ -66,12 +64,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.icobFirst)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconClear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconWrite2SAP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSystemSelect)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl請選擇檔案
@@ -141,27 +136,16 @@
             this.lblDate.Size = new System.Drawing.Size(0, 17);
             this.lblDate.TabIndex = 15;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label2.Location = new System.Drawing.Point(481, 110);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(105, 20);
-            this.label2.TabIndex = 19;
-            this.label2.Text = "查詢批次庫存";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(1235, 612);
+            this.label4.Location = new System.Drawing.Point(1315, 620);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(159, 20);
+            this.label4.Size = new System.Drawing.Size(79, 20);
             this.label4.TabIndex = 21;
-            this.label4.Text = "確認寫入並匯出Excel";
+            this.label4.Text = "匯出Excel";
             // 
             // label5
             // 
@@ -175,6 +159,9 @@
             // 
             // dgvResult
             // 
+            this.dgvResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvResult.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
+            this.dgvResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResult.Location = new System.Drawing.Point(619, 162);
             this.dgvResult.Name = "dgvResult";
@@ -193,6 +180,48 @@
             this.lblPage.Size = new System.Drawing.Size(112, 20);
             this.lblPage.TabIndex = 26;
             this.lblPage.Text = "第幾筆/共幾筆";
+            // 
+            // comboSearch
+            // 
+            this.comboSearch.Font = new System.Drawing.Font("微軟正黑體 Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.comboSearch.FormattingEnabled = true;
+            this.comboSearch.Location = new System.Drawing.Point(867, 105);
+            this.comboSearch.Margin = new System.Windows.Forms.Padding(2);
+            this.comboSearch.Name = "comboSearch";
+            this.comboSearch.Size = new System.Drawing.Size(464, 28);
+            this.comboSearch.TabIndex = 33;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label6.Location = new System.Drawing.Point(844, 110);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(0, 20);
+            this.label6.TabIndex = 35;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label7.Location = new System.Drawing.Point(709, 105);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(149, 20);
+            this.label7.TabIndex = 36;
+            this.label7.Text = "客戶料號+客戶地址";
+            // 
+            // iconSearch
+            // 
+            this.iconSearch.Image = global::RFC_shippingHistory.Properties.Resources.find;
+            this.iconSearch.Location = new System.Drawing.Point(1352, 102);
+            this.iconSearch.Name = "iconSearch";
+            this.iconSearch.Size = new System.Drawing.Size(42, 39);
+            this.iconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconSearch.TabIndex = 37;
+            this.iconSearch.TabStop = false;
+            this.iconSearch.Click += new System.EventHandler(this.iconSearch_Click);
             // 
             // iconEdit
             // 
@@ -251,10 +280,10 @@
             // 
             // iconClear
             // 
-            this.iconClear.Image = global::RFC_shippingHistory.Properties.Resources.clean;
-            this.iconClear.Location = new System.Drawing.Point(524, 612);
+            this.iconClear.Image = global::RFC_shippingHistory.Properties.Resources.clear_format;
+            this.iconClear.Location = new System.Drawing.Point(526, 608);
             this.iconClear.Name = "iconClear";
-            this.iconClear.Size = new System.Drawing.Size(74, 50);
+            this.iconClear.Size = new System.Drawing.Size(67, 33);
             this.iconClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconClear.TabIndex = 23;
             this.iconClear.TabStop = false;
@@ -262,25 +291,14 @@
             // 
             // iconExport
             // 
-            this.iconExport.Image = global::RFC_shippingHistory.Properties.Resources.export;
-            this.iconExport.Location = new System.Drawing.Point(1187, 602);
+            this.iconExport.Image = global::RFC_shippingHistory.Properties.Resources.export__1_;
+            this.iconExport.Location = new System.Drawing.Point(1267, 606);
             this.iconExport.Name = "iconExport";
-            this.iconExport.Size = new System.Drawing.Size(43, 50);
+            this.iconExport.Size = new System.Drawing.Size(43, 39);
             this.iconExport.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconExport.TabIndex = 22;
             this.iconExport.TabStop = false;
             this.iconExport.Click += new System.EventHandler(this.iconExport_Click);
-            // 
-            // iconWrite2SAP
-            // 
-            this.iconWrite2SAP.Image = global::RFC_shippingHistory.Properties.Resources.sap;
-            this.iconWrite2SAP.Location = new System.Drawing.Point(410, 95);
-            this.iconWrite2SAP.Name = "iconWrite2SAP";
-            this.iconWrite2SAP.Size = new System.Drawing.Size(62, 57);
-            this.iconWrite2SAP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconWrite2SAP.TabIndex = 18;
-            this.iconWrite2SAP.TabStop = false;
-            this.iconWrite2SAP.Click += new System.EventHandler(this.iconWrite2SAP_Click);
             // 
             // pictureBox1
             // 
@@ -316,64 +334,12 @@
             this.iconFile.TabStop = false;
             this.iconFile.Click += new System.EventHandler(this.iconFile_Click);
             // 
-            // comboSearch
-            // 
-            this.comboSearch.Font = new System.Drawing.Font("微軟正黑體 Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.comboSearch.FormattingEnabled = true;
-            this.comboSearch.Location = new System.Drawing.Point(829, 102);
-            this.comboSearch.Margin = new System.Windows.Forms.Padding(2);
-            this.comboSearch.Name = "comboSearch";
-            this.comboSearch.Size = new System.Drawing.Size(505, 28);
-            this.comboSearch.TabIndex = 33;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label6.Location = new System.Drawing.Point(844, 110);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(0, 20);
-            this.label6.TabIndex = 35;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label7.Location = new System.Drawing.Point(669, 108);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(144, 20);
-            this.label7.TabIndex = 36;
-            this.label7.Text = "客戶料號/客戶地址";
-            // 
-            // iconSearch
-            // 
-            this.iconSearch.Image = global::RFC_shippingHistory.Properties.Resources.loupe;
-            this.iconSearch.Location = new System.Drawing.Point(1352, 102);
-            this.iconSearch.Name = "iconSearch";
-            this.iconSearch.Size = new System.Drawing.Size(32, 39);
-            this.iconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconSearch.TabIndex = 37;
-            this.iconSearch.TabStop = false;
-            this.iconSearch.Click += new System.EventHandler(this.iconSearch_Click);
-            // 
-            // dgvSystemSelect
-            // 
-            this.dgvSystemSelect.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSystemSelect.Location = new System.Drawing.Point(34, 681);
-            this.dgvSystemSelect.Name = "dgvSystemSelect";
-            this.dgvSystemSelect.RowTemplate.Height = 24;
-            this.dgvSystemSelect.Size = new System.Drawing.Size(1350, 310);
-            this.dgvSystemSelect.TabIndex = 38;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1443, 1061);
-            this.Controls.Add(this.dgvSystemSelect);
+            this.ClientSize = new System.Drawing.Size(1443, 714);
             this.Controls.Add(this.iconSearch);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -389,8 +355,6 @@
             this.Controls.Add(this.iconClear);
             this.Controls.Add(this.iconExport);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.iconWrite2SAP);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.lblTime);
@@ -407,6 +371,7 @@
             this.Text = "出貨歷史";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconEdit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPrevious)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconLast)).EndInit();
@@ -414,12 +379,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.icobFirst)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconClear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconWrite2SAP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSystemSelect)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -436,8 +398,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox iconWrite2SAP;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox iconExport;
         private System.Windows.Forms.PictureBox iconClear;
@@ -453,7 +413,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.PictureBox iconSearch;
-        private System.Windows.Forms.DataGridView dgvSystemSelect;
     }
 }
 
