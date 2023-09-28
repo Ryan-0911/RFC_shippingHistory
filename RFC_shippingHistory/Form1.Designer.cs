@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lbl請選擇檔案 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,34 +41,39 @@
             this.lblDate = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.dgvResult = new System.Windows.Forms.DataGridView();
+            this.dgvOne = new System.Windows.Forms.DataGridView();
             this.lblPage = new System.Windows.Forms.Label();
             this.comboSearch = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblFilter = new System.Windows.Forms.Label();
+            this.lblViewMode = new System.Windows.Forms.Label();
+            this.iconViewMode = new System.Windows.Forms.PictureBox();
             this.iconSearch = new System.Windows.Forms.PictureBox();
             this.iconEdit = new System.Windows.Forms.PictureBox();
             this.iconPrevious = new System.Windows.Forms.PictureBox();
             this.iconLast = new System.Windows.Forms.PictureBox();
             this.iconNext = new System.Windows.Forms.PictureBox();
-            this.icobFirst = new System.Windows.Forms.PictureBox();
+            this.iconFirst = new System.Windows.Forms.PictureBox();
             this.iconClear = new System.Windows.Forms.PictureBox();
             this.iconExport = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.iconFolder = new System.Windows.Forms.PictureBox();
             this.iconFile = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).BeginInit();
+            this.dgvAll = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOne)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconViewMode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPrevious)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconLast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconNext)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.icobFirst)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconFirst)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconClear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAll)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl請選擇檔案
@@ -157,19 +164,26 @@
             this.label5.Size = new System.Drawing.Size(0, 20);
             this.label5.TabIndex = 24;
             // 
-            // dgvResult
+            // dgvOne
             // 
-            this.dgvResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvResult.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
-            this.dgvResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResult.Location = new System.Drawing.Point(619, 162);
-            this.dgvResult.Name = "dgvResult";
-            this.dgvResult.ReadOnly = true;
-            this.dgvResult.RowHeadersWidth = 51;
-            this.dgvResult.RowTemplate.Height = 24;
-            this.dgvResult.Size = new System.Drawing.Size(775, 434);
-            this.dgvResult.TabIndex = 25;
+            this.dgvOne.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvOne.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
+            this.dgvOne.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvOne.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOne.Location = new System.Drawing.Point(619, 162);
+            this.dgvOne.Name = "dgvOne";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvOne.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvOne.RowHeadersWidth = 51;
+            this.dgvOne.RowTemplate.Height = 24;
+            this.dgvOne.Size = new System.Drawing.Size(775, 434);
+            this.dgvOne.TabIndex = 25;
             // 
             // lblPage
             // 
@@ -183,12 +197,14 @@
             // 
             // comboSearch
             // 
+            this.comboSearch.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.comboSearch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboSearch.Font = new System.Drawing.Font("微軟正黑體 Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.comboSearch.FormattingEnabled = true;
-            this.comboSearch.Location = new System.Drawing.Point(867, 105);
+            this.comboSearch.Location = new System.Drawing.Point(991, 105);
             this.comboSearch.Margin = new System.Windows.Forms.Padding(2);
             this.comboSearch.Name = "comboSearch";
-            this.comboSearch.Size = new System.Drawing.Size(464, 28);
+            this.comboSearch.Size = new System.Drawing.Size(340, 28);
             this.comboSearch.TabIndex = 33;
             // 
             // label6
@@ -201,16 +217,37 @@
             this.label6.Size = new System.Drawing.Size(0, 20);
             this.label6.TabIndex = 35;
             // 
-            // label7
+            // lblFilter
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label7.Location = new System.Drawing.Point(709, 105);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(149, 20);
-            this.label7.TabIndex = 36;
-            this.label7.Text = "客戶料號+客戶地址";
+            this.lblFilter.AutoSize = true;
+            this.lblFilter.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblFilter.Location = new System.Drawing.Point(987, 74);
+            this.lblFilter.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFilter.Name = "lblFilter";
+            this.lblFilter.Size = new System.Drawing.Size(149, 20);
+            this.lblFilter.TabIndex = 36;
+            this.lblFilter.Text = "客戶料號+客戶地址";
+            // 
+            // lblViewMode
+            // 
+            this.lblViewMode.AutoSize = true;
+            this.lblViewMode.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblViewMode.Location = new System.Drawing.Point(687, 113);
+            this.lblViewMode.Name = "lblViewMode";
+            this.lblViewMode.Size = new System.Drawing.Size(73, 20);
+            this.lblViewMode.TabIndex = 39;
+            this.lblViewMode.Text = "全筆編輯";
+            // 
+            // iconViewMode
+            // 
+            this.iconViewMode.Image = global::RFC_shippingHistory.Properties.Resources.eye;
+            this.iconViewMode.Location = new System.Drawing.Point(619, 99);
+            this.iconViewMode.Name = "iconViewMode";
+            this.iconViewMode.Size = new System.Drawing.Size(62, 42);
+            this.iconViewMode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconViewMode.TabIndex = 38;
+            this.iconViewMode.TabStop = false;
+            this.iconViewMode.Click += new System.EventHandler(this.iconViewMode_Click);
             // 
             // iconSearch
             // 
@@ -243,7 +280,7 @@
             this.iconPrevious.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconPrevious.TabIndex = 30;
             this.iconPrevious.TabStop = false;
-            this.iconPrevious.Click += new System.EventHandler(this.iconPrevous_Click);
+            this.iconPrevious.Click += new System.EventHandler(this.iconPrevious_Click);
             // 
             // iconLast
             // 
@@ -267,16 +304,16 @@
             this.iconNext.TabStop = false;
             this.iconNext.Click += new System.EventHandler(this.iconNext_Click);
             // 
-            // icobFirst
+            // iconFirst
             // 
-            this.icobFirst.Image = global::RFC_shippingHistory.Properties.Resources.rewind;
-            this.icobFirst.Location = new System.Drawing.Point(829, 611);
-            this.icobFirst.Name = "icobFirst";
-            this.icobFirst.Size = new System.Drawing.Size(46, 30);
-            this.icobFirst.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.icobFirst.TabIndex = 27;
-            this.icobFirst.TabStop = false;
-            this.icobFirst.Click += new System.EventHandler(this.icobFirst_Click);
+            this.iconFirst.Image = global::RFC_shippingHistory.Properties.Resources.rewind;
+            this.iconFirst.Location = new System.Drawing.Point(829, 611);
+            this.iconFirst.Name = "iconFirst";
+            this.iconFirst.Size = new System.Drawing.Size(46, 30);
+            this.iconFirst.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconFirst.TabIndex = 27;
+            this.iconFirst.TabStop = false;
+            this.iconFirst.Click += new System.EventHandler(this.iconFirst_Click);
             // 
             // iconClear
             // 
@@ -334,23 +371,48 @@
             this.iconFile.TabStop = false;
             this.iconFile.Click += new System.EventHandler(this.iconFile_Click);
             // 
+            // dgvAll
+            // 
+            this.dgvAll.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvAll.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
+            this.dgvAll.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvAll.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAll.Location = new System.Drawing.Point(619, 162);
+            this.dgvAll.Name = "dgvAll";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAll.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvAll.RowHeadersWidth = 51;
+            this.dgvAll.RowTemplate.Height = 24;
+            this.dgvAll.Size = new System.Drawing.Size(775, 434);
+            this.dgvAll.TabIndex = 40;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(1443, 714);
+            this.Controls.Add(this.dgvAll);
+            this.Controls.Add(this.lblViewMode);
+            this.Controls.Add(this.iconViewMode);
             this.Controls.Add(this.iconSearch);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblFilter);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.comboSearch);
             this.Controls.Add(this.iconEdit);
             this.Controls.Add(this.iconPrevious);
             this.Controls.Add(this.iconLast);
             this.Controls.Add(this.iconNext);
-            this.Controls.Add(this.icobFirst);
+            this.Controls.Add(this.iconFirst);
             this.Controls.Add(this.lblPage);
-            this.Controls.Add(this.dgvResult);
+            this.Controls.Add(this.dgvOne);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.iconClear);
             this.Controls.Add(this.iconExport);
@@ -370,18 +432,20 @@
             this.Name = "Form1";
             this.Text = "出貨歷史";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOne)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconViewMode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconEdit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPrevious)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconLast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconNext)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.icobFirst)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconFirst)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconClear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAll)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -402,17 +466,20 @@
         private System.Windows.Forms.PictureBox iconExport;
         private System.Windows.Forms.PictureBox iconClear;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridView dgvResult;
+        private System.Windows.Forms.DataGridView dgvOne;
         private System.Windows.Forms.Label lblPage;
-        private System.Windows.Forms.PictureBox icobFirst;
+        private System.Windows.Forms.PictureBox iconFirst;
         private System.Windows.Forms.PictureBox iconNext;
         private System.Windows.Forms.PictureBox iconLast;
         private System.Windows.Forms.PictureBox iconPrevious;
         private System.Windows.Forms.PictureBox iconEdit;
         private System.Windows.Forms.ComboBox comboSearch;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblFilter;
         private System.Windows.Forms.PictureBox iconSearch;
+        private System.Windows.Forms.PictureBox iconViewMode;
+        private System.Windows.Forms.Label lblViewMode;
+        private System.Windows.Forms.DataGridView dgvAll;
     }
 }
 

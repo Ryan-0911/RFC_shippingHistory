@@ -15,7 +15,7 @@ namespace RFC_shippingHistory
         public string CPartNo { get; set; }
 
         /// <summary>
-        /// 銷項交貨
+        /// 銷售文件
         /// </summary>
         public string ShipperNo { get; set; }
 
@@ -50,28 +50,33 @@ namespace RFC_shippingHistory
         public string PartNo { get; set; }
 
         /// <summary>
-        /// 批次號碼 【RFC2】
+        /// 批次號碼【RFC2】
         /// </summary>
         public string BatchNo { get; set; }
 
         /// <summary>
-        /// 未限制使用庫存 【RFC2】
+        /// 未限制使用庫存【RFC2】
         /// </summary>
         public float BatchAmount { get; set; }
 
         /// <summary>
-        /// 儲存地點 【RFC2】
+        /// 儲存地點【RFC2】
         /// </summary>
         public string Repository{ get; set; }
 
         /// <summary>
-        /// 儲存地點說明 【RFC2】
+        /// 儲存地點說明【RFC2】
         /// </summary>
         public string RepositoryDesc { get; set; }
 
         /// <summary>
-        /// Sales & Distribution 文件 【RFC2】
+        /// 銷售與配銷文件號碼 【RFC2】
         /// </summary>
         public string SD { get; set; }
+
+        /// <summary>
+        /// 銷售與配銷文件日期【RFC2】
+        /// </summary>
+        public DateTime MyProperty { get; set; }
     }
 }

@@ -117,6 +117,8 @@
   <ItemGroup>
     <Content Include="bin\Debug\libicudecnumber.dll" />
     <Content Include="bin\Release\libicudecnumber.dll" />
+    <None Include="Resources\eye.png" />
+    <None Include="Resources\all.png" />
     <None Include="Resources\find.png" />
     <None Include="Resources\export %281%29.png" />
     <None Include="Resources\clear-format.png" />

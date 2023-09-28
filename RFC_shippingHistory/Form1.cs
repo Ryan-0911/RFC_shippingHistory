@@ -20,6 +20,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using DataTable = System.Data.DataTable;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Core;
 
 namespace RFC_shippingHistory
 {
@@ -46,9 +47,15 @@ namespace RFC_shippingHistory
         List<ShippingInfo> listUserSelect = new List<ShippingInfo>();
 
         /// <summary>
-        /// 以CAddrCode & CPartNo分類的所有可選批次庫存 (dgvResult 所有頁)
+        /// 單筆檢視 (以CAddrCode & CPartNo 為分類基準)
         /// </summary>
-        List<DataTable> listDtAllOptions = new List<DataTable>();
+        List<DataTable> listDtOneView = new List<DataTable>();
+
+        /// <summary>
+        /// 全筆檢視
+        /// </summary>
+        DataTable dtAllView = new DataTable();
+
 
         /// <summary>
         /// 用來存放最終出貨單 (1. 匯出 Excel、2. 寫進 SAP 出貨單) 
@@ -65,7 +72,6 @@ namespace RFC_shippingHistory
         /// </summary>
         List<string> listCPartNoAddrCode = new List<string>();
 
-
         public Form1()
         {
             InitializeComponent();
@@ -73,8 +79,11 @@ namespace RFC_shippingHistory
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // 啟用動態時間
             timer1.Start();
-            dtResult.Columns.Add("銷項交貨");
+
+            // 要匯出的 DataTable (使用者所選庫存)
+            dtResult.Columns.Add("銷售文件");
             dtResult.Columns.Add("收貨方");
             dtResult.Columns.Add("實際發貨日期");
             dtResult.Columns.Add("物料");
@@ -85,6 +94,15 @@ namespace RFC_shippingHistory
             dtResult.Columns.Add("批次");
             dtResult.Columns.Add("儲存地點");
             dtResult.Columns.Add("說明");
+
+            // 可選庫存清單
+            DataGridViewTextBoxColumn dgvCol = new DataGridViewTextBoxColumn();
+            dgvCol.HeaderText = "庫存取用量";
+            dgvCol.Name = "庫存取用量";
+            dgvOne.Columns.Insert(0, dgvCol);
+            dgvOne.Columns["庫存取用量"].ReadOnly = false;
+            dgvOne.Columns["庫存取用量"].Visible = false;
+            dgvOne.Visible = false;
         }
 
         /// <summary>
@@ -104,13 +122,11 @@ namespace RFC_shippingHistory
             // Step 2: 取得某客戶某物料的批次庫存狀況
             dealWithBatch();
 
-            //foreach (ShippingInfo s in listAllOptions)
-            //{
-            //    Console.WriteLine($"客戶物料號碼:{s.CPartNo}、銷項交貨:{s.ShipperNo}、客戶地址:{s.CustomerAddressCode}、出貨數量:{s.Quantity}、實際發貨日期:{s.ShipDate}、資料取得成功:{s.ok}、收貨方【RFC1】:{s.CustomerCode}、物料號碼【RFC2】:{s.PartNo}、批次號碼【RFC2】:{s.BatchNo}、未限制使用庫存【RFC2】:{s.BatchAmount}、儲存地點【RFC2】:{s.Repository}、儲存地點說明【RFC2】:{s.RepositoryDesc}、Sales & Distribution 文件【RFC2】:{s.SD}");
-            //}
+            // 以客戶物料、客戶地址將listAllOptions分成多頁 (一頁等於一個DataTable)
+            LoadListDtOneView();
 
-            // 以客戶物料、客戶地址將listShippingHistory分成多頁 (一頁等於一個DataTable)
-            sortForEditPage();
+            // 將進度條歸零
+            lib.Control.ShowPgbar(pgBar, 0, 0);
         }
 
         /// <summary>
@@ -130,13 +146,16 @@ namespace RFC_shippingHistory
             // Step 2: 取得某客戶某物料的批次庫存狀況
             dealWithBatch();
 
-            foreach (ShippingInfo s in listAllOptions)
+            foreach (ShippingInfo s in listSystemSelect)
             {
-                Console.WriteLine($"客戶物料號碼:{s.CPartNo}、銷項交貨:{s.ShipperNo}、客戶地址:{s.CustomerAddressCode}、出貨數量:{s.Quantity}、實際發貨日期:{s.ShipDate}、資料取得成功:{s.ok}、收貨方【RFC1】:{s.CustomerCode}、物料號碼【RFC2】:{s.PartNo}、批次號碼【RFC2】:{s.BatchNo}、未限制使用庫存【RFC2】:{s.BatchAmount}、儲存地點【RFC2】:{s.Repository}、儲存地點說明【RFC2】:{s.RepositoryDesc}、Sales & Distribution 文件【RFC2】:{s.SD}");
+                Console.WriteLine($"客戶物料號碼:{s.CPartNo}、銷售文件:{s.ShipperNo}、客戶地址:{s.CustomerAddressCode}、出貨數量:{s.Quantity}、實際發貨日期:{s.ShipDate}、資料取得成功:{s.ok}、收貨方【RFC1】:{s.CustomerCode}、物料號碼【RFC2】:{s.PartNo}、批次號碼【RFC2】:{s.BatchNo}、未限制使用庫存【RFC2】:{s.BatchAmount}、儲存地點【RFC2】:{s.Repository}、儲存地點說明【RFC2】:{s.RepositoryDesc}、Sales & Distribution 文件【RFC2】:{s.SD}");
             }
 
-            // 以客戶物料、客戶地址將listShippingHistory分成多頁 (一頁等於一個DataTable)
-            sortForEditPage();
+            LoadListDtOneView();
+            LoadDtAllView();
+
+            // 將進度條歸零
+            lib.Control.ShowPgbar(pgBar, 0, 0);
         }
 
         /// <summary>
@@ -146,7 +165,7 @@ namespace RFC_shippingHistory
         {
             listShippingInfo.Clear();
             listAllOptions.Clear();
-            listDtAllOptions.Clear();
+            listDtOneView.Clear();
             listCPartNoAddrCode.Clear();
         }
 
@@ -161,6 +180,43 @@ namespace RFC_shippingHistory
         }
 
         /// <summary>
+        /// 檢視模式切換
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void iconViewMode_Click(object sender, EventArgs e)
+        {
+            if (lblViewMode.Text == "全筆編輯")
+            {
+                iconFirst.Visible = true;
+                iconPrevious.Visible = true;
+                iconNext.Visible = true;
+                iconLast.Visible = true;
+                lblPage.Visible = true;
+                comboSearch.Visible = true;
+                iconSearch.Visible = true;
+                lblFilter.Visible = true;
+                lblViewMode.Text = "單筆編輯";
+                dgvAll.Visible = false;
+                dgvOne.Visible = true;
+            }
+            else
+            {
+                iconFirst.Visible = false;
+                iconPrevious.Visible = false;
+                iconNext.Visible = false;
+                iconLast.Visible = false;
+                lblPage.Visible = false;
+                comboSearch.Visible = false;
+                iconSearch.Visible = false;
+                lblFilter.Visible = false;
+                lblViewMode.Text = "全筆編輯";
+                dgvAll.Visible = true;
+                dgvOne.Visible = false;
+            }
+        }
+
+        /// <summary>
         /// 下拉選擇客戶物料號碼與客戶地址後，查詢庫存
         /// </summary>
         /// <param name="sender"></param>
@@ -169,19 +225,19 @@ namespace RFC_shippingHistory
         {
             if (listAllOptions.Count == 0)
             {
-                MessageBox.Show("請先查詢SAP批次庫存!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             if (comboSearch.SelectedIndex >= 0)
             {
-                foreach (DataTable dt in listDtAllOptions.AsEnumerable())
+                foreach (DataTable dt in listDtOneView.AsEnumerable())
                 {
                     foreach (DataRow dr in dt.Rows)
                     {
                         if ($"{dr["客戶料號"].ToString()}+{dr["客戶地址"].ToString()}" == comboSearch.Text.ToString())
                         {
-                            currentPage = listDtAllOptions.IndexOf(dt) + 1;
+                            currentPage = listDtOneView.IndexOf(dt) + 1;
                             break;
                         }
                         else
@@ -208,7 +264,7 @@ namespace RFC_shippingHistory
                 DataRow dr = dtResult.NewRow();
                 dr["客戶料號"] = s.CPartNo;
                 dr["客戶地址"] = s.CustomerAddressCode;
-                dr["銷項交貨"] = s.ShipperNo;
+                dr["銷售文件"] = s.SD;
                 dr["收貨方"] = s.CustomerCode;
                 dr["實際發貨日期"] = s.ShipDate;
                 dr["物料"] = s.PartNo;
@@ -222,7 +278,7 @@ namespace RFC_shippingHistory
             
             if (dtResult.Rows.Count == 0)
             {
-                MessageBox.Show("請先查詢SAP批次庫存!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             using (var dialog = new FolderBrowserDialog())
@@ -249,14 +305,16 @@ namespace RFC_shippingHistory
 
         }
 
+
+
         /// <summary>
         /// 第一頁
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void icobFirst_Click(object sender, EventArgs e)
+        private void iconFirst_Click(object sender, EventArgs e)
         {
-            if (listDtAllOptions.Count == 0)
+            if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -270,9 +328,9 @@ namespace RFC_shippingHistory
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void iconPrevous_Click(object sender, EventArgs e)
+        private void iconPrevious_Click(object sender, EventArgs e)
         {
-            if (listDtAllOptions.Count == 0)
+            if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -288,12 +346,12 @@ namespace RFC_shippingHistory
         /// <param name="e"></param>
         private void iconNext_Click(object sender, EventArgs e)
         {
-            if (listDtAllOptions.Count == 0)
+            if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            currentPage = currentPage < listDtAllOptions.Count ? ++currentPage : listDtAllOptions.Count;
+            currentPage = currentPage < listDtOneView.Count ? ++currentPage : listDtOneView.Count;
             refreshPage();
         }
 
@@ -304,12 +362,12 @@ namespace RFC_shippingHistory
         /// <param name="e"></param>
         private void iconLast_Click(object sender, EventArgs e)
         {
-            if (listDtAllOptions.Count == 0)
+            if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            currentPage = listDtAllOptions.Count;
+            currentPage = listDtOneView.Count;
             refreshPage();
         }
 
@@ -318,25 +376,24 @@ namespace RFC_shippingHistory
         /// </summary>
         private void refreshPage()
         {
-            dgvResult.DataSource = listDtAllOptions[currentPage - 1];
-            DataGridViewTextBoxColumn dgvCol = new DataGridViewTextBoxColumn();
-            dgvCol.HeaderText = "庫存取用量";
-            dgvCol.Name = "庫存取用量";
-            dgvResult.Columns.Insert(0, dgvCol);
-            dgvResult.Columns["庫存取用量"].ReadOnly = false;
-            //dgvResult.Columns["客戶地址"].Visible = false;
-            foreach (DataRow dr in listDtAllOptions[currentPage - 1].Rows)
+            dgvOne.DataSource = listDtOneView[currentPage - 1];
+            dgvOne.Visible = true;
+            dgvOne.Columns["客戶地址"].Visible = false;
+            dgvOne.Columns["客戶料號"].Visible = false;
+            dgvOne.Columns["庫存取用量"].Visible = true;
+
+            foreach (DataRow dr in listDtOneView[currentPage - 1].Rows)
             {
                 comboSearch.Text = $"{dr["客戶料號"].ToString()}+{dr["客戶地址"]}";             
                 break;
             }
-            lblPage.Text = $"第{currentPage}頁/共{listDtAllOptions.Count}頁";
+            lblPage.Text = $"第{currentPage}頁/共{listDtOneView.Count}頁";
         }
 
         /// <summary>
-        /// 將listAllOptions以客戶料號、客戶地址分成多張DataTable
+        /// 將listAllOptions以客戶料號、客戶地址分成多張DataTable，並加到listDtOneView
         /// </summary>
-        private void sortForEditPage()
+        private void LoadListDtOneView()
         {
             Dictionary<string, DataTable> dataTableDictionary = new Dictionary<string, DataTable>();
 
@@ -348,26 +405,26 @@ namespace RFC_shippingHistory
                 {
                     // Create a new DataTable with a unique name based on the key
                     DataTable dt = new DataTable(key); // Use key as the table name
-                    DataRow dr = dt.NewRow();
                     dt.Columns.Add("客戶料號");
                     dt.Columns.Add("客戶地址");
-                    dt.Columns.Add("銷項交貨");
+                    dt.Columns.Add("銷售文件");
                     dt.Columns.Add("收貨方");
                     dt.Columns.Add("實際發貨日期");
                     dt.Columns.Add("物料");
-                    dt.Columns.Add("交貨數量");
+                    dt.Columns.Add("可用庫存");
                     dt.Columns.Add("單位");
                     dt.Columns.Add("批次");
                     dt.Columns.Add("儲存地點");
                     dt.Columns.Add("說明");
 
+                    DataRow dr = dt.NewRow();
                     dr["客戶料號"] = s.CPartNo;
                     dr["客戶地址"] = s.CustomerAddressCode;
-                    dr["銷項交貨"] = s.ShipperNo;
+                    dr["銷售文件"] = s.SD;
                     dr["收貨方"] = s.CustomerCode;
                     dr["實際發貨日期"] = s.ShipDate;
                     dr["物料"] = s.PartNo;
-                    dr["交貨數量"] = s.BatchAmount;
+                    dr["可用庫存"] = s.BatchAmount;
                     dr["單位"] = "MPC";
                     dr["批次"] = s.BatchNo;
                     dr["儲存地點"] = s.Repository;
@@ -375,19 +432,19 @@ namespace RFC_shippingHistory
                     dt.Rows.Add(dr);
 
                     dataTableDictionary[key] = dt;
-                    listDtAllOptions.Add(dt);
+                    listDtOneView.Add(dt);
                 }
                 else
                 {
                     // 如果字典中已存在匹配的DataTable，將該列添加到現有的DataTable中
                     DataRow dr = dataTableDictionary[key].NewRow();
-                    dr["客戶料號"] = s.CPartNo;
-                    dr["客戶地址"] = s.CustomerAddressCode;
-                    dr["銷項交貨"] = s.ShipperNo;
+                    //dr["客戶料號"] = s.CPartNo;
+                    //dr["客戶地址"] = s.CustomerAddressCode;
+                    dr["銷售文件"] = s.SD;
                     dr["收貨方"] = s.CustomerCode;
                     dr["實際發貨日期"] = s.ShipDate;
                     dr["物料"] = s.PartNo;
-                    dr["交貨數量"] = s.BatchAmount;
+                    dr["可用庫存"] = s.BatchAmount;
                     dr["單位"] = "MPC";
                     dr["批次"] = s.BatchNo;
                     dr["儲存地點"] = s.Repository;
@@ -395,8 +452,44 @@ namespace RFC_shippingHistory
                     dataTableDictionary[key].Rows.Add(dr);
                 }
             }
-            lblPage.Text = $"第{currentPage}頁/共{listDtAllOptions.Count}頁";
+            lblPage.Text = $"第{currentPage}頁/共{listDtOneView.Count}頁";
             refreshPage();
+        }
+
+        /// <summary>
+        /// 從listAllOptions載入dtAllView
+        /// </summary>
+        private void LoadDtAllView()
+        {
+            dtAllView.Columns.Add("客戶料號");
+            dtAllView.Columns.Add("客戶地址");
+            dtAllView.Columns.Add("銷售文件");
+            dtAllView.Columns.Add("收貨方");
+            dtAllView.Columns.Add("實際發貨日期");
+            dtAllView.Columns.Add("物料");
+            dtAllView.Columns.Add("可用庫存");
+            dtAllView.Columns.Add("單位");
+            dtAllView.Columns.Add("批次");
+            dtAllView.Columns.Add("儲存地點");
+            dtAllView.Columns.Add("說明");
+
+            foreach (ShippingInfo s in listAllOptions)
+            {
+                DataRow dr = dtAllView.NewRow();
+                dr["客戶料號"] = s.CPartNo;
+                dr["客戶地址"] = s.CustomerAddressCode;
+                dr["銷售文件"] = s.SD;
+                dr["收貨方"] = s.CustomerCode;
+                dr["實際發貨日期"] = s.ShipDate;
+                dr["物料"] = s.PartNo;
+                dr["可用庫存"] = s.BatchAmount;
+                dr["單位"] = "MPC";
+                dr["批次"] = s.BatchNo;
+                dr["儲存地點"] = s.Repository;
+                dr["說明"] = s.RepositoryDesc;
+                dtAllView.Rows.Add(dr);
+            }
+            dgvAll.DataSource = dtAllView;
         }
 
         /// <summary>
@@ -497,7 +590,7 @@ namespace RFC_shippingHistory
                 int rowCount = xlRange.Rows.Count;
                 int colCount = xlRange.Columns.Count;
                 // 將進度條歸零
-                lib.Control.ShowPgbar(pgBar, rowCount, 0);
+                lib.Control.ShowPgbar(pgBar, 0, 0);
                 lib.Control.ShowLog(tbLog, $"找到Excel文件! 開始讀取 [路徑: {path}] \r\n");
 
                 lib.Control.ShowLog(tbLog, $"[工作表數: {z.ToString()}/ 列數: {rowCount.ToString()}/ 行數: {colCount.ToString()}] \r\n");
@@ -731,8 +824,11 @@ namespace RFC_shippingHistory
             int i = 0;
             lib.Control.ShowPgbar(pgBar, 0, 0);
 
-            // 用來存放查詢到的庫存
-            List<ShippingInfo> listInventory = new List<ShippingInfo>();
+            // 用來存放查詢到的所有庫存
+            List<ShippingInfo> listAllInventory = new List<ShippingInfo>();
+
+            // 用來存放系統所選的庫存
+            List<ShippingInfo> listSystemInventory = new List<ShippingInfo>();
 
             try
             {
@@ -749,7 +845,7 @@ namespace RFC_shippingHistory
                     // 進度條
                     lib.Control.ShowPgbar(pgBar, total, i);
 
-                    listInventory.Clear();
+                    listAllInventory.Clear();
 
                     // 設置 RFC 函数的輸入參數  (客戶物料號碼、客戶地址)
                     rfcFunction.SetValue("I_PN_MATNR", s.CPartNo);
@@ -769,8 +865,8 @@ namespace RFC_shippingHistory
                         IRfcTable rfcTable = rfcFunction.GetTable("ET_ZSDT012");
                         DataTable dataTable = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
 
-                        // 將所查到的庫存從DataTable轉成list
-                        foreach (DataRow dr in dataTable.AsEnumerable())
+                        // 所有的批次庫存-----------------------------------------------------------------------------------------------------------------------------
+                         foreach (DataRow dr in dataTable.AsEnumerable())
                         {
                             ShippingInfo sh = new ShippingInfo();
                             sh.CPartNo = s.CPartNo;
@@ -788,9 +884,48 @@ namespace RFC_shippingHistory
                             sh.Repository = dr["LGORT"].ToString(); // 儲存地點
                             sh.RepositoryDesc = dr["LGOBE"].ToString(); // 儲存地點說明
                             sh.SD = dr["VBELN"].ToString(); // 銷售與配銷文件號碼
-                            listInventory.Add(sh);
+                            listAllInventory.Add(sh);
                         }
-                        listAllOptions.AddRange(listInventory);
+
+                        // 系統挑選的批次庫存 (先進先出)-----------------------------------------------------------------------------------------------------------------------------
+                        // Plex 出貨數量
+                        float quantity = s.Quantity;
+
+                        // 將所查到的庫存從DataTable轉成list【系統挑選的選項(先進先出)】
+                        foreach (DataRow dr in dataTable.AsEnumerable())
+                        {
+                            // 將Plex出貨數減掉Sap批次庫存
+                            quantity -= (Convert.ToSingle(dr["LABST"]) * 1000);
+                            // 若Plex出貨數還是大於零
+                           
+                            if (quantity >= 0)
+                                
+                            {
+                                ShippingInfo sh = new ShippingInfo();
+                                sh.CPartNo = s.CPartNo;
+                                sh.ShipperNo = s.ShipperNo;
+                                sh.CustomerAddressCode = s.CustomerAddressCode;
+                                sh.Quantity = s.Quantity;
+                                sh.ShipDate = s.ShipDate;
+                                sh.ok = s.ok;
+                                // RFC1
+                                sh.CustomerCode = s.CustomerCode;
+                                // RFC2
+                                sh.PartNo = dr["MATNR"].ToString(); // 物料號碼
+                                sh.BatchNo = dr["CHARG"].ToString(); // 批次號碼
+                                sh.BatchAmount = Convert.ToSingle(dr["LABST"]); // 未限制使用庫存
+                                sh.Repository = dr["LGORT"].ToString(); // 儲存地點
+                                sh.RepositoryDesc = dr["LGOBE"].ToString(); // 儲存地點說明
+                                sh.SD = dr["VBELN"].ToString(); // 銷售與配銷文件號碼
+                                listSystemInventory.Add(sh);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        listAllOptions.AddRange(listAllInventory);
+                        listSystemSelect.AddRange(listSystemInventory);
                         rfcTable.Clear();
                     }
                     else
@@ -814,6 +949,7 @@ namespace RFC_shippingHistory
                         sh.SD = null; // 銷售與配銷文件號碼
                         sh.ok = false;
                         listAllOptions.Add(sh);
+                        listSystemSelect.Add(sh);
                     }
                     i++;
                     
@@ -886,8 +1022,8 @@ namespace RFC_shippingHistory
                         excelWorkSheet.Cells[inRow, inColumn] = dtbl.Rows[m][n].ToString();
                     }
 
-                    //// 若「銷項交貨」的值與上筆一樣就合併儲存格
-                    //if (m > 0 && dtbl.Rows[m]["銷項交貨"].ToString() == dtbl.Rows[m - 1]["銷項交貨"].ToString())
+                    //// 若「物料號碼」的值與上筆一樣就合併儲存格
+                    //if (m > 0 && dtbl.Rows[m]["銷售文件"].ToString() == dtbl.Rows[m - 1]["銷售文件"].ToString())
                     //{
                     //    excelApp.DisplayAlerts = false;
                     //    excelWorkSheet.get_Range("A" + inRow.ToString(), "A" + (inRow - 1).ToString()).Merge();
