@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFC_shippingHistory", "RFC_shippingHistory\RFC_shippingHistory.csproj", "{F4F3ABAC-F9A1-43C6-9D0C-D02BACBAD00F}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PlexToSap", "PlexToSap\PlexToSap.vdproj", "{D7DB66A7-E33A-45F4-AF0D-F151941D1411}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F4F3ABAC-F9A1-43C6-9D0C-D02BACBAD00F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F4F3ABAC-F9A1-43C6-9D0C-D02BACBAD00F}.Release|x64.ActiveCfg = Release|x64
 		{F4F3ABAC-F9A1-43C6-9D0C-D02BACBAD00F}.Release|x64.Build.0 = Release|x64
+		{D7DB66A7-E33A-45F4-AF0D-F151941D1411}.Debug|Any CPU.ActiveCfg = Debug
+		{D7DB66A7-E33A-45F4-AF0D-F151941D1411}.Debug|x64.ActiveCfg = Debug
+		{D7DB66A7-E33A-45F4-AF0D-F151941D1411}.Release|Any CPU.ActiveCfg = Release
+		{D7DB66A7-E33A-45F4-AF0D-F151941D1411}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

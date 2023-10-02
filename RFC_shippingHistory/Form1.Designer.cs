@@ -33,7 +33,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lbl請選擇檔案 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.pgBar = new System.Windows.Forms.ProgressBar();
             this.tbLog = new System.Windows.Forms.TextBox();
             this.lblTime = new System.Windows.Forms.Label();
@@ -57,7 +56,6 @@
             this.iconClear = new System.Windows.Forms.PictureBox();
             this.iconExport = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.iconFolder = new System.Windows.Forms.PictureBox();
             this.iconFile = new System.Windows.Forms.PictureBox();
             this.dgvAll = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOne)).BeginInit();
@@ -71,7 +69,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconClear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAll)).BeginInit();
             this.SuspendLayout();
@@ -80,23 +77,12 @@
             // 
             this.lbl請選擇檔案.AutoSize = true;
             this.lbl請選擇檔案.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl請選擇檔案.Location = new System.Drawing.Point(287, 110);
+            this.lbl請選擇檔案.Location = new System.Drawing.Point(106, 113);
             this.lbl請選擇檔案.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl請選擇檔案.Name = "lbl請選擇檔案";
-            this.lbl請選擇檔案.Size = new System.Drawing.Size(89, 20);
+            this.lbl請選擇檔案.Size = new System.Drawing.Size(114, 20);
             this.lbl請選擇檔案.TabIndex = 1;
-            this.lbl請選擇檔案.Text = "從檔案匯入";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label1.Location = new System.Drawing.Point(99, 110);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 20);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "從資料夾匯入";
+            this.lbl請選擇檔案.Text = "匯入Plex Excel";
             // 
             // pgBar
             // 
@@ -147,12 +133,12 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(1315, 620);
+            this.label4.Location = new System.Drawing.Point(1279, 620);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(79, 20);
+            this.label4.Size = new System.Drawing.Size(115, 20);
             this.label4.TabIndex = 21;
-            this.label4.Text = "匯出Excel";
+            this.label4.Text = "匯出 Sap Excel";
             // 
             // label5
             // 
@@ -236,7 +222,7 @@
             this.lblViewMode.Name = "lblViewMode";
             this.lblViewMode.Size = new System.Drawing.Size(73, 20);
             this.lblViewMode.TabIndex = 39;
-            this.lblViewMode.Text = "全筆編輯";
+            this.lblViewMode.Text = "單筆編輯";
             // 
             // iconViewMode
             // 
@@ -329,7 +315,7 @@
             // iconExport
             // 
             this.iconExport.Image = global::RFC_shippingHistory.Properties.Resources.export__1_;
-            this.iconExport.Location = new System.Drawing.Point(1267, 606);
+            this.iconExport.Location = new System.Drawing.Point(1214, 606);
             this.iconExport.Name = "iconExport";
             this.iconExport.Size = new System.Drawing.Size(43, 39);
             this.iconExport.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -347,28 +333,17 @@
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             // 
-            // iconFolder
-            // 
-            this.iconFolder.Image = global::RFC_shippingHistory.Properties.Resources.open_folder;
-            this.iconFolder.Location = new System.Drawing.Point(44, 99);
-            this.iconFolder.Margin = new System.Windows.Forms.Padding(2);
-            this.iconFolder.Name = "iconFolder";
-            this.iconFolder.Size = new System.Drawing.Size(50, 42);
-            this.iconFolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconFolder.TabIndex = 5;
-            this.iconFolder.TabStop = false;
-            this.iconFolder.Click += new System.EventHandler(this.iconFolder_Click);
-            // 
             // iconFile
             // 
             this.iconFile.Image = global::RFC_shippingHistory.Properties.Resources.excel;
-            this.iconFile.Location = new System.Drawing.Point(225, 102);
+            this.iconFile.Location = new System.Drawing.Point(44, 105);
             this.iconFile.Margin = new System.Windows.Forms.Padding(2);
             this.iconFile.Name = "iconFile";
             this.iconFile.Size = new System.Drawing.Size(58, 39);
             this.iconFile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconFile.TabIndex = 4;
             this.iconFile.TabStop = false;
+            this.iconFile.Tag = "匯入Plex Excel";
             this.iconFile.Click += new System.EventHandler(this.iconFile_Click);
             // 
             // dgvAll
@@ -422,9 +397,7 @@
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.tbLog);
             this.Controls.Add(this.pgBar);
-            this.Controls.Add(this.iconFolder);
             this.Controls.Add(this.iconFile);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.lbl請選擇檔案);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -443,7 +416,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconClear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconFolder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAll)).EndInit();
             this.ResumeLayout(false);
@@ -453,9 +425,7 @@
 
         #endregion
         private System.Windows.Forms.Label lbl請選擇檔案;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox iconFile;
-        private System.Windows.Forms.PictureBox iconFolder;
         private System.Windows.Forms.ProgressBar pgBar;
         private System.Windows.Forms.TextBox tbLog;
         private System.Windows.Forms.Label lblTime;

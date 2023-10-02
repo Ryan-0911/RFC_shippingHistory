@@ -77,6 +77,6 @@ namespace RFC_shippingHistory
         /// <summary>
         /// 銷售與配銷文件日期【RFC2】
         /// </summary>
-        public DateTime MyProperty { get; set; }
+        public DateTime? SD_date { get; set; }
     }
 }
