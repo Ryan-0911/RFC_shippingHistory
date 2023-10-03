@@ -27,7 +27,7 @@ namespace RFC_shippingHistory
         /// <summary>
         /// 出貨數量
         /// </summary>
-        public int Quantity { get; set; }
+        public float Quantity { get; set; }
 
         /// <summary>
         /// 實際發貨日期

@@ -20,6 +20,10 @@ namespace RFC_shippingHistory
         private void iconExport_Click(object sender, EventArgs e)
         {
             var ResultOrderedByShipperNo = from t in listSystemSelect orderby t.ShipperNo select t;
+
+            // 創建一個新的 DataTable 並複製 dtResult 的結構
+            DataTable dtExport = dtResult.Clone();
+
             foreach (ShippingInfo s in ResultOrderedByShipperNo)
             {
                 DataRow dr = dtResult.NewRow();
@@ -51,7 +55,7 @@ namespace RFC_shippingHistory
                 if (result == DialogResult.OK)
                 {
                     DataSet ds = new DataSet();
-                    ds.Tables.Add(dtResult);
+                    ds.Tables.Add(dtExport); // 將新的 DataTable 添加到新的 DataSet 中
                     string directoryPath = dialog.SelectedPath;
                     string filePath = ExportDataSetToExcel(ds, directoryPath);
                     ExcelProcessAll(filePath, "Sap");
@@ -100,6 +104,10 @@ namespace RFC_shippingHistory
                     {
                         inColumn = n + 1;
                         inRow = inHeaderLength + 2 + m;
+                        if(inColumn == 12)
+                        {
+                            excelWorkSheet.Cells[inRow, 12].NumberFormat = "@";
+                        }
                         excelWorkSheet.Cells[inRow, inColumn] = dt.Rows[m][n].ToString();
                     }
                     // 若RFC沒匹配成功，以紅色背景顯示
@@ -133,12 +141,14 @@ namespace RFC_shippingHistory
                 cellRang.Font.Bold = true;
                 cellRang.Font.Color = ColorTranslator.ToOle(Color.White);
                 cellRang.Interior.Color = ColorTranslator.FromHtml("#465775");
-                //excelWorkSheet.get_Range("F4").EntireColumn.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
-                //// Formate price column
-                //excelWorkSheet.get_Range("F5").EntireColumn.NumberFormat = "0.00";
+
+                //// 將批次欄位轉為文字型態
+                //excelWorkSheet.get_Range("L:L").NumberFormat = "@";
+
                 // Auto fit columns
                 excelWorkSheet.Columns.AutoFit();
             }
+
 
             // 刪除第一個工作表
             excelApp.DisplayAlerts = false;

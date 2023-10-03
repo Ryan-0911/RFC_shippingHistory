@@ -136,9 +136,9 @@
             this.label4.Location = new System.Drawing.Point(1279, 620);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(115, 20);
+            this.label4.Size = new System.Drawing.Size(111, 20);
             this.label4.TabIndex = 21;
-            this.label4.Text = "匯出 Sap Excel";
+            this.label4.Text = "匯出Sap Excel";
             // 
             // label5
             // 

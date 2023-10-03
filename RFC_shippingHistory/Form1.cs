@@ -403,6 +403,7 @@ namespace RFC_shippingHistory
                 dr["說明"] = s.RepositoryDesc;
                 dtAllView.Rows.Add(dr);
             }
+
             dgvAll.DataSource = dtAllView;
         }
 
@@ -462,7 +463,7 @@ namespace RFC_shippingHistory
                                         shippingInfo.CustomerAddressCode = xlRange.Cells[i, 6].Value2.ToString().Trim().ToUpper();
                                         break;
                                     case 7:
-                                        shippingInfo.Quantity = Convert.ToInt32(xlRange.Cells[i, 7].Value2) / 1000;
+                                        shippingInfo.Quantity = Convert.ToSingle(xlRange.Cells[i, 7].Value2) / 1000;
                                         break;
                                 }
 
