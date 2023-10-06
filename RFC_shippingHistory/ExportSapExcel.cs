@@ -21,9 +21,6 @@ namespace RFC_shippingHistory
         {
             var ResultOrderedByShipperNo = from t in listSystemSelect orderby t.ShipperNo select t;
 
-            // 創建一個新的 DataTable 並複製 dtResult 的結構
-            DataTable dtExport = dtResult.Clone();
-
             foreach (ShippingInfo s in ResultOrderedByShipperNo)
             {
                 DataRow dr = dtResult.NewRow();
@@ -43,8 +40,9 @@ namespace RFC_shippingHistory
                 dr["說明"] = s.RepositoryDesc;
                 dtResult.Rows.Add(dr);
             }
+            DataTable dtExport = dtResult.Copy();
 
-            if (dtResult.Rows.Count == 0)
+            if (dtExport.Rows.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

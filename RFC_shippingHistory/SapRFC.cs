@@ -19,7 +19,7 @@ namespace RFC_shippingHistory
             // 清空進度條
             int total = listPlex.Count;
             int i = 0;
-            lib.Control.ShowPgbar(pgBar, 0, 0);
+            pgBar.Value = 0;
 
             try
             {
@@ -33,9 +33,10 @@ namespace RFC_shippingHistory
 
                 foreach (ShippingInfo s in listPlex)
                 {
+                    // 增加進度條
                     lib.Control.ShowPgbar(pgBar, total, i);
 
-                    //輸入 CustomerAddressCode 參數
+                    // 輸入 CustomerAddressCode 參數
                     rfcFunction.SetValue("I_NAME2", s.CustomerAddressCode.Trim().ToUpper());
                     //rfcFunction.SetValue("I_NAME2", "DURA AUTOMOTIVE");
 
@@ -95,7 +96,7 @@ namespace RFC_shippingHistory
         }
 
         /// <summary>
-        /// 處理批次
+        /// 呼叫RFC【Z_SUMEEKO_006_PNGETSTK】，取回批次與庫存
         /// </summary>
         /// <returns></returns>
         private void dealWithBatch()
@@ -123,7 +124,7 @@ namespace RFC_shippingHistory
 
                 foreach (ShippingInfo s in listPlex)
                 {
-                    // 進度條
+                    // 增加進度條
                     lib.Control.ShowPgbar(pgBar, total, i);
 
                     // 清空前筆批次庫存
@@ -174,11 +175,12 @@ namespace RFC_shippingHistory
 
 
                         // 系統挑選的批次庫存 (先進先出)-----------------------------------------------------------------------------------------------------------------------------
-
+                        
                         // 先確認Sap未限制使用庫存總數是否大於等於Plex出貨數
                         //Console.WriteLine(dataTable.Columns["LABST"].DataType);
                         Single totalInventory = dataTable.AsEnumerable()
                                        .Sum(row => Convert.ToSingle(row.Field<string>("LABST")));
+
                         // 若不足Plex的出貨數，直接視為RFC資料不齊全
                         if (totalInventory < s.Quantity)
                         {
@@ -217,7 +219,7 @@ namespace RFC_shippingHistory
                             // 逐列累加Sap批次庫存
                             SapInventory += Convert.ToSingle(dr["LABST"]);
 
-                            // 若累加數量超過s.Quantity，將該列加入至listSystemInventory並跳出foreach
+                            // 若累加數量大於等於s.Quantity，將該列加入至listSystemInventory並跳出foreach
                             if (SapInventory >= s.Quantity)
                             {
                                 ShippingInfo sh = new ShippingInfo();
@@ -286,6 +288,85 @@ namespace RFC_shippingHistory
                         sh.ok = false;
                         listAllOptions.Add(sh);
                         listSystemSelect.Add(sh);
+                    }
+                    i++;
+                    lib.Control.ShowLog(tbLog, "完成! \r\n");
+                    lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+                }
+            }
+            catch (RfcCommunicationException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcCommunicationException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+
+            }
+            catch (RfcLogonException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcLogonException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+
+            }
+            catch (RfcAbapRuntimeException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcAbapRuntimeException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+            }
+            catch (RfcAbapBaseException ex)
+            {
+                lib.Control.ShowLog(tbLog, $"RfcAbapBaseException: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+            }
+            catch (Exception ex)
+            {
+                lib.Control.ShowLog(tbLog, $"Exception: {ex.Message.ToString()} \r\n");
+                lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+            }
+        }
+
+        /// <summary>
+        /// 呼叫【】，寫入出貨單
+        /// </summary>
+        private void WriteShippingHistory()
+        {
+            // 清空進度條
+            int total = listPlex.Count;
+            int i = 0;
+            pgBar.Value = 0;
+
+            try
+            {
+                string FunctionName = "";
+                lib.Control.ShowLog(tbLog, "開始寫入出貨單......\r\n");
+
+                RfcDestination rfcDestination = lib.SAP.GetDestination();
+                RfcRepository rfcRepository = rfcDestination.Repository; 
+                // 調用 RFC 函数
+                IRfcFunction rfcFunction = rfcRepository.CreateFunction(FunctionName);
+
+                // 移除 listSystemSelect 欄位有空值的
+                var listSystemSelectWithoutNull = from sysNoNull in listSystemSelect where sysNoNull.CustomerCode != null && sysNoNull.SD != null select sysNoNull;
+
+                foreach (ShippingInfo s in listSystemSelect)
+                {
+                    lib.Control.ShowPgbar(pgBar, total, i);
+
+                    // 輸入參數
+
+                    // 執行 RFC 函数
+                    rfcFunction.Invoke(rfcDestination);
+
+                    // 從 RFC 函数獲取輸出參數
+                    string dataRCode = rfcFunction.GetString("E_RCODE");
+
+                    if (dataRCode.Equals("S"))
+                    {
+                        lib.Control.ShowLog(tbLog, $"成功寫入【{s.ShipperNo}】銷貨交項 \r\n");
+                    
+                    }
+                    else
+                    {
+                        lib.Control.ShowLog(tbLog, $"無法寫入【{s.ShipperNo}】銷貨交項 \r\n");
+
                     }
                     i++;
                     lib.Control.ShowLog(tbLog, "完成! \r\n");

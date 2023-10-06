@@ -10,29 +10,30 @@ namespace RFC_shippingHistory
 {
     internal partial class Form1
     {
-        /// <summary>
-        /// 從資料夾匯入 Plex Excel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void iconFolder_Click(object sender, EventArgs e)
-        {
-            ClearList();
+        ///// <summary>
+        ///// 從資料夾匯入 Plex Excel
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void iconFolder_Click(object sender, EventArgs e)
+        //{
+        //    ClearList();
 
-            ImportFolder();
 
-            // Step 1: 取得 CustomerCode
-            getCustomerCode();
+        //    ImportFolder();
 
-            // Step 2: 取得某客戶某物料的批次庫存狀況
-            dealWithBatch();
+        //    // Step 1: 取得 CustomerCode
+        //    getCustomerCode();
 
-            // 以客戶物料、客戶地址將listAllOptions分成多頁 (一頁等於一個DataTable)
-            LoadListDtOneView();
+        //    // Step 2: 取得某客戶某物料的批次庫存狀況
+        //    dealWithBatch();
 
-            // 將進度條歸零
-            lib.Control.ShowPgbar(pgBar, 0, 0);
-        }
+        //    // 以客戶物料、客戶地址將listAllOptions分成多頁 (一頁等於一個DataTable)
+        //    LoadListDtOneView();
+
+        //    // 將進度條歸零
+        //    lib.Control.ShowPgbar(pgBar, 0, 0);
+        //}
 
         /// <summary>
         /// 從檔案匯入Plex Excel
@@ -42,6 +43,7 @@ namespace RFC_shippingHistory
         private void iconFile_Click(object sender, EventArgs e)
         {
             ClearList();
+
 
             bool CallSap = ImportFile();
 
@@ -58,13 +60,12 @@ namespace RFC_shippingHistory
                     Console.WriteLine($"客戶物料號碼:{s.CPartNo}、銷售文件:{s.ShipperNo}、客戶地址:{s.CustomerAddressCode}、出貨數量:{s.Quantity}、實際發貨日期:{s.ShipDate}、資料取得成功:{s.ok}、收貨方【RFC1】:{s.CustomerCode}、物料號碼【RFC2】:{s.PartNo}、批次號碼【RFC2】:{s.BatchNo}、未限制使用庫存【RFC2】:{s.BatchAmount}、儲存地點【RFC2】:{s.Repository}、儲存地點說明【RFC2】:{s.RepositoryDesc}、Sales & Distribution 文件【RFC2】:{s.SD}");
                 }
 
-
                 LoadListDtOneView();
                 LoadDtAllView();
 
                 // 將進度條歸零
                 lib.Control.ShowPgbar(pgBar, 0, 0);
-            }
+            };
         }
 
         /// <summary>

@@ -418,7 +418,6 @@ namespace RFC_shippingHistory
             lblDate.Text = DateTime.Now.ToLongDateString();
         }
 
-
         /// <summary>
         /// 將 .xls、.xlsx、.csv 格式文件存入資料庫中、將Excel填入listShippingHistory&listCPartNoAddrCode
         /// </summary>
