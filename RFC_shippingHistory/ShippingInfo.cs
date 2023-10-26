@@ -10,32 +10,37 @@ namespace RFC_shippingHistory
     internal class ShippingInfo
     {
         /// <summary>
-        /// 客戶料號
+        /// 客戶料號【Plex】
         /// </summary>
         public string CPartNo { get; set; }
 
         /// <summary>
-        /// 銷售文件
+        /// 銷售文件【Plex】
         /// </summary>
         public string ShipperNo { get; set; }
 
         /// <summary>
-        /// 客戶地址
+        /// 客戶地址【Plex】
         /// </summary>
-        public string CustomerAddressCode { get; set; }
+        public string Customer { get; set; }
 
         /// <summary>
-        /// 出貨數量
+        /// 出貨數量【Plex】
         /// </summary>
         public float Quantity { get; set; }
 
         /// <summary>
-        /// 實際發貨日期
+        /// 實際發貨日期【Plex】
         /// </summary>
         public string ShipDate { get; set; }
 
         /// <summary>
-        /// 兩個RFC的資料是否都有查詢到
+        /// 淨額【Plex】
+        /// </summary>
+        public decimal NetUnitPrice { get; set; }
+
+        /// <summary>
+        /// 兩個RFC的資料是否都有查詢到【made】
         /// </summary>
         public bool ok { get; set; } = true;
 
@@ -45,38 +50,39 @@ namespace RFC_shippingHistory
         public string CustomerCode { get; set; }
 
         /// <summary>
+        /// RFC1錯誤訊息【RFC1】
+        /// </summary>
+        public string E_MESSAGE_rfc1 { get; set; }
+
+        /// <summary>
         /// 物料號碼【RFC2】
         /// </summary>
         public string PartNo { get; set; }
 
         /// <summary>
-        /// 批次號碼【RFC2】
+        /// 庫存狀態【made】
         /// </summary>
-        public string BatchNo { get; set; }
-
-        /// <summary>
-        /// 未限制使用庫存【RFC2】
-        /// </summary>
-        public float BatchAmount { get; set; }
+        public List<Inventory> inventory { get; set; } = new List<Inventory>();
 
         /// <summary>
         /// 儲存地點【RFC2】
         /// </summary>
-        public string Repository{ get; set; }
+        public string Repository { get; set; }
 
         /// <summary>
         /// 儲存地點說明【RFC2】
         /// </summary>
         public string RepositoryDesc { get; set; }
 
-        /// <summary>
-        /// 銷售與配銷文件號碼 【RFC2】
-        /// </summary>
-        public string SD { get; set; }
 
         /// <summary>
-        /// 銷售與配銷文件日期【RFC2】
+        /// RFC2錯誤訊息【RFC2】
         /// </summary>
-        public DateTime? SD_date { get; set; }
+        public string E_MESSAGE_rfc2 { get; set; }
+
+        /// <summary>
+        /// RFC3錯誤訊息【RFC3】
+        /// </summary>
+        public string E_MESSAGE_rfc3 { get; set; }
     }
 }

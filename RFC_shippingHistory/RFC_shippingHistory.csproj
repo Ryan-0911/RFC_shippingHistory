@@ -115,6 +115,7 @@
     <Compile Include="ImportPlexExcel.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Inventory.cs" />
     <Compile Include="lib\Control.cs" />
     <Compile Include="lib\DB.cs" />
     <Compile Include="lib\SAP.cs" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <Content Include="bin\Debug\libicudecnumber.dll" />
     <Content Include="bin\Release\libicudecnumber.dll" />
+    <None Include="Resources\exclamation.png" />
     <None Include="Resources\eye.png" />
     <None Include="Resources\all.png" />
     <None Include="Resources\find.png" />

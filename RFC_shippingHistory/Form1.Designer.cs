@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lbl請選擇檔案 = new System.Windows.Forms.Label();
             this.pgBar = new System.Windows.Forms.ProgressBar();
@@ -43,10 +44,8 @@
             this.dgvOne = new System.Windows.Forms.DataGridView();
             this.lblPage = new System.Windows.Forms.Label();
             this.comboSearch = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.lblFilter = new System.Windows.Forms.Label();
-            this.lblViewMode = new System.Windows.Forms.Label();
-            this.iconViewMode = new System.Windows.Forms.PictureBox();
+            this.pictureBoxError = new System.Windows.Forms.PictureBox();
             this.iconSearch = new System.Windows.Forms.PictureBox();
             this.iconEdit = new System.Windows.Forms.PictureBox();
             this.iconPrevious = new System.Windows.Forms.PictureBox();
@@ -57,9 +56,9 @@
             this.iconExport = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.iconFile = new System.Windows.Forms.PictureBox();
-            this.dgvAll = new System.Windows.Forms.DataGridView();
+            this.lblError = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOne)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconViewMode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPrevious)).BeginInit();
@@ -70,7 +69,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAll)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl請選擇檔案
@@ -109,7 +107,7 @@
             // 
             this.lblTime.AutoSize = true;
             this.lblTime.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblTime.Location = new System.Drawing.Point(184, 28);
+            this.lblTime.Location = new System.Drawing.Point(191, 28);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(0, 17);
             this.lblTime.TabIndex = 14;
@@ -152,24 +150,49 @@
             // 
             // dgvOne
             // 
+            this.dgvOne.AllowUserToAddRows = false;
+            this.dgvOne.AllowUserToDeleteRows = false;
             this.dgvOne.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvOne.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvOne.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
             this.dgvOne.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgvOne.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvOne.Location = new System.Drawing.Point(619, 162);
-            this.dgvOne.Name = "dgvOne";
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvOne.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvOne.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvOne.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvOne.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvOne.EnableHeadersVisualStyles = false;
+            this.dgvOne.Location = new System.Drawing.Point(619, 162);
+            this.dgvOne.Name = "dgvOne";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvOne.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvOne.RowHeadersWidth = 51;
             this.dgvOne.RowTemplate.Height = 24;
             this.dgvOne.Size = new System.Drawing.Size(775, 434);
             this.dgvOne.TabIndex = 25;
+            this.dgvOne.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvOne_CellBeginEdit);
+            this.dgvOne.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOne_CellEndEdit);
+            this.dgvOne.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvOne_CellFormatting);
+            this.dgvOne.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvOne_CellPainting);
+            this.dgvOne.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvOne_CellValidating);
             // 
             // lblPage
             // 
@@ -193,16 +216,6 @@
             this.comboSearch.Size = new System.Drawing.Size(340, 28);
             this.comboSearch.TabIndex = 33;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label6.Location = new System.Drawing.Point(844, 110);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(0, 20);
-            this.label6.TabIndex = 35;
-            // 
             // lblFilter
             // 
             this.lblFilter.AutoSize = true;
@@ -210,30 +223,19 @@
             this.lblFilter.Location = new System.Drawing.Point(987, 74);
             this.lblFilter.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFilter.Name = "lblFilter";
-            this.lblFilter.Size = new System.Drawing.Size(149, 20);
+            this.lblFilter.Size = new System.Drawing.Size(230, 20);
             this.lblFilter.TabIndex = 36;
-            this.lblFilter.Text = "客戶料號+客戶地址";
+            this.lblFilter.Text = "Plex出貨單-客戶代號/客戶料號";
             // 
-            // lblViewMode
+            // pictureBoxError
             // 
-            this.lblViewMode.AutoSize = true;
-            this.lblViewMode.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblViewMode.Location = new System.Drawing.Point(687, 113);
-            this.lblViewMode.Name = "lblViewMode";
-            this.lblViewMode.Size = new System.Drawing.Size(73, 20);
-            this.lblViewMode.TabIndex = 39;
-            this.lblViewMode.Text = "單筆編輯";
-            // 
-            // iconViewMode
-            // 
-            this.iconViewMode.Image = global::RFC_shippingHistory.Properties.Resources.eye;
-            this.iconViewMode.Location = new System.Drawing.Point(619, 99);
-            this.iconViewMode.Name = "iconViewMode";
-            this.iconViewMode.Size = new System.Drawing.Size(62, 42);
-            this.iconViewMode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconViewMode.TabIndex = 38;
-            this.iconViewMode.TabStop = false;
-            this.iconViewMode.Click += new System.EventHandler(this.iconViewMode_Click);
+            this.pictureBoxError.Image = global::RFC_shippingHistory.Properties.Resources.exclamation;
+            this.pictureBoxError.Location = new System.Drawing.Point(619, 105);
+            this.pictureBoxError.Name = "pictureBoxError";
+            this.pictureBoxError.Size = new System.Drawing.Size(44, 34);
+            this.pictureBoxError.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxError.TabIndex = 42;
+            this.pictureBoxError.TabStop = false;
             // 
             // iconSearch
             // 
@@ -346,26 +348,15 @@
             this.iconFile.Tag = "匯入Plex Excel";
             this.iconFile.Click += new System.EventHandler(this.iconFile_Click);
             // 
-            // dgvAll
+            // lblError
             // 
-            this.dgvAll.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvAll.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
-            this.dgvAll.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgvAll.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAll.Location = new System.Drawing.Point(619, 162);
-            this.dgvAll.Name = "dgvAll";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAll.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvAll.RowHeadersWidth = 51;
-            this.dgvAll.RowTemplate.Height = 24;
-            this.dgvAll.Size = new System.Drawing.Size(775, 434);
-            this.dgvAll.TabIndex = 40;
+            this.lblError.AutoSize = true;
+            this.lblError.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblError.Location = new System.Drawing.Point(684, 108);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(73, 20);
+            this.lblError.TabIndex = 43;
+            this.lblError.Text = "錯誤原因";
             // 
             // Form1
             // 
@@ -373,13 +364,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(1443, 714);
-            this.Controls.Add(this.dgvAll);
-            this.Controls.Add(this.lblViewMode);
-            this.Controls.Add(this.iconViewMode);
+            this.ClientSize = new System.Drawing.Size(1463, 714);
+            this.Controls.Add(this.lblError);
+            this.Controls.Add(this.pictureBoxError);
             this.Controls.Add(this.iconSearch);
             this.Controls.Add(this.lblFilter);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.comboSearch);
             this.Controls.Add(this.iconEdit);
             this.Controls.Add(this.iconPrevious);
@@ -406,7 +395,7 @@
             this.Text = "出貨歷史";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOne)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconViewMode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconEdit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconPrevious)).EndInit();
@@ -417,7 +406,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconExport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconFile)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAll)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -444,12 +432,10 @@
         private System.Windows.Forms.PictureBox iconPrevious;
         private System.Windows.Forms.PictureBox iconEdit;
         private System.Windows.Forms.ComboBox comboSearch;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblFilter;
         private System.Windows.Forms.PictureBox iconSearch;
-        private System.Windows.Forms.PictureBox iconViewMode;
-        private System.Windows.Forms.Label lblViewMode;
-        private System.Windows.Forms.DataGridView dgvAll;
+        private System.Windows.Forms.PictureBox pictureBoxError;
+        private System.Windows.Forms.Label lblError;
     }
 }
 

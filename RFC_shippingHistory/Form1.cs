@@ -22,6 +22,8 @@ using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Core;
 using System.Reflection.Emit;
+using System.Collections;
+using System.Globalization;
 
 namespace RFC_shippingHistory
 {
@@ -33,35 +35,14 @@ namespace RFC_shippingHistory
         List<ShippingInfo> listPlex = new List<ShippingInfo>();
 
         /// <summary>
-        /// 所有可選的批次庫存 
-        /// </summary>
-        List<ShippingInfo> listAllOptions = new List<ShippingInfo>();
-
-        /// <summary>
         /// 系統所選的批次庫存 
         /// </summary>
         List<ShippingInfo> listSystemSelect = new List<ShippingInfo>();
 
         /// <summary>
-        /// 使用者所選的批次庫存 
-        /// </summary>
-        List<ShippingInfo> listUserSelect = new List<ShippingInfo>();
-
-        /// <summary>
-        /// 單筆檢視 (以CAddrCode & CPartNo 為分類基準)
+        /// 單筆檢視 
         /// </summary>
         List<DataTable> listDtOneView = new List<DataTable>();
-
-        /// <summary>
-        /// 全筆檢視
-        /// </summary>
-        DataTable dtAllView = new DataTable();
-
-
-        /// <summary>
-        /// 用來存放最終出貨單 (1. 匯出 Excel、2. 寫進 SAP 出貨單) 
-        /// </summary>
-        DataTable dtResult = new DataTable();
 
         /// <summary>
         /// 編輯畫面的當前頁數
@@ -69,9 +50,14 @@ namespace RFC_shippingHistory
         int currentPage = 1;
 
         /// <summary>
-        /// 客戶料號/客戶地址搜尋 ComboBox
+        /// ComboBox【銷貨交項-客戶料號/客戶地址】
         /// </summary>
-        List<string> listCPartNoAddrCode = new List<string>();
+        List<string> listDropDown = new List<string>();
+
+        /// <summary>
+        /// 是否確認更新
+        /// </summary>
+        bool editConfirmed = false;
 
         public Form1()
         {
@@ -83,33 +69,9 @@ namespace RFC_shippingHistory
             // 啟用動態時間
             timer1.Start();
 
-            // 要匯出的 DataTable 
-            dtResult.Columns.Add("銷項交貨");
-            dtResult.Columns.Add("物料");
-            dtResult.Columns.Add("客戶料號");
-            dtResult.Columns.Add("銷售文件號碼");
-            dtResult.Columns.Add("銷售文件日期");
-            dtResult.Columns.Add("客戶地址");
-            dtResult.Columns.Add("收貨方");
-            dtResult.Columns.Add("實際發貨日期");
-            dtResult.Columns.Add("庫存數量");
-            dtResult.Columns.Add("實際出貨數量");
-            dtResult.Columns.Add("單位");
-            dtResult.Columns.Add("批次");
-            dtResult.Columns.Add("儲存地點");
-            dtResult.Columns.Add("說明");
-
-            // 可選庫存清單
-            DataGridViewTextBoxColumn dgvCol = new DataGridViewTextBoxColumn();
-            dgvCol.HeaderText = "庫存取用量";
-            dgvCol.Name = "庫存取用量";
-            dgvOne.Columns.Insert(0, dgvCol);
-            dgvOne.Columns["庫存取用量"].ReadOnly = false;
-            dgvOne.Columns["庫存取用量"].Visible = false;
-            dgvOne.Visible = false;
-
-            // 先隱藏dgvAll
-            dgvAll.Visible = false;
+            // 隱藏錯誤圖示&訊息
+            pictureBoxError.Visible = false;
+            lblError.Text = "";
         }
 
 
@@ -119,12 +81,9 @@ namespace RFC_shippingHistory
         private void ClearList()
         {
             listPlex.Clear();
-            listAllOptions.Clear();
             listSystemSelect.Clear();
-            listUserSelect.Clear();
             listDtOneView.Clear();
-            listCPartNoAddrCode.Clear();
-            dtAllView.Clear();
+            listDropDown.Clear();
             dtResult.Clear();
         }
 
@@ -139,50 +98,13 @@ namespace RFC_shippingHistory
         }
 
         /// <summary>
-        /// 檢視模式切換
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void iconViewMode_Click(object sender, EventArgs e)
-        {
-            if (lblViewMode.Text == "全筆編輯")
-            {
-                iconFirst.Visible = true;
-                iconPrevious.Visible = true;
-                iconNext.Visible = true;
-                iconLast.Visible = true;
-                lblPage.Visible = true;
-                comboSearch.Visible = true;
-                iconSearch.Visible = true;
-                lblFilter.Visible = true;
-                lblViewMode.Text = "單筆編輯";
-                dgvAll.Visible = false;
-                dgvOne.Visible = true;
-            }
-            else
-            {
-                iconFirst.Visible = false;
-                iconPrevious.Visible = false;
-                iconNext.Visible = false;
-                iconLast.Visible = false;
-                lblPage.Visible = false;
-                comboSearch.Visible = false;
-                iconSearch.Visible = false;
-                lblFilter.Visible = false;
-                lblViewMode.Text = "全筆編輯";
-                dgvAll.Visible = true;
-                dgvOne.Visible = false;
-            }
-        }
-
-        /// <summary>
         /// 下拉選擇客戶物料號碼與客戶地址後，查詢庫存
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void iconSearch_Click(object sender, EventArgs e)
         {
-            if (listAllOptions.Count == 0)
+            if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -190,34 +112,71 @@ namespace RFC_shippingHistory
 
             if (comboSearch.SelectedIndex >= 0)
             {
-                foreach (DataTable dt in listDtOneView.AsEnumerable())
+                DataTable foundDataTable = listDtOneView.FirstOrDefault(table => table.TableName == comboSearch.Text.ToString());
+                if (foundDataTable != null)
                 {
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        if ($"{dr["客戶料號"].ToString()}+{dr["客戶地址"].ToString()}" == comboSearch.Text.ToString())
-                        {
-                            currentPage = listDtOneView.IndexOf(dt) + 1;
-                            break;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-
+                    currentPage = listDtOneView.IndexOf(foundDataTable) + 1;
+                    refreshPage();
                 }
             }
-            refreshPage();
+
         }
 
         /// <summary>
-        /// 修改系統選好的批號
+        /// 修改系統選好的庫存
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void iconEdit_Click(object sender, EventArgs e)
         {
+            if (listDtOneView.Count == 0)
+            {
+                MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
+            DialogResult = MessageBox.Show("確定要更新嗎?", "更新確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (DialogResult == DialogResult.Yes)
+            {
+                // 確認Sap選用庫存是否等於Plex出貨數
+                float total = 0; // 用來儲存所選庫存加總
+                foreach (DataGridViewRow row in dgvOne.Rows)
+                {
+                    if (row.Cells[0].Value != null && Single.TryParse(row.Cells[0].Value.ToString(), out float cellValue))
+                    {
+                        total += cellValue;
+                    }
+                }
+                float t = total;
+                string str = t.ToString("N4");
+                float.TryParse(str, out total);
+                if (total < Convert.ToSingle(dgvOne.Rows[2].Cells[2].Value))
+                {
+                    MessageBox.Show("Sap選用庫存不足Plex出貨數", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                // 將 dgvOne 的值更新到 listSystemSelect 
+                editConfirmed = true;
+                listSystemSelect[currentPage - 1].inventory.Clear();
+                foreach (DataGridViewRow row in dgvOne.Rows)
+                {
+                    Inventory iv = new Inventory();
+                    iv.BatchNo = row.Cells["批號"].Value.ToString();
+                    iv.BatchAmount = Convert.ToSingle(row.Cells["Sap可用庫存"].Value);
+                    iv.BatchTaken = Convert.ToSingle(row.Cells["Sap庫存取用量"].Value);
+                    iv.SD = row.Cells["銷售文件號碼"].Value.ToString();
+                    iv.SD_date = Convert.ToDateTime(row.Cells["銷售文件日期"].Value.ToString());
+                    iv.NetUnitPrice = Convert.ToDecimal(row.Cells["單位淨價"].Value);
+                    iv.Currency = row.Cells["幣別"].Value.ToString();
+                    listSystemSelect[currentPage - 1].inventory.Add(iv);
+                }
+            }
+            else
+            {
+                return;
+            }
         }
 
 
@@ -228,11 +187,36 @@ namespace RFC_shippingHistory
         /// <param name="e"></param>
         private void iconFirst_Click(object sender, EventArgs e)
         {
+            // 預防未匯入 Plex Excel
             if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            // 確認當頁 listDtOneView 的每筆庫存選用量是否跟 listSystemSelect 一樣，不一樣代表有更新
+            bool edit = editOrNot();
+            if (listDtOneView.Count > 0 && edit == true && editConfirmed == false)
+            {
+                DialogResult r = MessageBox.Show("您所選用的庫存將捨棄，確定離開嗎?", "操作說明", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+                // 若捨棄，就要將當頁 dtOneView 的庫存選用量回復成原來的值
+                if (r == DialogResult.Yes)
+                {
+                    int j = 0;
+                    foreach (Inventory iv in listSystemSelect[currentPage - 1].inventory)
+                    {
+                        listDtOneView[currentPage - 1].Rows[j]["Sap庫存取用量"] = iv.BatchTaken;
+                        j++;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            // 更新頁數 & 重整頁面
             currentPage = 1;
             refreshPage();
         }
@@ -244,11 +228,36 @@ namespace RFC_shippingHistory
         /// <param name="e"></param>
         private void iconPrevious_Click(object sender, EventArgs e)
         {
+            // 預防未匯入 Plex Excel
             if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            // 確認當頁 listDtOneView 的每筆庫存選用量是否跟 listSystemSelect 一樣，不一樣代表有更新
+            bool edit = editOrNot();
+            if (listDtOneView.Count > 0 && edit == true && editConfirmed == false)
+            {
+                DialogResult r = MessageBox.Show("您所選用的庫存將捨棄，確定離開嗎?", "操作說明", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+                // 若捨棄，就要將當頁 dtOneView 的庫存選用量回復成原來的值
+                if (r == DialogResult.Yes)
+                {
+                    int j = 0;
+                    foreach (Inventory iv in listSystemSelect[currentPage - 1].inventory)
+                    {
+                        listDtOneView[currentPage - 1].Rows[j]["Sap庫存取用量"] = iv.BatchTaken;
+                        j++;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            // 更新頁數 & 重整頁面
             currentPage = currentPage > 1 ? --currentPage : 1;
             refreshPage();
         }
@@ -260,13 +269,55 @@ namespace RFC_shippingHistory
         /// <param name="e"></param>
         private void iconNext_Click(object sender, EventArgs e)
         {
+            // 預防未匯入 Plex Excel
             if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            // 確認當頁 listDtOneView 的每筆庫存選用量是否跟 listSystemSelect 一樣，不一樣代表有更新
+            bool edit = editOrNot();
+            if (listDtOneView.Count > 0 && edit == true && editConfirmed == false)
+            {
+                DialogResult r = MessageBox.Show("您所選用的庫存將捨棄，確定離開嗎?", "操作說明", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+                // 若捨棄，就要將當頁 dtOneView 的庫存選用量回復成原來的值
+                if (r == DialogResult.Yes)
+                {
+                    int j = 0;
+                    foreach (Inventory iv in listSystemSelect[currentPage - 1].inventory)
+                    {
+                        listDtOneView[currentPage - 1].Rows[j]["Sap庫存取用量"] = iv.BatchTaken;
+                        j++;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            // 更新頁數 & 重整頁面
             currentPage = currentPage < listDtOneView.Count ? ++currentPage : listDtOneView.Count;
             refreshPage();
+        }
+
+        private bool editOrNot()
+        {
+            // 確認當頁 listDtOneView 的每筆庫存選用量是否跟 listSystemSelect 一樣，不一樣代表有更新
+            bool edit = false;
+            int i = 0;
+            foreach (Inventory iv in listSystemSelect[currentPage - 1].inventory)
+            {
+                if (iv.BatchTaken != Convert.ToSingle(listDtOneView[currentPage - 1].Rows[i]["Sap庫存取用量"]))
+                {
+                    edit = true;
+                    break;
+                }
+                i++;
+            }
+            return edit;
         }
 
         /// <summary>
@@ -276,11 +327,36 @@ namespace RFC_shippingHistory
         /// <param name="e"></param>
         private void iconLast_Click(object sender, EventArgs e)
         {
+            // 預防未匯入 Plex Excel
             if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            // 確認當頁 listDtOneView 的每筆庫存選用量是否跟 listSystemSelect 一樣，不一樣代表有更新
+            bool edit = editOrNot();
+            if (listDtOneView.Count > 0 && edit == true && editConfirmed == false)
+            {
+                DialogResult r = MessageBox.Show("您所選用的庫存將捨棄，確定離開嗎?", "操作說明", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+                // 若捨棄，就要將當頁 dtOneView 的庫存選用量回復成原來的值
+                if (r == DialogResult.Yes)
+                {
+                    int j = 0;
+                    foreach (Inventory iv in listSystemSelect[currentPage - 1].inventory)
+                    {
+                        listDtOneView[currentPage - 1].Rows[j]["Sap庫存取用量"] = iv.BatchTaken;
+                        j++;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            // 更新頁數 & 重整頁面
             currentPage = listDtOneView.Count;
             refreshPage();
         }
@@ -290,121 +366,70 @@ namespace RFC_shippingHistory
         /// </summary>
         private void refreshPage()
         {
+            // 綁定 DataTable 至 DataGridView
             dgvOne.DataSource = listDtOneView[currentPage - 1];
-            dgvOne.Visible = true;
-            dgvOne.Columns["客戶地址"].Visible = false;
-            dgvOne.Columns["客戶料號"].Visible = false;
-            dgvOne.Columns["庫存取用量"].Visible = true;
+            dgvOne.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            dgvOne.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
-            foreach (DataRow dr in listDtOneView[currentPage - 1].Rows)
-            {
-                comboSearch.Text = $"{dr["客戶料號"].ToString()}+{dr["客戶地址"]}";
-                break;
-            }
+            // 更新下拉選單、頁數
+            comboSearch.Text = $"{listSystemSelect[currentPage - 1].ShipperNo.ToString()}-{listSystemSelect[currentPage - 1].Customer}/{listSystemSelect[currentPage - 1].CPartNo}";
             lblPage.Text = $"第{currentPage}頁/共{listDtOneView.Count}頁";
+            
+            // lbl 錯誤原因
+            if (listSystemSelect[currentPage - 1].ok == false)
+            {
+                lblError.Text = $"{listSystemSelect[currentPage - 1].E_MESSAGE_rfc1}{listSystemSelect[currentPage - 1].E_MESSAGE_rfc2}";
+                pictureBoxError.Visible = true;
+            }
+            else
+            {
+                lblError.Text = "";
+                pictureBoxError.Visible = false;
+            }
         }
 
         /// <summary>
-        /// 將listAllOptions以客戶料號、客戶地址分成多張DataTable，並加到listDtOneView
+        /// 將 listSystemSelect 加入至 listDtOneView (索引值對應)
         /// </summary>
         private void LoadListDtOneView()
         {
-            Dictionary<string, DataTable> dataTableDictionary = new Dictionary<string, DataTable>();
-
-            foreach (var s in listAllOptions)
+            foreach (ShippingInfo s in listSystemSelect)
             {
-                string key = $"{s.CPartNo}_{s.CustomerAddressCode}";
+                string key = $"{s.ShipperNo}-{s.Customer}/{s.CPartNo}";
 
-                if (!dataTableDictionary.ContainsKey(key))
+                DataTable dt = new DataTable(key); // Use key as the table name
+                dt.Columns.Add("Sap庫存取用量");
+                dt.Columns.Add("Sap可用庫存");
+                dt.Columns.Add("Plex出貨量");
+                dt.Columns.Add("單位");
+                dt.Columns.Add("批號");
+                dt.Columns.Add("銷售文件號碼");
+                dt.Columns.Add("銷售文件日期");
+                dt.Columns.Add("料號");
+                dt.Columns.Add("Sap單位淨價");
+                dt.Columns.Add("Plex單位淨價");
+                dt.Columns.Add("幣別");
+                
+
+                foreach (Inventory iv in s.inventory)
                 {
-                    // Create a new DataTable with a unique name based on the key
-                    DataTable dt = new DataTable(key); // Use key as the table name
-                    dt.Columns.Add("客戶料號");
-                    dt.Columns.Add("客戶地址");
-                    dt.Columns.Add("銷售文件號碼");
-                    dt.Columns.Add("銷售文件日期");
-                    dt.Columns.Add("收貨方");
-                    dt.Columns.Add("物料");
-                    dt.Columns.Add("可用庫存");
-                    dt.Columns.Add("單位");
-                    dt.Columns.Add("批次");
-                    dt.Columns.Add("儲存地點");
-                    dt.Columns.Add("說明");
-
                     DataRow dr = dt.NewRow();
-                    dr["客戶料號"] = s.CPartNo;
-                    dr["客戶地址"] = s.CustomerAddressCode;
-                    dr["銷售文件號碼"] = s.SD;
-                    dr["銷售文件日期"] = s.SD_date;
-                    dr["收貨方"] = s.CustomerCode;
-                    dr["物料"] = s.PartNo;
-                    dr["可用庫存"] = s.BatchAmount;
+                    dr["Sap庫存取用量"] = iv.BatchTaken;
+                    dr["Sap可用庫存"] = iv.BatchAmount;
+                    dr["Plex出貨量"] = s.Quantity;
                     dr["單位"] = "MPC";
-                    dr["批次"] = s.BatchNo;
-                    dr["儲存地點"] = s.Repository;
-                    dr["說明"] = s.RepositoryDesc;
+                    dr["批號"] = iv.BatchNo;
+                    dr["銷售文件號碼"] = iv.SD;
+                    dr["銷售文件日期"] = iv.SD_date;
+                    dr["料號"] = s.PartNo;
+                    dr["Sap單位淨價"] = iv.NetUnitPrice;
+                    dr["Plex單位淨價"] = s.NetUnitPrice;
+                    dr["幣別"] = iv.Currency;
                     dt.Rows.Add(dr);
-
-                    dataTableDictionary[key] = dt;
-                    listDtOneView.Add(dt);
                 }
-                else
-                {
-                    // 如果字典中已存在匹配的DataTable，將該列添加到現有的DataTable中
-                    DataRow dr = dataTableDictionary[key].NewRow();
-                    dr["客戶料號"] = s.CPartNo;
-                    dr["客戶地址"] = s.CustomerAddressCode;
-                    dr["銷售文件號碼"] = s.SD;
-                    dr["銷售文件日期"] = s.SD_date;
-                    dr["收貨方"] = s.CustomerCode;
-                    dr["物料"] = s.PartNo;
-                    dr["可用庫存"] = s.BatchAmount;
-                    dr["單位"] = "MPC";
-                    dr["批次"] = s.BatchNo;
-                    dr["儲存地點"] = s.Repository;
-                    dr["說明"] = s.RepositoryDesc;
-                    dataTableDictionary[key].Rows.Add(dr);
-                }
+                listDtOneView.Add(dt);
             }
-            lblPage.Text = $"第{currentPage}頁/共{listDtOneView.Count}頁";
             refreshPage();
-        }
-
-        /// <summary>
-        /// 從listAllOptions載入dtAllView
-        /// </summary>
-        private void LoadDtAllView()
-        {
-            dtAllView.Columns.Add("客戶料號");
-            dtAllView.Columns.Add("客戶地址");
-            dtAllView.Columns.Add("銷售文件號碼");
-            dtAllView.Columns.Add("銷售文件日期");
-            dtAllView.Columns.Add("收貨方");
-            dtAllView.Columns.Add("物料");
-            dtAllView.Columns.Add("可用庫存");
-            dtAllView.Columns.Add("單位");
-            dtAllView.Columns.Add("批次");
-            dtAllView.Columns.Add("儲存地點");
-            dtAllView.Columns.Add("說明");
-
-            foreach (ShippingInfo s in listAllOptions)
-            {
-                DataRow dr = dtAllView.NewRow();
-                dr["客戶料號"] = s.CPartNo;
-                dr["客戶地址"] = s.CustomerAddressCode;
-                dr["銷售文件號碼"] = s.SD;
-                dr["銷售文件日期"] = s.SD_date;
-                dr["收貨方"] = s.CustomerCode;
-                dr["物料"] = s.PartNo;
-                dr["可用庫存"] = s.BatchAmount;
-                dr["單位"] = "MPC";
-                dr["批次"] = s.BatchNo;
-                dr["儲存地點"] = s.Repository;
-                dr["說明"] = s.RepositoryDesc;
-                dtAllView.Rows.Add(dr);
-            }
-
-            dgvAll.DataSource = dtAllView;
         }
 
         /// <summary>
@@ -419,7 +444,7 @@ namespace RFC_shippingHistory
         }
 
         /// <summary>
-        /// 將 .xls、.xlsx、.csv 格式文件存入資料庫中、將Excel填入listShippingHistory&listCPartNoAddrCode
+        /// 將 .xls、.xlsx、.csv 格式文件存入資料庫中
         /// </summary>
         /// <param name="path"></param>
         protected void ExcelProcessAll(string path, string system)
@@ -431,9 +456,22 @@ namespace RFC_shippingHistory
             for (int z = 1; z <= xlWorkbook.Sheets.Count; z++)
             {
                 Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[z];
+
+                //int lastRow = xlWorksheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
+                //for (int row = lastRow; row >= 1; row--)
+                //{
+                //    Excel.Range cell = (Excel.Range)xlWorksheet.Cells[row, 2];
+                //    if (string.IsNullOrEmpty(cell.Value2?.ToString()))
+                //    {
+                //        Excel.Range entireRow = cell.EntireRow;
+                //        entireRow.Delete(Excel.XlDirection.xlUp);
+                //    }
+                //}
+
                 Excel.Range xlRange = xlWorksheet.UsedRange;
                 int rowCount = xlRange.Rows.Count;
                 int colCount = xlRange.Columns.Count;
+
                 lib.Control.ShowLog(tbLog, $"找到Excel，開始將[路徑: {path}]存入資料庫 \r\n");
                 lib.Control.ShowLog(tbLog, $"[工作表數: {z.ToString()}/ 列數: {rowCount.ToString()}/ 行數: {colCount.ToString()}] \r\n");
                 lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
@@ -442,6 +480,11 @@ namespace RFC_shippingHistory
                 {
                     for (int i = 2; i <= rowCount; i++)
                     {
+                        if (xlRange.Cells[i, 2].Value2 == null)
+                        {
+                            continue;
+                        }
+
                         ShippingInfo shippingInfo = new ShippingInfo();
                         for (int j = 1; j <= colCount; j++)
                         {
@@ -449,34 +492,38 @@ namespace RFC_shippingHistory
                             {
                                 switch (j)
                                 {
-                                    case 1:
-                                        shippingInfo.CPartNo = xlRange.Cells[i, 2].Value2.ToString();
+                                    case 2:
+                                        shippingInfo.ShipperNo = xlRange.Cells[i, 2].Value2.ToString();
                                         break;
                                     case 3:
-                                        shippingInfo.ShipDate = xlRange.Cells[i, 3].Value2.ToString();
-                                        break;
-                                    case 4:
-                                        shippingInfo.ShipperNo = xlRange.Cells[i, 4].Value2.ToString();
-                                        break;
-                                    case 6:
-                                        shippingInfo.CustomerAddressCode = xlRange.Cells[i, 6].Value2.ToString().Trim().ToUpper();
+                                        shippingInfo.ShipDate = xlRange.Cells[i, 3].Text;
                                         break;
                                     case 7:
-                                        shippingInfo.Quantity = Convert.ToSingle(xlRange.Cells[i, 7].Value2) / 1000;
+                                        shippingInfo.CPartNo = xlRange.Cells[i, 7].Value2.ToString();
+                                        break;
+                                    case 8:
+                                        shippingInfo.Customer = xlRange.Cells[i, 8].Value2.ToString().Trim().ToUpper();
+                                        break;
+                                    case 9:
+                                        shippingInfo.Quantity = Convert.ToSingle(xlRange.Cells[i, 9].Value2) / 1000;
+                                        break;
+                                    case 10:
+                                        shippingInfo.NetUnitPrice = Convert.ToDecimal(xlRange.Cells[i, 12].Value2) / Convert.ToDecimal(xlRange.Cells[i, 9].Value2);
                                         break;
                                 }
-
                                 Save2DB(fileid, GetFieldName(i, j), xlRange.Cells[i, j].Value2.ToString(), z, system);
                             }
                         }
-                        listCPartNoAddrCode.Add($"{xlRange.Cells[i, 2].Value2.ToString()}+{shippingInfo.CustomerAddressCode = xlRange.Cells[i, 6].Value2.ToString().Trim().ToUpper()}");
+                        listDropDown.Add($"{xlRange.Cells[i, 2].Value2.ToString()}-{shippingInfo.Customer = xlRange.Cells[i, 8].Value2.ToString().Trim().ToUpper()}/{xlRange.Cells[i, 7].Value2.ToString()}");
                         listPlex.Add(shippingInfo);
                         lib.Control.ShowPgbar(pgBar, rowCount, i);
                     }
+                    // 將listPlex內容複製給listSystemSelect
+                    listSystemSelect = new List<ShippingInfo>(listPlex);
 
                     // ComboBox 值初始化
-                    listCPartNoAddrCode.Distinct().OrderBy(s => s).ToList();
-                    foreach (string s in listCPartNoAddrCode)
+                    listDropDown.Distinct().OrderBy(s => s).ToList();
+                    foreach (string s in listDropDown)
                     {
                         comboSearch.Items.Add(s);
                     }
@@ -618,6 +665,143 @@ namespace RFC_shippingHistory
                 columnIndex = (columnIndex - 1) / 26;
             }
             return columnName;
+        }
+
+        /// <summary>
+        /// 需要繪製儲存格時發生
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvOne_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            e.AdvancedBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.None;
+            if (e.RowIndex < 1 || e.ColumnIndex < 0)
+                return;
+            if (e.ColumnIndex == 2 || e.ColumnIndex == 3)
+            {
+                if (IsTheSameCellValue(e.ColumnIndex, e.RowIndex))
+                {
+                    e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None;
+                }
+            }
+            else
+            {
+                e.AdvancedBorderStyle.Top = dgvOne.AdvancedCellBorderStyle.Top;
+            }
+        }
+
+        /// <summary>
+        /// 確認DataGridView前列與該列的值是否一樣
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        bool IsTheSameCellValue(int column, int row)
+        {
+            DataGridViewCell cell1 = dgvOne[column, row];
+            DataGridViewCell cell2 = dgvOne[column, row - 1];
+            if (cell1.Value == null || cell2.Value == null)
+            {
+                return false;
+            }
+            return cell1.Value.ToString() == cell2.Value.ToString();
+        }
+
+        /// <summary>
+        /// 設定要顯示的儲存格內容時發生
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvOne_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex == 0)
+                return;
+            if (e.ColumnIndex == 2 || e.ColumnIndex == 3)
+            {
+                if (IsTheSameCellValue(e.ColumnIndex, e.RowIndex))
+                {
+                    e.Value = "";
+                    e.FormattingApplied = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 正在驗證儲存格時發生
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvOne_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            // 驗證Sap庫存取用量
+            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+            {
+                // 驗證; 只能輸入數字
+                if (!Regex.IsMatch(e.FormattedValue.ToString(), @"^[0-9]*(\.[0-9]*)?$"))
+                {
+                    e.Cancel = true;
+                    //dgvOne.Rows[e.RowIndex].ErrorText = "只能輸入數字和小數點"; // 顯示錯誤提示
+                    MessageBox.Show("只能輸入數字和小數點", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                // 驗證: 不可超出Sap可用庫存
+                if (Convert.ToSingle(e.FormattedValue.ToString()) > Convert.ToSingle(dgvOne.Rows[e.RowIndex].Cells[1].Value))
+                {
+                    e.Cancel = true;
+                    //dgvOne.Rows[e.RowIndex].ErrorText = "不可超出Sap可用庫存"; // 顯示錯誤提示
+                    MessageBox.Show("不可超過Sap可用庫存", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                // 驗證: 不可超出Plex出貨數
+                float total = 0; // 用來存儲所選庫存加總
+                foreach (DataGridViewRow row in dgvOne.Rows)
+                {
+                    if (row.Cells[e.ColumnIndex].Value != null && Single.TryParse(row.Cells[e.ColumnIndex].Value.ToString(), out float cellValue))
+                    {
+                        if (row.Index == e.RowIndex)
+                        {
+                            total += Convert.ToSingle(e.FormattedValue.ToString());
+                        }
+                        else
+                        {
+                            total += cellValue;
+                        }
+                    }
+                    float t = total;
+                    string str = t.ToString("N4");
+                    float.TryParse(str, out total);
+                }
+                if (total > Convert.ToSingle(dgvOne.Rows[e.RowIndex].Cells[2].Value))
+                {
+                    e.Cancel = true;
+                    //dgvOne.Rows[e.RowIndex].ErrorText = "不可超出Plex出貨數"; // 顯示錯誤提示
+                    MessageBox.Show("不可超過Plex出貨數", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+            }
+        }
+
+        private void dgvOne_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            // 除了庫存選用量欄位可以編輯，其他欄位都禁止編輯
+            if (e.ColumnIndex != 0)
+            {
+                e.Cancel = true;
+            }
+
+            // Sap單位淨價與Plex單位淨價不一致就無法編輯
+            if (Convert.ToDecimal(listDtOneView[currentPage - 1].Rows[e.RowIndex]["Sap單位淨價"]) != listSystemSelect[currentPage - 1].NetUnitPrice)
+            {
+                MessageBox.Show("Plex與Sap的單位淨價不一致!", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Cancel = true;
+            }
+        }
+
+        private void dgvOne_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

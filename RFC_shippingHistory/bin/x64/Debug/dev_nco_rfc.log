@@ -2006,3 +2006,235 @@ SAP.Middleware.Connector.RfcLogonException ---> SAP.Middleware.Connector.RfcAbap
    於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
    於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
    於 RFC_shippingHistory.Program.Main() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\Program.cs: 行 19
+
+**** Log file opened by process 21324 at 2023-10-24 13:59:52 (UTC+08:00 台北標準時間)
+
+SAP .NET Connector 3.1 with file version 3.1.2.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug\RFC_shippingHistory.exe
+Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug
+Operating system: Windows 10 Professional 64-bit 
+Processor: 8x AMD64 (or x64)
+SAP release: 785, Kernel release: 785, Kernel patch level: 234
+Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: ::1
+
+Default trace level: None
+
+>> Error entry 2023-10-24 13:59:52.603 [Thread 1]
+SAP.Middleware.Connector.RfcAbapRuntimeException: STOP statement used outside a report flow.
+   於 SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   於 SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte* buffer, Int32 count)
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcIDBegin(Int32& length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, RFCID rid)
+   於 SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+   於 RFC_shippingHistory.Form1.WriteShippingHistory() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\SapRFC.cs: 行 326
+   於 RFC_shippingHistory.Form1.iconExport_Click(Object sender, EventArgs e) 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\ExportSapExcel.cs: 行 123
+   於 System.Windows.Forms.Control.OnClick(EventArgs e)
+   於 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   於 System.Windows.Forms.Control.WndProc(Message& m)
+   於 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   於 RFC_shippingHistory.Program.Main() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\Program.cs: 行 19
+>> Error entry 2023-10-24 13:59:52.615 [Thread 1]
+[NAME=dev ASHOST=172.16.2.23 SYSNR=00 SYSID=DS4 USER=S2239002 PASSWD=******** CLIENT=330 LANG=ZF]
+SAP.Middleware.Connector.RfcAbapRuntimeException: STOP statement used outside a report flow.
+   於 SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   於 SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte* buffer, Int32 count)
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcIDBegin(Int32& length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, RFCID rid)
+   於 SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+   於 RFC_shippingHistory.Form1.WriteShippingHistory() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\SapRFC.cs: 行 326
+   於 RFC_shippingHistory.Form1.iconExport_Click(Object sender, EventArgs e) 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\ExportSapExcel.cs: 行 123
+   於 System.Windows.Forms.Control.OnClick(EventArgs e)
+   於 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   於 System.Windows.Forms.Control.WndProc(Message& m)
+   於 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   於 RFC_shippingHistory.Program.Main() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\Program.cs: 行 19
+
+**** Log file opened by process 20876 at 2023-10-24 14:25:38 (UTC+08:00 台北標準時間)
+
+SAP .NET Connector 3.1 with file version 3.1.2.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug\RFC_shippingHistory.exe
+Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug
+Operating system: Windows 10 Professional 64-bit 
+Processor: 8x AMD64 (or x64)
+SAP release: 785, Kernel release: 785, Kernel patch level: 234
+Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: ::1
+
+Default trace level: None
+
+>> Error entry 2023-10-24 14:25:38.622 [Thread 1]
+SAP.Middleware.Connector.RfcAbapRuntimeException: STOP statement used outside a report flow.
+   於 SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   於 SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte* buffer, Int32 count)
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcIDBegin(Int32& length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, RFCID rid)
+   於 SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+   於 RFC_shippingHistory.Form1.WriteShippingHistory() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\SapRFC.cs: 行 326
+   於 RFC_shippingHistory.Form1.iconExport_Click(Object sender, EventArgs e) 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\ExportSapExcel.cs: 行 124
+   於 System.Windows.Forms.Control.OnClick(EventArgs e)
+   於 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   於 System.Windows.Forms.Control.WndProc(Message& m)
+   於 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   於 RFC_shippingHistory.Program.Main() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\Program.cs: 行 19
+>> Error entry 2023-10-24 14:25:38.646 [Thread 1]
+[NAME=dev ASHOST=172.16.2.23 SYSNR=00 SYSID=DS4 USER=S2239002 PASSWD=******** CLIENT=330 LANG=ZF]
+SAP.Middleware.Connector.RfcAbapRuntimeException: STOP statement used outside a report flow.
+   於 SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   於 SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte* buffer, Int32 count)
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcIDBegin(Int32& length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, RFCID rid)
+   於 SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+   於 RFC_shippingHistory.Form1.WriteShippingHistory() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\SapRFC.cs: 行 326
+   於 RFC_shippingHistory.Form1.iconExport_Click(Object sender, EventArgs e) 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\ExportSapExcel.cs: 行 124
+   於 System.Windows.Forms.Control.OnClick(EventArgs e)
+   於 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   於 System.Windows.Forms.Control.WndProc(Message& m)
+   於 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   於 RFC_shippingHistory.Program.Main() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\Program.cs: 行 19
+
+**** Log file opened by process 23792 at 2023-10-24 14:27:48 (UTC+08:00 台北標準時間)
+
+SAP .NET Connector 3.1 with file version 3.1.2.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug\RFC_shippingHistory.exe
+Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug
+Operating system: Windows 10 Professional 64-bit 
+Processor: 8x AMD64 (or x64)
+SAP release: 785, Kernel release: 785, Kernel patch level: 234
+Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: ::1
+
+Default trace level: None
+
+>> Error entry 2023-10-24 14:27:48.452 [Thread 1]
+SAP.Middleware.Connector.RfcAbapRuntimeException: STOP statement used outside a report flow.
+   於 SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   於 SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte* buffer, Int32 count)
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcIDBegin(Int32& length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, RFCID rid)
+   於 SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+   於 RFC_shippingHistory.Form1.WriteShippingHistory() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\SapRFC.cs: 行 326
+   於 RFC_shippingHistory.Form1.iconExport_Click(Object sender, EventArgs e) 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\ExportSapExcel.cs: 行 124
+   於 System.Windows.Forms.Control.OnClick(EventArgs e)
+   於 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   於 System.Windows.Forms.Control.WndProc(Message& m)
+   於 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   於 RFC_shippingHistory.Program.Main() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\Program.cs: 行 19
+>> Error entry 2023-10-24 14:27:48.462 [Thread 1]
+[NAME=dev ASHOST=172.16.2.23 SYSNR=00 SYSID=DS4 USER=S2239002 PASSWD=******** CLIENT=330 LANG=ZF]
+SAP.Middleware.Connector.RfcAbapRuntimeException: STOP statement used outside a report flow.
+   於 SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   於 SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte* buffer, Int32 count)
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcIDBegin(Int32& length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, RFCID rid)
+   於 SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+   於 RFC_shippingHistory.Form1.WriteShippingHistory() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\SapRFC.cs: 行 326
+   於 RFC_shippingHistory.Form1.iconExport_Click(Object sender, EventArgs e) 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\ExportSapExcel.cs: 行 124
+   於 System.Windows.Forms.Control.OnClick(EventArgs e)
+   於 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   於 System.Windows.Forms.Control.WndProc(Message& m)
+   於 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   於 RFC_shippingHistory.Program.Main() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\Program.cs: 行 19
+
+**** Log file opened by process 10336 at 2023-10-24 14:32:37 (UTC+08:00 台北標準時間)
+
+SAP .NET Connector 3.1 with file version 3.1.2.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug\RFC_shippingHistory.exe
+Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug
+Operating system: Windows 10 Professional 64-bit 
+Processor: 8x AMD64 (or x64)
+SAP release: 785, Kernel release: 785, Kernel patch level: 234
+Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: ::1
+
+Default trace level: None
+
+>> Error entry 2023-10-24 14:32:37.564 [Thread 1]
+SAP.Middleware.Connector.RfcAbapRuntimeException: STOP statement used outside a report flow.
+   於 SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   於 SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte* buffer, Int32 count)
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcIDBegin(Int32& length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, RFCID rid)
+   於 SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+   於 RFC_shippingHistory.Form1.WriteShippingHistory()
+   於 RFC_shippingHistory.Form1.iconExport_Click(Object sender, EventArgs e)
+   於 System.Windows.Forms.Control.OnClick(EventArgs e)
+   於 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   於 System.Windows.Forms.Control.WndProc(Message& m)
+   於 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   於 RFC_shippingHistory.Program.Main()
+>> Error entry 2023-10-24 14:32:37.579 [Thread 1]
+[NAME=dev ASHOST=172.16.2.23 SYSNR=00 SYSID=DS4 USER=S2239002 PASSWD=******** CLIENT=330 LANG=ZF]
+SAP.Middleware.Connector.RfcAbapRuntimeException: STOP statement used outside a report flow.
+   於 SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   於 SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte* buffer, Int32 count)
+   於 SAP.Middleware.Connector.RfcConnection.ReadRfcIDBegin(Int32& length)
+   於 SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   於 SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   於 SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   於 SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, RFCID rid)
+   於 SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+   於 RFC_shippingHistory.Form1.WriteShippingHistory()
+   於 RFC_shippingHistory.Form1.iconExport_Click(Object sender, EventArgs e)
+   於 System.Windows.Forms.Control.OnClick(EventArgs e)
+   於 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   於 System.Windows.Forms.Control.WndProc(Message& m)
+   於 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   於 RFC_shippingHistory.Program.Main()

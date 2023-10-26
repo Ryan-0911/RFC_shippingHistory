@@ -13,49 +13,126 @@ namespace RFC_shippingHistory
     internal partial class Form1
     {
         /// <summary>
+        /// 用來存放最終出貨單 (1. 匯出 Excel、2. 寫進 SAP 出貨單) 
+        /// </summary>
+        DataTable dtResult = new DataTable();
+
+
+        /// <summary>
         /// 將dtResult匯出成Excel，並存入ShippingHistory資料庫中
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void iconExport_Click(object sender, EventArgs e)
         {
-            var ResultOrderedByShipperNo = from t in listSystemSelect orderby t.ShipperNo select t;
-
-            foreach (ShippingInfo s in ResultOrderedByShipperNo)
-            {
-                DataRow dr = dtResult.NewRow();
-                dr["銷項交貨"] = s.ShipperNo;
-                dr["物料"] = s.PartNo;
-                dr["客戶料號"] = s.CPartNo;
-                dr["銷售文件號碼"] = s.SD;
-                dr["銷售文件日期"] = s.SD_date;
-                dr["客戶地址"] = s.CustomerAddressCode;
-                dr["收貨方"] = s.CustomerCode;
-                dr["實際發貨日期"] = s.ShipDate;
-                dr["庫存數量"] = s.BatchAmount;
-                dr["實際出貨數量"] = s.Quantity;
-                dr["單位"] = "MPC";
-                dr["批次"] = s.BatchNo;
-                dr["儲存地點"] = s.Repository;
-                dr["說明"] = s.RepositoryDesc;
-                dtResult.Rows.Add(dr);
-            }
-            DataTable dtExport = dtResult.Copy();
-
-            if (dtExport.Rows.Count == 0)
+            if (listDtOneView.Count == 0)
             {
                 MessageBox.Show("請先匯入Plex Excel!", "操作說明", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            dtResult.Columns.Clear();
+            dtResult.Clear();
+
+            // 要匯出的 DataTable 欄位
+            dtResult.Columns.Add("銷項交貨");
+            dtResult.Columns.Add("物料");
+            dtResult.Columns.Add("客戶料號");
+            dtResult.Columns.Add("客戶");
+            dtResult.Columns.Add("收貨方");
+            dtResult.Columns.Add("銷售文件號碼");
+            dtResult.Columns.Add("銷售文件日期");
+            dtResult.Columns.Add("實際發貨日期");
+            dtResult.Columns.Add("Sap庫存取用量");
+            dtResult.Columns.Add("Sap可用庫存");
+            dtResult.Columns.Add("Plex出貨量");
+            dtResult.Columns.Add("單位");
+            dtResult.Columns.Add("批次");
+            dtResult.Columns.Add("儲存地點");
+            dtResult.Columns.Add("說明");
+            dtResult.Columns.Add("Sap單位淨額");
+            dtResult.Columns.Add("Plex單位淨額");
+            dtResult.Columns.Add("幣別");
+            dtResult.Columns.Add("客戶錯誤訊息");
+            dtResult.Columns.Add("庫存錯誤訊息");
+            dtResult.Columns.Add("出貨單錯誤訊息");
+
             using (var dialog = new FolderBrowserDialog())
             {
                 DialogResult result = dialog.ShowDialog();
+                // 若是確定執行
                 if (result == DialogResult.OK)
                 {
+                    // 建立Sap出貨單
+                    WriteShippingHistory();
+
+                    // 匯出 Sap Excel
+                    var ResultOrderedByShipperNo = from t in listSystemSelect orderby t.ShipperNo select t;
+                    foreach (ShippingInfo s in ResultOrderedByShipperNo)
+                    {
+                        // rfc 執行成功
+                        if (s.inventory.Count() > 0)
+                        {
+                            foreach (Inventory iv in s.inventory)
+                            {
+                                // 選用的庫存量為0代表不是要寫進Sap的
+                                if (iv.BatchTaken == 0)
+                                {
+                                    continue;
+                                }
+
+                                DataRow dr = dtResult.NewRow();
+                                dr["銷項交貨"] = s.ShipperNo;
+                                dr["物料"] = s.PartNo;
+                                dr["客戶料號"] = s.CPartNo;
+                                dr["客戶"] = s.Customer;
+                                dr["收貨方"] = s.CustomerCode;
+                                dr["銷售文件號碼"] = iv.SD;
+                                dr["銷售文件日期"] = iv.SD_date;
+                                dr["實際發貨日期"] = s.ShipDate;
+                                dr["Sap庫存取用量"] = iv.BatchTaken;
+                                dr["Sap可用庫存"] = iv.BatchAmount;
+                                dr["Plex出貨量"] = s.Quantity;
+                                dr["單位"] = "MPC";
+                                dr["批次"] = iv.BatchNo;
+                                dr["儲存地點"] = s.Repository;
+                                dr["說明"] = s.RepositoryDesc;
+                                dr["Sap單位淨額"] = iv.NetUnitPrice;
+                                dr["Plex單位淨額"] = s.NetUnitPrice;
+                                dr["幣別"] = iv.Currency;
+                                dr["客戶錯誤訊息"] = s.E_MESSAGE_rfc1;
+                                dr["庫存錯誤訊息"] = s.E_MESSAGE_rfc2;
+                                dr["出貨單錯誤訊息"] = s.E_MESSAGE_rfc3;
+                                dtResult.Rows.Add(dr);
+                            }
+                        }
+                        // rfc 執行失敗
+                        else
+                        {
+                            DataRow dr = dtResult.NewRow();
+                            dr["銷項交貨"] = s.ShipperNo;
+                            dr["物料"] = s.PartNo;
+                            dr["客戶料號"] = s.CPartNo;
+                            dr["客戶"] = s.Customer;
+                            dr["收貨方"] = s.CustomerCode;
+                            dr["實際發貨日期"] = s.ShipDate;
+                            dr["Plex出貨量"] = s.Quantity;
+                            dr["單位"] = "MPC";
+                            dr["儲存地點"] = s.Repository;
+                            dr["說明"] = s.RepositoryDesc;
+                            dr["客戶錯誤訊息"] = s.E_MESSAGE_rfc1;
+                            dr["庫存錯誤訊息"] = s.E_MESSAGE_rfc2;
+                            dr["出貨單錯誤訊息"] = s.E_MESSAGE_rfc3;
+                            dtResult.Rows.Add(dr);
+                        }
+                    }
                     DataSet ds = new DataSet();
-                    ds.Tables.Add(dtExport); // 將新的 DataTable 添加到新的 DataSet 中
+                    // 解決 'DataTable 已經屬於其他 DataSet。'
+                    ds.Tables.Add(dtResult.Copy()); 
                     string directoryPath = dialog.SelectedPath;
                     string filePath = ExportDataSetToExcel(ds, directoryPath);
+
+                    // 存入資料庫
                     ExcelProcessAll(filePath, "Sap");
                 }
             }
@@ -102,9 +179,9 @@ namespace RFC_shippingHistory
                     {
                         inColumn = n + 1;
                         inRow = inHeaderLength + 2 + m;
-                        if(inColumn == 12)
+                        if(inColumn == 13)
                         {
-                            excelWorkSheet.Cells[inRow, 12].NumberFormat = "@";
+                            excelWorkSheet.Cells[inRow, 13].NumberFormat = "@";
                         }
                         excelWorkSheet.Cells[inRow, inColumn] = dt.Rows[m][n].ToString();
                     }
@@ -115,11 +192,32 @@ namespace RFC_shippingHistory
                         Rang.Interior.Color = ColorTranslator.FromHtml("#EFCFE3");
                     }
 
-                    // 若「物料號碼」的值與上筆一樣就合併儲存格
+                    // 若「銷項交貨」的值與上筆一樣就合併儲存格
                     if (m > 0 && dt.Rows[m]["銷項交貨"].ToString() == dt.Rows[m - 1]["銷項交貨"].ToString())
                     {
                         excelApp.DisplayAlerts = false;
                         excelWorkSheet.get_Range("A" + inRow.ToString(), "A" + (inRow - 1).ToString()).Merge();
+
+                        // 若「物料」的值與上筆一樣就合併儲存格
+                        if (m > 0 && dt.Rows[m]["物料"].ToString() == dt.Rows[m - 1]["物料"].ToString())
+                        {
+                            excelApp.DisplayAlerts = false;
+                            excelWorkSheet.get_Range("B" + inRow.ToString(), "B" + (inRow - 1).ToString()).Merge();
+                        }
+
+                        // 若「客戶料號」的值與上筆一樣就合併儲存格
+                        if (m > 0 && dt.Rows[m]["客戶料號"].ToString() == dt.Rows[m - 1]["客戶料號"].ToString())
+                        {
+                            excelApp.DisplayAlerts = false;
+                            excelWorkSheet.get_Range("C" + inRow.ToString(), "C" + (inRow - 1).ToString()).Merge();
+                        }
+
+                        // 若「Plex出貨量」的值與上筆一樣就合併儲存格
+                        if (m > 0 && dt.Rows[m]["Plex出貨量"].ToString() == dt.Rows[m - 1]["Plex出貨量"].ToString())
+                        {
+                            excelApp.DisplayAlerts = false;
+                            excelWorkSheet.get_Range("K" + inRow.ToString(), "K" + (inRow - 1).ToString()).Merge();
+                        }
                     }
                 }
                 excelApp.DisplayAlerts = true;
