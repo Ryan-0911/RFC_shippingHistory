@@ -168,7 +168,7 @@ namespace RFC_shippingHistory
                     iv.BatchTaken = Convert.ToSingle(row.Cells["Sap庫存取用量"].Value);
                     iv.SD = row.Cells["銷售文件號碼"].Value.ToString();
                     iv.SD_date = Convert.ToDateTime(row.Cells["銷售文件日期"].Value.ToString());
-                    iv.NetUnitPrice = Convert.ToDecimal(row.Cells["單位淨價"].Value);
+                    iv.NetUnitPrice = Convert.ToDecimal(row.Cells["Sap單位淨價"].Value);
                     iv.Currency = row.Cells["幣別"].Value.ToString();
                     listSystemSelect[currentPage - 1].inventory.Add(iv);
                 }
@@ -374,7 +374,7 @@ namespace RFC_shippingHistory
             // 更新下拉選單、頁數
             comboSearch.Text = $"{listSystemSelect[currentPage - 1].ShipperNo.ToString()}-{listSystemSelect[currentPage - 1].Customer}/{listSystemSelect[currentPage - 1].CPartNo}";
             lblPage.Text = $"第{currentPage}頁/共{listDtOneView.Count}頁";
-            
+
             // lbl 錯誤原因
             if (listSystemSelect[currentPage - 1].ok == false)
             {
@@ -409,7 +409,7 @@ namespace RFC_shippingHistory
                 dt.Columns.Add("Sap單位淨價");
                 dt.Columns.Add("Plex單位淨價");
                 dt.Columns.Add("幣別");
-                
+
 
                 foreach (Inventory iv in s.inventory)
                 {
@@ -472,7 +472,7 @@ namespace RFC_shippingHistory
                 int rowCount = xlRange.Rows.Count;
                 int colCount = xlRange.Columns.Count;
 
-                lib.Control.ShowLog(tbLog, $"找到Excel，開始將[路徑: {path}]存入資料庫 \r\n");
+                lib.Control.ShowLog(tbLog, $"開始將Excel[路徑: {path}]存入資料庫 \r\n");
                 lib.Control.ShowLog(tbLog, $"[工作表數: {z.ToString()}/ 列數: {rowCount.ToString()}/ 行數: {colCount.ToString()}] \r\n");
                 lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
 
@@ -742,6 +742,8 @@ namespace RFC_shippingHistory
                     e.Cancel = true;
                     //dgvOne.Rows[e.RowIndex].ErrorText = "只能輸入數字和小數點"; // 顯示錯誤提示
                     MessageBox.Show("只能輸入數字和小數點", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    // 將值還原為原始值
+                    dgvOne.CancelEdit();
                     return;
                 }
 
@@ -751,6 +753,9 @@ namespace RFC_shippingHistory
                     e.Cancel = true;
                     //dgvOne.Rows[e.RowIndex].ErrorText = "不可超出Sap可用庫存"; // 顯示錯誤提示
                     MessageBox.Show("不可超過Sap可用庫存", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    // 將值還原為原始值
+                    dgvOne.CancelEdit();
+                    dgvOne[e.ColumnIndex, e.RowIndex].Value = listDtOneView[currentPage - 1].Rows[e.RowIndex][e.ColumnIndex].ToString();
                     return;
                 }
 
@@ -778,6 +783,9 @@ namespace RFC_shippingHistory
                     e.Cancel = true;
                     //dgvOne.Rows[e.RowIndex].ErrorText = "不可超出Plex出貨數"; // 顯示錯誤提示
                     MessageBox.Show("不可超過Plex出貨數", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    // 將值還原為原始值
+                    dgvOne.CancelEdit();
+                    dgvOne[e.ColumnIndex, e.RowIndex].Value = 0;  /*listDtOneView[currentPage - 1].Rows[e.RowIndex][e.ColumnIndex].ToString();    */
                     return;
                 }
             }
@@ -791,17 +799,23 @@ namespace RFC_shippingHistory
                 e.Cancel = true;
             }
 
-            // Sap單位淨價與Plex單位淨價不一致就無法編輯
-            if (Convert.ToDecimal(listDtOneView[currentPage - 1].Rows[e.RowIndex]["Sap單位淨價"]) != listSystemSelect[currentPage - 1].NetUnitPrice)
+
+            // Sap單位淨價與Plex單位淨價差距超過0.003美元就無法編輯
+            Decimal differ;
+            if (Convert.ToDecimal(listDtOneView[currentPage - 1].Rows[e.RowIndex]["Sap單位淨價"]) > listSystemSelect[currentPage - 1].NetUnitPrice)
             {
-                MessageBox.Show("Plex與Sap的單位淨價不一致!", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                differ = Convert.ToDecimal(listDtOneView[currentPage - 1].Rows[e.RowIndex]["Sap單位淨價"]) - listSystemSelect[currentPage - 1].NetUnitPrice;
+            }
+            else
+            {
+                differ = listSystemSelect[currentPage - 1].NetUnitPrice - Convert.ToDecimal(listDtOneView[currentPage - 1].Rows[e.RowIndex]["Sap單位淨價"]);
+            }
+
+            if (differ >= 0.003M)
+            {
+                MessageBox.Show("Plex與Sap差距大於0.003美元!", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 e.Cancel = true;
             }
-        }
-
-        private void dgvOne_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }

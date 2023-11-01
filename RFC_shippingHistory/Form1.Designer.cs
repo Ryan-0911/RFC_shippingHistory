@@ -189,7 +189,6 @@
             this.dgvOne.Size = new System.Drawing.Size(775, 434);
             this.dgvOne.TabIndex = 25;
             this.dgvOne.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvOne_CellBeginEdit);
-            this.dgvOne.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOne_CellEndEdit);
             this.dgvOne.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvOne_CellFormatting);
             this.dgvOne.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvOne_CellPainting);
             this.dgvOne.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvOne_CellValidating);

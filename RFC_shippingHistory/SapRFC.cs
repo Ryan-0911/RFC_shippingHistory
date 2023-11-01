@@ -136,13 +136,14 @@ namespace RFC_shippingHistory
                         IRfcTable rfcTable = rfcFunction.GetTable("ET_ZSDT012");
                         DataTable dataTable = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
 
+
                         // 先確認Sap可用庫存總數是否大於等於Plex出貨數 (Plex單位淨價等於Sap單位淨價才能算)
                         // Console.WriteLine(dataTable.Columns["LABST"].DataType);
                         Single totalInventory = dataTable.AsEnumerable()
-                                       //.Where(row => (Convert.ToDecimal(row.Field<string>("KBETR")) / Convert.ToDecimal(row.Field<string>("KPEIN")) / 100) == s.NetUnitPrice)
+                                       .Where(row => Math.Abs((Convert.ToDecimal(row.Field<string>("KBETR")) / Convert.ToDecimal(row.Field<string>("KPEIN")) / 1000) - s.NetUnitPrice) < 0.003M)
                                        .Sum(row => Convert.ToSingle(row.Field<string>("LABST")));
 
-                        // Condition 1: 若Sap庫存總和不足Plex的出貨數，直接視為RFC資料不齊全
+                        // Condition 1: 若Sap庫存總和不足Plex的出貨數，直接視為RFC資料不齊全********************************************
                         if (totalInventory < s.Quantity)
                         {
                             s.PartNo = null; // 物料號碼【RFC2】
@@ -157,7 +158,7 @@ namespace RFC_shippingHistory
                             continue;
                         }
 
-                        // Condition 2: Sap庫存總和足夠Plex的出貨數 
+                        // Condition 2: Sap庫存總和足夠Plex的出貨數********************************************
 
                         // Sap庫存累加額
                         float SapInventory = 0;
@@ -175,12 +176,23 @@ namespace RFC_shippingHistory
                             s.RepositoryDesc = dr["LGOBE"].ToString(); // 儲存地點說明【RFC2】
                             cnt++;
 
-                            // 若 Plex單位淨價不等於Sap單位淨價 或 Sap庫存累加額已超過Plex出貨數
-                            //Decimal SapNetUnitPrice = Convert.ToDecimal(dr["KBETR"]) / Convert.ToInt32(dr["KPEIN"]) / 100;
-                            if ( above == true) // SapNetUnitPrice != s.NetUnitPrice ||
+                            // 計算Plex單位淨跟Sap單位淨額的差距
+                            Decimal SapNetUnitPrice = Convert.ToDecimal(dr["KBETR"]) / Convert.ToInt32(dr["KPEIN"]) / 1000;
+                            Decimal differ;
+                            if (SapNetUnitPrice > s.NetUnitPrice)
+                            {
+                                differ = SapNetUnitPrice - s.NetUnitPrice;
+                            }
+                            else
+                            {
+                                differ = s.NetUnitPrice - SapNetUnitPrice;
+                            }
+
+                            // 若 (Plex單位淨價跟Sap單位淨價差距大於0.003美元) 或 (Sap庫存累加額已超過Plex出貨數)
+                            if (differ > 0.003M || above == true) 
                             {
                                 Inventory iv = new Inventory(); // 庫存狀態物件
-                                //iv.NetUnitPrice = SapNetUnitPrice; // 金額
+                                iv.NetUnitPrice = SapNetUnitPrice; // 金額
                                 iv.Currency = dr["KONWA"].ToString(); // 幣別
                                 iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
                                 iv.BatchNo = dr["CHARG"].ToString(); // 批次號碼
@@ -198,7 +210,7 @@ namespace RFC_shippingHistory
                             if (SapInventory >= s.Quantity)
                             {
                                 Inventory iv = new Inventory(); // 庫存狀態物件
-                                //iv.NetUnitPrice = SapNetUnitPrice; // 金額
+                                iv.NetUnitPrice = SapNetUnitPrice; // 金額
                                 iv.Currency = dr["KONWA"].ToString(); // 幣別
                                 iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
                                 iv.BatchNo = dr["CHARG"].ToString(); // 批次號碼
@@ -225,7 +237,7 @@ namespace RFC_shippingHistory
                             else
                             {
                                 Inventory iv = new Inventory(); // 庫存狀態物件
-                                //iv.NetUnitPrice = SapNetUnitPrice; // 金額
+                                iv.NetUnitPrice = SapNetUnitPrice; // 金額
                                 iv.Currency = dr["KONWA"].ToString(); // 幣別
                                 iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
                                 iv.BatchNo = dr["CHARG"].ToString(); // 批次號碼
@@ -344,6 +356,9 @@ namespace RFC_shippingHistory
 
                     // 傳入參數，字符串類型 
                     rfcFunction.SetValue("I_POST", "X");
+
+                    // 傳入參數，字符串類型 
+                    rfcFunction.SetValue("I_WADAT_IST", Convert.ToDateTime(sh.ShipDate));
 
                     rfcFunction.SetParameterActive(0, true);
                     

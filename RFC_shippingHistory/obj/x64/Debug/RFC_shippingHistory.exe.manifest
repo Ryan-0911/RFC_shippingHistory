@@ -42,38 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RFC_shippingHistory.exe" size="131008">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RFC_shippingHistory.exe" size="132032">
       <assemblyIdentity name="RFC_shippingHistory" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>eKxn/nOF3gVmia6OPdSE4BQBJmDOdnyYDzRA9TnAjL4=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="sapnco.dll" size="730160">
-      <assemblyIdentity name="sapnco" version="3.1.0.42" publicKeyToken="50436DCA5C7F7D23" language="neutral" processorArchitecture="amd64" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SzsByLMP2wmTax82O1dN3BuZYMALmsKVE83suahICyQ=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="sapnco_utils.dll" size="7238704">
-      <assemblyIdentity name="sapnco_utils" version="3.1.0.42" publicKeyToken="50436DCA5C7F7D23" language="neutral" processorArchitecture="amd64" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>cfVLXBl1WUy/383Ywhu0cZBggeLcXggyBBJy0Q9MX+w=</dsig:DigestValue>
+        <dsig:DigestValue>c9to5fOeIKekk5tviRpddFUQ2LbucAHJ4uLZbPBvNLo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

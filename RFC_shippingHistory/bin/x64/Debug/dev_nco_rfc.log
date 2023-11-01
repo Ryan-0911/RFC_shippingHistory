@@ -2238,3 +2238,36 @@ SAP.Middleware.Connector.RfcAbapRuntimeException: STOP statement used outside a 
    於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
    於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
    於 RFC_shippingHistory.Program.Main()
+
+**** Log file opened by process 23016 at 2023-10-31 14:55:34 (UTC+08:00 台北標準時間)
+
+SAP .NET Connector 3.1 with file version 3.1.2.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug\RFC_shippingHistory.exe
+Working directory: C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\bin\x64\Debug
+Operating system: Windows 10 Professional 64-bit 
+Processor: 8x AMD64 (or x64)
+SAP release: 785, Kernel release: 785, Kernel patch level: 234
+Hostname: PC105, IP address: 192.168.1.238, IP_v6 address: ::1
+
+Default trace level: None
+
+>> Error entry 2023-10-31 14:55:34.884 [Thread 1]
+SAP.Middleware.Connector.RfcTypeConversionException: PARAMETER I_WADAT_IST of FUNCTION Z_SUMEEKO_008_SHIPMENTPOST (SETTER): cannot convert String into DATE ---> SAP.Middleware.Connector.RfcTypeConversionException: Cannot convert "2010/2/23" into DATE (yyyyMMdd) ---> System.FormatException: 字串未被辨認為有效的 DateTime。
+   於 SAP.Middleware.Connector.RfcScalarMetadataDate.ConvertString(String value, Object& currentValue)
+   --- 內部例外狀況堆疊追蹤的結尾 ---
+   於 SAP.Middleware.Connector.RfcScalarMetadataDate.ConvertString(String value, Object& currentValue)
+   於 SAP.Middleware.Connector.RfcDataContainer`1.SetValue(Int32 index, String value)
+   --- 內部例外狀況堆疊追蹤的結尾 ---
+   於 SAP.Middleware.Connector.RfcDataContainer`1.SetValue(Int32 index, String value)
+   於 RFC_shippingHistory.Form1.WriteShippingHistory() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\SapRFC.cs: 行 361
+   於 RFC_shippingHistory.Form1.iconExport_Click(Object sender, EventArgs e) 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\ExportSapExcel.cs: 行 67
+   於 System.Windows.Forms.Control.OnClick(EventArgs e)
+   於 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   於 System.Windows.Forms.Control.WndProc(Message& m)
+   於 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   於 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   於 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   於 RFC_shippingHistory.Program.Main() 於 C:\Users\S2239002\Desktop\SUMEEKO\RFC_shippingHistory\RFC_shippingHistory\Program.cs: 行 19

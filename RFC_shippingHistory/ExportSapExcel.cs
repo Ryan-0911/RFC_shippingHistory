@@ -188,7 +188,7 @@ namespace RFC_shippingHistory
                     // 若RFC沒匹配成功，以紅色背景顯示
                     if (dt.Rows[m]["收貨方"].ToString() == "" || dt.Rows[m]["批次"].ToString() == "")
                     {
-                        Excel.Range Rang = excelWorkSheet.get_Range($"B{inRow}", $"{charTotalCol}{inRow}");
+                        Excel.Range Rang = excelWorkSheet.get_Range($"B{inRow}", $"T{inRow}");
                         Rang.Interior.Color = ColorTranslator.FromHtml("#EFCFE3");
                     }
 
@@ -197,6 +197,7 @@ namespace RFC_shippingHistory
                     {
                         excelApp.DisplayAlerts = false;
                         excelWorkSheet.get_Range("A" + inRow.ToString(), "A" + (inRow - 1).ToString()).Merge();
+                        excelWorkSheet.get_Range("U" + inRow.ToString(), "U" + (inRow - 1).ToString()).Merge();
 
                         // 若「物料」的值與上筆一樣就合併儲存格
                         if (m > 0 && dt.Rows[m]["物料"].ToString() == dt.Rows[m - 1]["物料"].ToString())
@@ -244,7 +245,6 @@ namespace RFC_shippingHistory
                 // Auto fit columns
                 excelWorkSheet.Columns.AutoFit();
             }
-
 
             // 刪除第一個工作表
             excelApp.DisplayAlerts = false;
