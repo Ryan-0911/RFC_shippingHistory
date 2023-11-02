@@ -84,6 +84,7 @@ namespace RFC_shippingHistory
             listSystemSelect.Clear();
             listDtOneView.Clear();
             listDropDown.Clear();
+            comboSearch.Items.Clear();
             dtResult.Clear();
         }
 

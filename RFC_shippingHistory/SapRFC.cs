@@ -321,20 +321,21 @@ namespace RFC_shippingHistory
                                                                          select exp).ToList();
 
                 // 設置 RFC 參數
-                IRfcTable table;
+                IRfcTable rfcTable;
                 foreach (ShippingInfo sh in ResultSapSuccessOrderedByShipperNo)
                 {
                     lib.Control.ShowPgbar(pgBar, ResultSapSuccessOrderedByShipperNo.Count, i);
 
-                    table = rfcFunction.GetTable("ET_ZSDT014");
+                    rfcTable = rfcFunction.GetTable("ET_ZSDT014");
+
                     foreach (Inventory iv in sh.inventory)
                     {
                         if (iv.BatchTaken <= 0) { continue; } 
-                        table.Insert();
-                        table.CurrentRow.SetValue("MANDT", ""); // 用戶端 
-                        table.CurrentRow.SetValue("CHARG", iv.BatchNo); // 批次號碼
-                        table.CurrentRow.SetValue("MATNR", sh.PartNo); // 物料號碼
-                        table.CurrentRow.SetValue("LGMNG", iv.BatchTaken); // 評價的未限制使用庫存
+                        rfcTable.Insert();
+                        rfcTable.CurrentRow.SetValue("MANDT", ""); // 用戶端 
+                        rfcTable.CurrentRow.SetValue("CHARG", iv.BatchNo); // 批次號碼
+                        rfcTable.CurrentRow.SetValue("MATNR", sh.PartNo); // 物料號碼
+                        rfcTable.CurrentRow.SetValue("LGMNG", iv.BatchTaken); // 評價的未限制使用庫存
                     }
 
                     // 如果當前不是最後一筆ShippingInfo
@@ -347,12 +348,13 @@ namespace RFC_shippingHistory
                         }
                     }
 
-                    string test = "1";
+                    //DataTable dt = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
+
                     // 傳入參數，table類型
-                    rfcFunction.SetValue("ET_ZSDT014", table);
+                    rfcFunction.SetValue("ET_ZSDT014", rfcTable);
 
                     // 傳入參數，字符串類型 
-                    rfcFunction.SetValue("I_VBELN", sh.ShipperNo + test);
+                    rfcFunction.SetValue("I_VBELN", sh.ShipperNo);
 
                     // 傳入參數，字符串類型 
                     rfcFunction.SetValue("I_POST", "X");
@@ -370,16 +372,19 @@ namespace RFC_shippingHistory
 
                     if (dataRCode.Equals("S"))
                     {
-                        lib.Control.ShowLog(tbLog, $"成功寫入【{sh.ShipperNo}{test}】銷貨交項 \r\n");
+                        lib.Control.ShowLog(tbLog, $"成功寫入【{sh.ShipperNo}】銷貨交項 \r\n");
                     }
                     else
                     {
-                        lib.Control.ShowLog(tbLog, $"無法寫入【{sh.ShipperNo}{test}】銷貨交項: {rfcFunction.GetString("E_MESSAGE")} \r\n");
+                        lib.Control.ShowLog(tbLog, $"無法寫入【{sh.ShipperNo}】銷貨交項: {rfcFunction.GetString("E_MESSAGE")} \r\n");
                         listSystemSelect[listSystemSelect.IndexOf(sh)].E_MESSAGE_rfc3 = rfcFunction.GetString("E_MESSAGE");
                     }
                     i++;
                     lib.Control.ShowLog(tbLog, "完成! \r\n");
                     lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+
+                    // 清空table參數
+                    rfcTable.Clear();
                 }
             }
             catch (RfcCommunicationException ex)
