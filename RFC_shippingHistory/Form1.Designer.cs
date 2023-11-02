@@ -351,7 +351,7 @@
             // 
             this.lblError.AutoSize = true;
             this.lblError.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblError.Location = new System.Drawing.Point(684, 108);
+            this.lblError.Location = new System.Drawing.Point(669, 113);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(73, 20);
             this.lblError.TabIndex = 43;

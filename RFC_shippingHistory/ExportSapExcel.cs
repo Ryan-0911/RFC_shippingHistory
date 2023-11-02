@@ -71,7 +71,7 @@ namespace RFC_shippingHistory
                     foreach (ShippingInfo s in ResultOrderedByShipperNo)
                     {
                         // rfc 執行成功
-                        if (s.inventory.Count() > 0)
+                        if (s.ok == true)
                         {
                             foreach (Inventory iv in s.inventory)
                             {

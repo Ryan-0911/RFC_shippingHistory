@@ -136,21 +136,34 @@ namespace RFC_shippingHistory
                         IRfcTable rfcTable = rfcFunction.GetTable("ET_ZSDT012");
                         DataTable dataTable = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
 
-
-                        // 先確認Sap可用庫存總數是否大於等於Plex出貨數 (Plex單位淨價等於Sap單位淨價才能算)
-                        // Console.WriteLine(dataTable.Columns["LABST"].DataType);
-                        Single totalInventory = dataTable.AsEnumerable()
-                                       .Where(row => Math.Abs((Convert.ToDecimal(row.Field<string>("KBETR")) / Convert.ToDecimal(row.Field<string>("KPEIN")) / 1000) - s.NetUnitPrice) < 0.003M)
-                                       .Sum(row => Convert.ToSingle(row.Field<string>("LABST")));
-
-                        // Condition 1: 若Sap庫存總和不足Plex的出貨數，直接視為RFC資料不齊全********************************************
-                        if (totalInventory < s.Quantity)
+                        // Condition 1: 預防取出的KBETR(金額)跟KPEIN(條件定價單位)為0
+                        bool priceZero = dataTable.AsEnumerable().Any(row => Convert.ToDecimal(row.Field<string>("KPEIN")) == 0);
+                        if (priceZero == true)
                         {
-                            s.PartNo = null; // 物料號碼【RFC2】
-                            s.Repository = null; // 儲存地點【RFC2】
-                            s.RepositoryDesc = null; // 儲存地點說明【RFC2】
                             s.ok = false; // 兩個RFC的資料是否都有查詢到【made】
-                            s.E_MESSAGE_rfc2 = "庫存數量不足";
+                            s.E_MESSAGE_rfc2 = "價格主檔尚未維護";
+
+                            // 將所查到的批次庫存從DataTable轉成list
+                            foreach (DataRow dr in dataTable.AsEnumerable())
+                            {
+                                s.PartNo = dr["MATNR"].ToString(); // 物料號碼【RFC2】
+                                s.Repository = dr["LGORT"].ToString(); // 儲存地點【RFC2】
+                                s.RepositoryDesc = dr["LGOBE"].ToString(); // 儲存地點說明【RFC2】
+
+                                // 庫存狀態物件
+                                Inventory iv = new Inventory();
+                                iv.NetUnitPrice = 0; // 金額
+                                iv.Currency = dr["KONWA"].ToString(); // 幣別
+                                iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
+                                iv.BatchNo = dr["CHARG"].ToString(); // 批次號碼
+                                iv.BatchAmount = Convert.ToSingle(dr["LABST"]); // 未限制使用庫存
+                                iv.BatchTaken = 0;  // 取用的庫存
+                                iv.SD = dr["VBELN"].ToString(); // 銷售與配銷文件號碼
+                                iv.SD_date = Convert.ToDateTime(dr["ERSDA"]); // 銷售與配銷文件號碼日期
+                                s.inventory.Add(iv);
+                            }
+                            rfcTable.Clear();
+
                             // 增加進度變數，遍歷下筆listShippingInfo元素
                             i++;
                             lib.Control.ShowLog(tbLog, "完成! \r\n");
@@ -158,7 +171,86 @@ namespace RFC_shippingHistory
                             continue;
                         }
 
-                        // Condition 2: Sap庫存總和足夠Plex的出貨數********************************************
+                            // Condition 2: Sap庫存總和不足Plex的出貨數****************************************************************************************
+                            // Condition 2-1: 若Sap庫存本身總和不足Plex的出貨數
+                            Single totalInventoryWithoutPrice = dataTable.AsEnumerable()
+                                       .Sum(row => Convert.ToSingle(row.Field<string>("LABST")));
+
+                        if (totalInventoryWithoutPrice < s.Quantity)
+                        {
+                            s.ok = false; // 兩個RFC的資料是否都有查詢到【made】
+                            s.E_MESSAGE_rfc2 = "庫存數量不足";
+                            
+                            // 將所查到的批次庫存從DataTable轉成list
+                            foreach (DataRow dr in dataTable.AsEnumerable())
+                            {
+                                s.PartNo = dr["MATNR"].ToString(); // 物料號碼【RFC2】
+                                s.Repository = dr["LGORT"].ToString(); // 儲存地點【RFC2】
+                                s.RepositoryDesc = dr["LGOBE"].ToString(); // 儲存地點說明【RFC2】
+
+                                // 庫存狀態物件
+                                Inventory iv = new Inventory(); 
+                                iv.NetUnitPrice = Convert.ToDecimal(dr["KBETR"]) / Convert.ToInt32(dr["KPEIN"]) / 1000; // 金額
+                                iv.Currency = dr["KONWA"].ToString(); // 幣別
+                                iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
+                                iv.BatchNo = dr["CHARG"].ToString(); // 批次號碼
+                                iv.BatchAmount = Convert.ToSingle(dr["LABST"]); // 未限制使用庫存
+                                iv.BatchTaken = 0;  // 取用的庫存
+                                iv.SD = dr["VBELN"].ToString(); // 銷售與配銷文件號碼
+                                iv.SD_date = Convert.ToDateTime(dr["ERSDA"]); // 銷售與配銷文件號碼日期
+                                s.inventory.Add(iv);
+                            }
+                            rfcTable.Clear();
+
+                            // 增加進度變數，遍歷下筆listShippingInfo元素
+                            i++;
+                            lib.Control.ShowLog(tbLog, "完成! \r\n");
+                            lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+                            continue;
+                        }
+
+                        // Condition 2-2: 加入單位淨價條件才導致庫存不足
+                        Single totalInventoryWithPrice = dataTable.AsEnumerable()
+                                        .Where(row => Math.Abs((Convert.ToDecimal(row.Field<string>("KBETR")) / Convert.ToDecimal(row.Field<string>("KPEIN")) / 1000) - s.NetUnitPrice) < 0.003M)
+                                        .Sum(row => Convert.ToSingle(row.Field<string>("LABST")));
+
+                        if (totalInventoryWithPrice < s.Quantity)
+                        {
+                            s.PartNo = null; // 物料號碼【RFC2】
+                            s.Repository = null; // 儲存地點【RFC2】
+                            s.RepositoryDesc = null; // 儲存地點說明【RFC2】
+                            s.ok = false; // 兩個RFC的資料是否都有查詢到【made】
+                            s.E_MESSAGE_rfc2 = "庫存數量不足(單位淨價問題)";
+
+                            // 將所查到的批次庫存從DataTable轉成list
+                            foreach (DataRow dr in dataTable.AsEnumerable())
+                            {
+                                s.PartNo = dr["MATNR"].ToString(); // 物料號碼【RFC2】
+                                s.Repository = dr["LGORT"].ToString(); // 儲存地點【RFC2】
+                                s.RepositoryDesc = dr["LGOBE"].ToString(); // 儲存地點說明【RFC2】
+
+                                // 庫存狀態物件
+                                Inventory iv = new Inventory(); // 庫存狀態物件
+                                iv.NetUnitPrice = Convert.ToDecimal(dr["KBETR"]) / Convert.ToInt32(dr["KPEIN"]) / 1000; // 金額
+                                iv.Currency = dr["KONWA"].ToString(); // 幣別
+                                iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
+                                iv.BatchNo = dr["CHARG"].ToString(); // 批次號碼
+                                iv.BatchAmount = Convert.ToSingle(dr["LABST"]); // 未限制使用庫存
+                                iv.BatchTaken = 0;  // 取用的庫存
+                                iv.SD = dr["VBELN"].ToString(); // 銷售與配銷文件號碼
+                                iv.SD_date = Convert.ToDateTime(dr["ERSDA"]); // 銷售與配銷文件號碼日期
+                                s.inventory.Add(iv);
+                            }
+                            rfcTable.Clear();
+
+                            // 增加進度變數，遍歷下筆listShippingInfo元素
+                            i++;
+                            lib.Control.ShowLog(tbLog, "完成! \r\n");
+                            lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
+                            continue;
+                        }
+
+                        // Condition 3: Sap庫存總和足夠Plex的出貨數****************************************************************************************
 
                         // Sap庫存累加額
                         float SapInventory = 0;
@@ -189,10 +281,10 @@ namespace RFC_shippingHistory
                             }
 
                             // 若 (Plex單位淨價跟Sap單位淨價差距大於0.003美元) 或 (Sap庫存累加額已超過Plex出貨數)
-                            if (differ > 0.003M || above == true) 
+                            if (differ > 0.003M || above == true)
                             {
                                 Inventory iv = new Inventory(); // 庫存狀態物件
-                                iv.NetUnitPrice = SapNetUnitPrice; // 金額
+                                iv.NetUnitPrice = SapNetUnitPrice; // Sap單位淨價
                                 iv.Currency = dr["KONWA"].ToString(); // 幣別
                                 iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
                                 iv.BatchNo = dr["CHARG"].ToString(); // 批次號碼
@@ -210,7 +302,7 @@ namespace RFC_shippingHistory
                             if (SapInventory >= s.Quantity)
                             {
                                 Inventory iv = new Inventory(); // 庫存狀態物件
-                                iv.NetUnitPrice = SapNetUnitPrice; // 金額
+                                iv.NetUnitPrice = SapNetUnitPrice; // Sap單位淨價
                                 iv.Currency = dr["KONWA"].ToString(); // 幣別
                                 iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
                                 iv.BatchNo = dr["CHARG"].ToString(); // 批次號碼
@@ -222,11 +314,10 @@ namespace RFC_shippingHistory
                                 }
                                 else
                                 {
-                                    float ba = s.Quantity - (SapInventory - Convert.ToSingle(dr["LABST"]));
-                                    string str = ba.ToString("N4");
-                                    float.TryParse(str, out ba);
-                                    iv.BatchTaken = ba;
-
+                                    float bt = s.Quantity - (SapInventory - Convert.ToSingle(dr["LABST"]));
+                                    string str = bt.ToString("N4");
+                                    float.TryParse(str, out bt);
+                                    iv.BatchTaken = bt;
                                 }
                                 iv.SD = dr["VBELN"].ToString(); // 銷售與配銷文件號碼
                                 iv.SD_date = Convert.ToDateTime(dr["ERSDA"]); // 銷售與配銷文件號碼日期
@@ -237,7 +328,7 @@ namespace RFC_shippingHistory
                             else
                             {
                                 Inventory iv = new Inventory(); // 庫存狀態物件
-                                iv.NetUnitPrice = SapNetUnitPrice; // 金額
+                                iv.NetUnitPrice = SapNetUnitPrice; // Sap單位淨價
                                 iv.Currency = dr["KONWA"].ToString(); // 幣別
                                 iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
                                 iv.BatchNo = dr["CHARG"].ToString(); // 批次號碼
@@ -311,12 +402,12 @@ namespace RFC_shippingHistory
 
                 RfcDestination rfcDestination = lib.SAP.GetDestination();
                 RfcRepository rfcRepository = rfcDestination.Repository;
-               // 調用 RFC 函数
+                // 調用 RFC 函数
                 IRfcFunction rfcFunction = rfcRepository.CreateFunction(FunctionName);
 
-                // 篩選出要寫入的資料 (RFC1與RFC2都要查詢到且庫存狀態數量大於0)
-                List<ShippingInfo> ResultSapSuccessOrderedByShipperNo = (from exp in listSystemSelect 
-                                                                         where exp.ok == true && exp.inventory.Count > 0 
+                // 篩選出要寫入的資料 (RFC1與RFC2都要查詢到)
+                List<ShippingInfo> ResultSapSuccessOrderedByShipperNo = (from exp in listSystemSelect
+                                                                         where exp.ok == true 
                                                                          orderby exp.ShipperNo 
                                                                          select exp).ToList();
 
@@ -330,7 +421,7 @@ namespace RFC_shippingHistory
 
                     foreach (Inventory iv in sh.inventory)
                     {
-                        if (iv.BatchTaken <= 0) { continue; } 
+                        if (iv.BatchTaken <= 0) { continue; }
                         rfcTable.Insert();
                         rfcTable.CurrentRow.SetValue("MANDT", ""); // 用戶端 
                         rfcTable.CurrentRow.SetValue("CHARG", iv.BatchNo); // 批次號碼
@@ -363,7 +454,7 @@ namespace RFC_shippingHistory
                     rfcFunction.SetValue("I_WADAT_IST", Convert.ToDateTime(sh.ShipDate));
 
                     rfcFunction.SetParameterActive(0, true);
-                    
+
                     // 執行 RFC 函数
                     rfcFunction.Invoke(rfcDestination);
 
@@ -373,6 +464,8 @@ namespace RFC_shippingHistory
                     if (dataRCode.Equals("S"))
                     {
                         lib.Control.ShowLog(tbLog, $"成功寫入【{sh.ShipperNo}】銷貨交項 \r\n");
+                        listSystemSelect[listSystemSelect.IndexOf(sh)].E_MESSAGE_rfc3 = "寫入成功!";
+
                     }
                     else
                     {

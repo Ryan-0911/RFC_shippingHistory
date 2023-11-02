@@ -18,23 +18,23 @@ namespace RFC_shippingHistory.lib
         {
             RfcConfigParameters rfcConfigParameters = new RfcConfigParameters
             {
-                { RfcConfigParameters.Name, "dev" },
-                { RfcConfigParameters.AppServerHost, "172.16.2.23" },
-                { RfcConfigParameters.SystemNumber, "00" },
-                { RfcConfigParameters.SystemID, "DS4" },
-                { RfcConfigParameters.User, "S2239002" },
-                { RfcConfigParameters.Password, "S2239002" },
-                { RfcConfigParameters.Client, "330" },
-                { RfcConfigParameters.Language, "ZF" }
-
                 //{ RfcConfigParameters.Name, "dev" },
-                //{ RfcConfigParameters.AppServerHost, "172.16.2.166" },
+                //{ RfcConfigParameters.AppServerHost, "172.16.2.23" },
                 //{ RfcConfigParameters.SystemNumber, "00" },
-                //{ RfcConfigParameters.SystemID, "PS4" },
-                //{ RfcConfigParameters.User, "sumeeko01" },
-                //{ RfcConfigParameters.Password, "@Sap22546808@" },
-                //{ RfcConfigParameters.Client, "800" },
+                //{ RfcConfigParameters.SystemID, "DS4" },
+                //{ RfcConfigParameters.User, "SALES_OEM" },
+                //{ RfcConfigParameters.Password, "Su2254@oem" },
+                //{ RfcConfigParameters.Client, "330" },
                 //{ RfcConfigParameters.Language, "ZF" }
+
+                { RfcConfigParameters.Name, "dev" },
+                { RfcConfigParameters.AppServerHost, "172.16.2.166" },
+                { RfcConfigParameters.SystemNumber, "00" },
+                { RfcConfigParameters.SystemID, "PS4" },
+                { RfcConfigParameters.User, "SALES_OEM" },
+                { RfcConfigParameters.Password, "Su2254@oem" },
+                { RfcConfigParameters.Client, "800" },
+                { RfcConfigParameters.Language, "ZF" }
             };
             return rfcConfigParameters;
         }

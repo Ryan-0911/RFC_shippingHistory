@@ -498,6 +498,13 @@ namespace RFC_shippingHistory
                                         break;
                                     case 3:
                                         shippingInfo.ShipDate = xlRange.Cells[i, 3].Text;
+                                        // 解析原始日期
+                                        if (DateTime.TryParseExact(xlRange.Cells[i, 3].Text, "MM/dd/yy", null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
+                                        {
+                                            // 將日期格式化為 "yyyy/MM/dd"
+                                            string formattedDate = parsedDate.ToString("yyyy/MM/dd");
+                                            shippingInfo.ShipDate = formattedDate;
+                                        }
                                         break;
                                     case 7:
                                         shippingInfo.CPartNo = xlRange.Cells[i, 7].Value2.ToString();
@@ -800,7 +807,6 @@ namespace RFC_shippingHistory
                 e.Cancel = true;
             }
 
-
             // Sap單位淨價與Plex單位淨價差距超過0.003美元就無法編輯
             Decimal differ;
             if (Convert.ToDecimal(listDtOneView[currentPage - 1].Rows[e.RowIndex]["Sap單位淨價"]) > listSystemSelect[currentPage - 1].NetUnitPrice)
@@ -817,6 +823,14 @@ namespace RFC_shippingHistory
                 MessageBox.Show("Plex與Sap差距大於0.003美元!", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 e.Cancel = true;
             }
+
+            // 若Sap庫存數量不足一律不可編輯
+            if (listSystemSelect[currentPage - 1].E_MESSAGE_rfc2 != null)
+            {
+                MessageBox.Show("Sap庫存可用量不足!", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Cancel = true;
+            }
+
         }
     }
 }

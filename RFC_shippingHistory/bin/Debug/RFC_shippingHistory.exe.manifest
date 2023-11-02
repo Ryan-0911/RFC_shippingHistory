@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RFC_shippingHistory.exe" size="132544">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RFC_shippingHistory.exe" size="135616">
       <assemblyIdentity name="RFC_shippingHistory" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>RyaMM1LPtNLz6RivXybD/HR5RPRlexRZoQg8yx6aOL0=</dsig:DigestValue>
+        <dsig:DigestValue>1zHMpm8ZlDt8d3ghvKSarzpX/Urtb15WKG41iwhnqww=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
