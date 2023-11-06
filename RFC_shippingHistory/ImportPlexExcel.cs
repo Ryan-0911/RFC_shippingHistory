@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,37 +16,36 @@ namespace RFC_shippingHistory
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void iconFile_Click(object sender, EventArgs e)
+        private async void iconFile_Click(object sender, EventArgs e)
         {
             ClearList();
 
-
-            bool CallSap = ImportFile();
+            bool CallSap = await ImportFile();
 
             if (CallSap)
             {
-                // Step 1: 取得 CustomerCode
-                getCustomerCode();
+                await Task.Run(() =>
+                {
+                    // Step 1: 取得 CustomerCode
+                    getCustomerCode();
 
-                // Step 2: 取得某客戶某物料的批次庫存狀況
-                dealWithBatch();
+                    // Step 2: 取得某客戶某物料的批次庫存狀況
+                    dealWithBatch();
+
+                    LoadListDtOneView();
+
+                    // 將進度條歸零
+                    lib.Control.ShowPgbar(pgBar, 0, 0);
+                });
 
                 //foreach (ShippingInfo s in listSystemSelect)
                 //{
                 //    Console.WriteLine($"客戶物料號碼:{s.CPartNo}、銷售文件:{s.ShipperNo}、客戶地址:{s.Customer}、出貨數量:{s.Quantity}、實際發貨日期:{s.ShipDate}、資料取得成功:{s.ok}、收貨方【RFC1】:{s.CustomerCode}、物料號碼【RFC2】:{s.PartNo}、批次號碼【RFC2】:{s.BatchNo}、未限制使用庫存【RFC2】:{s.BatchAmount}、儲存地點【RFC2】:{s.Repository}、儲存地點說明【RFC2】:{s.RepositoryDesc}、Sales & Distribution 文件【RFC2】:{s.SD}");
                 //}
-
-                LoadListDtOneView();
-
-                // 將進度條歸零
-                lib.Control.ShowPgbar(pgBar, 0, 0);
             };
         }
 
-        /// <summary>
-        /// 匯入Plex Excel檔案並將之存入ShippingHistory資料庫
-        /// </summary>
-        protected bool ImportFile()
+        protected async Task<bool> ImportFile()
         {
             OpenFileDialog dialog = new OpenFileDialog(); //建立檔案選擇視窗
             dialog.Title = "選擇要匯入的excel檔案";
@@ -57,7 +57,10 @@ namespace RFC_shippingHistory
                 DialogResult importPlex = MessageBox.Show($"確定要將 [{dialog.FileName}] 匯入嗎?", "匯入確認", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 if (importPlex == DialogResult.OK)
                 {
-                    ExcelProcessAll(dialog.FileName, "Plex");
+                    await Task.Run(() =>
+                    {
+                        ExcelProcessAll(dialog.FileName, "Plex");
+                    });
                     return true;
                 }
                 return false;

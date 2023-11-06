@@ -23,7 +23,7 @@ namespace RFC_shippingHistory
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void iconExport_Click(object sender, EventArgs e)
+        private async void iconExport_Click(object sender, EventArgs e)
         {
             if (listDtOneView.Count == 0)
             {
@@ -64,76 +64,78 @@ namespace RFC_shippingHistory
                 if (result == DialogResult.OK)
                 {
                     // 建立Sap出貨單
-                    WriteShippingHistory();
-
-                    // 匯出 Sap Excel
-                    var ResultOrderedByShipperNo = from t in listSystemSelect orderby t.ShipperNo select t;
-                    foreach (ShippingInfo s in ResultOrderedByShipperNo)
+                    await Task.Run(() =>
                     {
-                        // rfc 執行成功
-                        if (s.ok == true)
+                        WriteShippingHistory();
+                        // 匯出 Sap Excel
+                        var ResultOrderedByShipperNo = from t in listSystemSelect orderby t.ShipperNo select t;
+                        foreach (ShippingInfo s in ResultOrderedByShipperNo)
                         {
-                            foreach (Inventory iv in s.inventory)
+                            // rfc 執行成功
+                            if (s.ok == true)
                             {
-                                // 選用的庫存量為0代表不是要寫進Sap的
-                                if (iv.BatchTaken == 0)
+                                foreach (Inventory iv in s.inventory)
                                 {
-                                    continue;
-                                }
+                                    // 選用的庫存量為0代表不是要寫進Sap的
+                                    if (iv.BatchTaken == 0)
+                                    {
+                                        continue;
+                                    }
 
+                                    DataRow dr = dtResult.NewRow();
+                                    dr["銷項交貨"] = s.ShipperNo;
+                                    dr["物料"] = s.PartNo;
+                                    dr["客戶料號"] = s.CPartNo;
+                                    dr["客戶"] = s.Customer;
+                                    dr["收貨方"] = s.CustomerCode;
+                                    dr["銷售文件號碼"] = iv.SD;
+                                    dr["銷售文件日期"] = iv.SD_date;
+                                    dr["實際發貨日期"] = s.ShipDate;
+                                    dr["Sap庫存取用量"] = iv.BatchTaken;
+                                    dr["Sap可用庫存"] = iv.BatchAmount;
+                                    dr["Plex出貨量"] = s.Quantity;
+                                    dr["單位"] = "MPC";
+                                    dr["批次"] = iv.BatchNo;
+                                    dr["儲存地點"] = s.Repository;
+                                    dr["說明"] = s.RepositoryDesc;
+                                    dr["Sap單位淨額"] = iv.NetUnitPrice;
+                                    dr["Plex單位淨額"] = s.NetUnitPrice;
+                                    dr["幣別"] = iv.Currency;
+                                    dr["客戶錯誤訊息"] = s.E_MESSAGE_rfc1;
+                                    dr["庫存錯誤訊息"] = s.E_MESSAGE_rfc2;
+                                    dr["出貨單錯誤訊息"] = s.E_MESSAGE_rfc3;
+                                    dtResult.Rows.Add(dr);
+                                }
+                            }
+                            // rfc 執行失敗
+                            else
+                            {
                                 DataRow dr = dtResult.NewRow();
                                 dr["銷項交貨"] = s.ShipperNo;
                                 dr["物料"] = s.PartNo;
                                 dr["客戶料號"] = s.CPartNo;
                                 dr["客戶"] = s.Customer;
                                 dr["收貨方"] = s.CustomerCode;
-                                dr["銷售文件號碼"] = iv.SD;
-                                dr["銷售文件日期"] = iv.SD_date;
                                 dr["實際發貨日期"] = s.ShipDate;
-                                dr["Sap庫存取用量"] = iv.BatchTaken;
-                                dr["Sap可用庫存"] = iv.BatchAmount;
                                 dr["Plex出貨量"] = s.Quantity;
                                 dr["單位"] = "MPC";
-                                dr["批次"] = iv.BatchNo;
                                 dr["儲存地點"] = s.Repository;
                                 dr["說明"] = s.RepositoryDesc;
-                                dr["Sap單位淨額"] = iv.NetUnitPrice;
-                                dr["Plex單位淨額"] = s.NetUnitPrice;
-                                dr["幣別"] = iv.Currency;
                                 dr["客戶錯誤訊息"] = s.E_MESSAGE_rfc1;
                                 dr["庫存錯誤訊息"] = s.E_MESSAGE_rfc2;
                                 dr["出貨單錯誤訊息"] = s.E_MESSAGE_rfc3;
                                 dtResult.Rows.Add(dr);
                             }
                         }
-                        // rfc 執行失敗
-                        else
-                        {
-                            DataRow dr = dtResult.NewRow();
-                            dr["銷項交貨"] = s.ShipperNo;
-                            dr["物料"] = s.PartNo;
-                            dr["客戶料號"] = s.CPartNo;
-                            dr["客戶"] = s.Customer;
-                            dr["收貨方"] = s.CustomerCode;
-                            dr["實際發貨日期"] = s.ShipDate;
-                            dr["Plex出貨量"] = s.Quantity;
-                            dr["單位"] = "MPC";
-                            dr["儲存地點"] = s.Repository;
-                            dr["說明"] = s.RepositoryDesc;
-                            dr["客戶錯誤訊息"] = s.E_MESSAGE_rfc1;
-                            dr["庫存錯誤訊息"] = s.E_MESSAGE_rfc2;
-                            dr["出貨單錯誤訊息"] = s.E_MESSAGE_rfc3;
-                            dtResult.Rows.Add(dr);
-                        }
-                    }
-                    DataSet ds = new DataSet();
-                    // 解決 'DataTable 已經屬於其他 DataSet。'
-                    ds.Tables.Add(dtResult.Copy()); 
-                    string directoryPath = dialog.SelectedPath;
-                    string filePath = ExportDataSetToExcel(ds, directoryPath);
+                        DataSet ds = new DataSet();
+                        // 解決 'DataTable 已經屬於其他 DataSet。'
+                        ds.Tables.Add(dtResult.Copy());
+                        string directoryPath = dialog.SelectedPath;
+                        string filePath = ExportDataSetToExcel(ds, directoryPath);
 
-                    // 存入資料庫
-                    ExcelProcessAll(filePath, "Sap");
+                        // 存入資料庫
+                        ExcelProcessAll(filePath, "Sap");
+                    });
                 }
             }
         }
@@ -222,6 +224,9 @@ namespace RFC_shippingHistory
                     }
                 }
                 excelApp.DisplayAlerts = true;
+
+                // 跑滿進度條
+                lib.Control.ShowPgbar(pgBar, dt.Rows.Count, dt.Rows.Count);
 
                 // 印出標題
                 Excel.Range cellRang = excelWorkSheet.get_Range("A1", $"{charTotalCol}3");

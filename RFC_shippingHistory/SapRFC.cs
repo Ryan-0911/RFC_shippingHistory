@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace RFC_shippingHistory
             // 清空進度條
             int total = listPlex.Count;
             int i = 0;
-            pgBar.Value = 0;
+            lib.Control.ShowPgbar(pgBar, 0, 0);
 
             try
             {
@@ -63,6 +64,8 @@ namespace RFC_shippingHistory
                     lib.Control.ShowLog(tbLog, "完成! \r\n");
                     lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
                 }
+                // 增加進度條
+                lib.Control.ShowPgbar(pgBar, total, total);
             }
             catch (RfcCommunicationException ex)
             {
@@ -102,7 +105,7 @@ namespace RFC_shippingHistory
             // 清空進度條
             int total = listPlex.Count;
             int i = 0;
-            pgBar.Value = 0;
+            lib.Control.ShowPgbar(pgBar, 0, 0);
 
             try
             {
@@ -171,16 +174,16 @@ namespace RFC_shippingHistory
                             continue;
                         }
 
-                            // Condition 2: Sap庫存總和不足Plex的出貨數****************************************************************************************
-                            // Condition 2-1: 若Sap庫存本身總和不足Plex的出貨數
-                            Single totalInventoryWithoutPrice = dataTable.AsEnumerable()
-                                       .Sum(row => Convert.ToSingle(row.Field<string>("LABST")));
+                        // Condition 2: Sap庫存總和不足Plex的出貨數****************************************************************************************
+                        // Condition 2-1: 若Sap庫存本身總和不足Plex的出貨數
+                        Single totalInventoryWithoutPrice = dataTable.AsEnumerable()
+                                   .Sum(row => Convert.ToSingle(row.Field<string>("LABST")));
 
                         if (totalInventoryWithoutPrice < s.Quantity)
                         {
                             s.ok = false; // 兩個RFC的資料是否都有查詢到【made】
                             s.E_MESSAGE_rfc2 = "庫存數量不足";
-                            
+
                             // 將所查到的批次庫存從DataTable轉成list
                             foreach (DataRow dr in dataTable.AsEnumerable())
                             {
@@ -189,7 +192,7 @@ namespace RFC_shippingHistory
                                 s.RepositoryDesc = dr["LGOBE"].ToString(); // 儲存地點說明【RFC2】
 
                                 // 庫存狀態物件
-                                Inventory iv = new Inventory(); 
+                                Inventory iv = new Inventory();
                                 iv.NetUnitPrice = Convert.ToDecimal(dr["KBETR"]) / Convert.ToInt32(dr["KPEIN"]) / 1000; // 金額
                                 iv.Currency = dr["KONWA"].ToString(); // 幣別
                                 iv.MPC = Convert.ToInt32(dr["KPEIN"]); // 條件定價單位
@@ -356,6 +359,8 @@ namespace RFC_shippingHistory
                     lib.Control.ShowLog(tbLog, "完成! \r\n");
                     lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
                 }
+                // 增加進度條
+                lib.Control.ShowPgbar(pgBar, total, total);
             }
             catch (RfcCommunicationException ex)
             {
@@ -393,7 +398,7 @@ namespace RFC_shippingHistory
         {
             // 清空進度條
             int i = 0;
-            pgBar.Value = 0;
+            lib.Control.ShowPgbar(pgBar, 0, 0);
 
             try
             {
@@ -407,17 +412,38 @@ namespace RFC_shippingHistory
 
                 // 篩選出要寫入的資料 (RFC1與RFC2都要查詢到)
                 List<ShippingInfo> ResultSapSuccessOrderedByShipperNo = (from exp in listSystemSelect
-                                                                         where exp.ok == true 
-                                                                         orderby exp.ShipperNo 
+                                                                             //where exp.ok == true 
+                                                                         orderby exp.ShipperNo
                                                                          select exp).ToList();
 
                 // 設置 RFC 參數
-                IRfcTable rfcTable;
+                IRfcTable rfcTable = rfcFunction.GetTable("ET_ZSDT014");
+                // 是否要 Post (同一銷項交貨的所有收貨方、物料庫存都齊全才能post)
+                bool postOrNot = true;
+
                 foreach (ShippingInfo sh in ResultSapSuccessOrderedByShipperNo)
                 {
+                    // 增加進度條
                     lib.Control.ShowPgbar(pgBar, ResultSapSuccessOrderedByShipperNo.Count, i);
 
-                    rfcTable = rfcFunction.GetTable("ET_ZSDT014");
+                    // rfc匹配不成功的跳過不寫入 (要預防sh是該筆銷貨交項的最後一筆)
+                    if (sh.ok == false)
+                    {
+                        postOrNot = false;
+                        // sh 不等於第一筆
+                        if (ResultSapSuccessOrderedByShipperNo.IndexOf(sh) != 0)
+                        {
+                            // 如果sh與前一筆的shipperNo一樣且與後一筆的shipperNo不一樣
+                            if (ResultSapSuccessOrderedByShipperNo[ResultSapSuccessOrderedByShipperNo.IndexOf(sh) - 1].ShipperNo == sh.ShipperNo && ResultSapSuccessOrderedByShipperNo[ResultSapSuccessOrderedByShipperNo.IndexOf(sh) + 1].ShipperNo != sh.ShipperNo)
+                            {
+                                goto inputParams;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
 
                     foreach (Inventory iv in sh.inventory)
                     {
@@ -429,7 +455,7 @@ namespace RFC_shippingHistory
                         rfcTable.CurrentRow.SetValue("LGMNG", iv.BatchTaken); // 評價的未限制使用庫存
                     }
 
-                    // 如果當前不是最後一筆ShippingInfo
+                    // 如果當前不是最後一筆 ShippingInfo
                     if (ResultSapSuccessOrderedByShipperNo.IndexOf(sh) != ResultSapSuccessOrderedByShipperNo.Count - 1)
                     {
                         // 如果與下一筆 ShippingInfo 的銷項交貨一樣
@@ -439,46 +465,66 @@ namespace RFC_shippingHistory
                         }
                     }
 
-                    //DataTable dt = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
+                    inputParams:
+                        // 傳入參數，table類型
+                        rfcFunction.SetValue("ET_ZSDT014", rfcTable);
 
-                    // 傳入參數，table類型
-                    rfcFunction.SetValue("ET_ZSDT014", rfcTable);
+                        // 傳入參數，字符串類型 
+                        rfcFunction.SetValue("I_VBELN", sh.ShipperNo);
 
-                    // 傳入參數，字符串類型 
-                    rfcFunction.SetValue("I_VBELN", sh.ShipperNo);
+                        DataTable dt = lib.SAP.ConvertRfcTableToDataTable(rfcTable);
 
-                    // 傳入參數，字符串類型 
-                    rfcFunction.SetValue("I_POST", "X");
+                        if (postOrNot == true)
+                        {
+                            // 傳入參數，字符串類型 
+                            rfcFunction.SetValue("I_POST", "X");
+                        }
+                        else
+                        {
+                            // 傳入參數，字符串類型 
+                            rfcFunction.SetValue("I_POST", "");
+                        }
 
-                    // 傳入參數，字符串類型 
-                    rfcFunction.SetValue("I_WADAT_IST", Convert.ToDateTime(sh.ShipDate));
+                        // 傳入參數，字符串類型 
+                        rfcFunction.SetValue("I_WADAT_IST", Convert.ToDateTime(sh.ShipDate));
 
-                    rfcFunction.SetParameterActive(0, true);
+                        rfcFunction.SetParameterActive(0, true);
 
-                    // 執行 RFC 函数
-                    rfcFunction.Invoke(rfcDestination);
+                        // 執行 RFC 函数
+                        rfcFunction.Invoke(rfcDestination);
 
-                    // 從 RFC 函数獲取輸出參數
-                    string dataRCode = rfcFunction.GetString("E_RCODE");
+                        // 從 RFC 函数獲取輸出參數
+                        string dataRCode = rfcFunction.GetString("E_RCODE");
 
-                    if (dataRCode.Equals("S"))
-                    {
-                        lib.Control.ShowLog(tbLog, $"成功寫入【{sh.ShipperNo}】銷貨交項 \r\n");
-                        listSystemSelect[listSystemSelect.IndexOf(sh)].E_MESSAGE_rfc3 = "寫入成功!";
+                        if (dataRCode.Equals("S"))
+                        {
+                            if (postOrNot == true)
+                            {
+                                lib.Control.ShowLog(tbLog, $"成功寫入【{sh.ShipperNo}】銷貨交項 \r\n");
+                                listSystemSelect[listSystemSelect.IndexOf(sh)].E_MESSAGE_rfc3 = "寫入成功!";
+                            }
+                            else
+                            {
+                                lib.Control.ShowLog(tbLog, $"成功寫入【{sh.ShipperNo}】銷貨交項 \r\n");
+                                listSystemSelect[listSystemSelect.IndexOf(sh)].E_MESSAGE_rfc3 = "寫入成功 (未過帳)!";
+                            }
+                        }
+                        else
+                        {
+                            lib.Control.ShowLog(tbLog, $"無法寫入【{sh.ShipperNo}】銷貨交項: {rfcFunction.GetString("E_MESSAGE")} \r\n");
+                            listSystemSelect[listSystemSelect.IndexOf(sh)].E_MESSAGE_rfc3 = rfcFunction.GetString("E_MESSAGE");
+                        }
+                        i++;
+                        lib.Control.ShowLog(tbLog, "完成! \r\n");
+                        lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
 
-                    }
-                    else
-                    {
-                        lib.Control.ShowLog(tbLog, $"無法寫入【{sh.ShipperNo}】銷貨交項: {rfcFunction.GetString("E_MESSAGE")} \r\n");
-                        listSystemSelect[listSystemSelect.IndexOf(sh)].E_MESSAGE_rfc3 = rfcFunction.GetString("E_MESSAGE");
-                    }
-                    i++;
-                    lib.Control.ShowLog(tbLog, "完成! \r\n");
-                    lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
-
-                    // 清空table參數
-                    rfcTable.Clear();
+                        // 清空table參數
+                        rfcTable.Clear();
+                        // 將post參數設為true
+                        postOrNot = true;
                 }
+                // 增加進度條
+                lib.Control.ShowPgbar(pgBar, ResultSapSuccessOrderedByShipperNo.Count, ResultSapSuccessOrderedByShipperNo.Count);
             }
             catch (RfcCommunicationException ex)
             {

@@ -85,10 +85,10 @@
             // pgBar
             // 
             this.pgBar.ForeColor = System.Drawing.Color.Lime;
-            this.pgBar.Location = new System.Drawing.Point(44, 578);
+            this.pgBar.Location = new System.Drawing.Point(42, 571);
             this.pgBar.Margin = new System.Windows.Forms.Padding(2);
             this.pgBar.Name = "pgBar";
-            this.pgBar.Size = new System.Drawing.Size(538, 18);
+            this.pgBar.Size = new System.Drawing.Size(538, 25);
             this.pgBar.TabIndex = 12;
             // 
             // tbLog

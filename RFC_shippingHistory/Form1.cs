@@ -140,18 +140,8 @@ namespace RFC_shippingHistory
 
             if (DialogResult == DialogResult.Yes)
             {
-                // 確認Sap選用庫存是否等於Plex出貨數
-                float total = 0; // 用來儲存所選庫存加總
-                foreach (DataGridViewRow row in dgvOne.Rows)
-                {
-                    if (row.Cells[0].Value != null && Single.TryParse(row.Cells[0].Value.ToString(), out float cellValue))
-                    {
-                        total += cellValue;
-                    }
-                }
-                float t = total;
-                string str = t.ToString("N4");
-                float.TryParse(str, out total);
+                // 確認Sap選用庫存等於Plex出貨數
+                float total = SapInventorySelected();
                 if (total < Convert.ToSingle(dgvOne.Rows[2].Cells[2].Value))
                 {
                     MessageBox.Show("Sap選用庫存不足Plex出貨數", "錯誤提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -159,6 +149,7 @@ namespace RFC_shippingHistory
                 }
 
                 // 將 dgvOne 的值更新到 listSystemSelect 
+                MessageBox.Show("更新成功", "通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 editConfirmed = true;
                 listSystemSelect[currentPage - 1].inventory.Clear();
                 foreach (DataGridViewRow row in dgvOne.Rows)
@@ -179,7 +170,6 @@ namespace RFC_shippingHistory
                 return;
             }
         }
-
 
         /// <summary>
         /// 第一頁
@@ -304,23 +294,6 @@ namespace RFC_shippingHistory
             refreshPage();
         }
 
-        private bool editOrNot()
-        {
-            // 確認當頁 listDtOneView 的每筆庫存選用量是否跟 listSystemSelect 一樣，不一樣代表有更新
-            bool edit = false;
-            int i = 0;
-            foreach (Inventory iv in listSystemSelect[currentPage - 1].inventory)
-            {
-                if (iv.BatchTaken != Convert.ToSingle(listDtOneView[currentPage - 1].Rows[i]["Sap庫存取用量"]))
-                {
-                    edit = true;
-                    break;
-                }
-                i++;
-            }
-            return edit;
-        }
-
         /// <summary>
         /// 最後一頁
         /// </summary>
@@ -362,30 +335,62 @@ namespace RFC_shippingHistory
             refreshPage();
         }
 
+
+        private bool editOrNot()
+        {
+            // 確認當頁 listDtOneView 的每筆庫存選用量是否跟 listSystemSelect 一樣，不一樣代表有更新
+            bool edit = false;
+            int i = 0;
+            foreach (Inventory iv in listSystemSelect[currentPage - 1].inventory)
+            {
+                if (iv.BatchTaken != Convert.ToSingle(listDtOneView[currentPage - 1].Rows[i]["Sap庫存取用量"]))
+                {
+                    edit = true;
+                    break;
+                }
+                i++;
+            }
+            return edit;
+        }
+
+        private float SapInventorySelected()
+        {
+            float total = 0; // 用來儲存所選庫存加總
+            foreach (DataGridViewRow row in dgvOne.Rows)
+            {
+                if (row.Cells[0].Value != null && Single.TryParse(row.Cells[0].Value.ToString(), out float cellValue))
+                {
+                    total += cellValue;
+                }
+            }
+            float t = total;
+            string str = t.ToString("N4");
+            float.TryParse(str, out total);
+            return total;
+        }
+
         /// <summary>
         /// 重整編輯頁面
         /// </summary>
         private void refreshPage()
         {
             // 綁定 DataTable 至 DataGridView
-            dgvOne.DataSource = listDtOneView[currentPage - 1];
-            dgvOne.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            dgvOne.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            lib.Control.BindDataTableToDataGridView(dgvOne, listDtOneView[currentPage - 1]);
 
             // 更新下拉選單、頁數
-            comboSearch.Text = $"{listSystemSelect[currentPage - 1].ShipperNo.ToString()}-{listSystemSelect[currentPage - 1].Customer}/{listSystemSelect[currentPage - 1].CPartNo}";
-            lblPage.Text = $"第{currentPage}頁/共{listDtOneView.Count}頁";
+            lib.Control.SetComboBoxText(comboSearch, $"{listSystemSelect[currentPage - 1].ShipperNo.ToString()}-{listSystemSelect[currentPage - 1].Customer}/{listSystemSelect[currentPage - 1].CPartNo}");
+            lib.Control.SetLblText(lblPage, $"第{currentPage}頁/共{listDtOneView.Count}頁");
 
             // lbl 錯誤原因
             if (listSystemSelect[currentPage - 1].ok == false)
             {
-                lblError.Text = $"{listSystemSelect[currentPage - 1].E_MESSAGE_rfc1}{listSystemSelect[currentPage - 1].E_MESSAGE_rfc2}";
-                pictureBoxError.Visible = true;
+                lib.Control.SetLblText(lblError, $"{listSystemSelect[currentPage - 1].E_MESSAGE_rfc1}{listSystemSelect[currentPage - 1].E_MESSAGE_rfc2}");
+                lib.Control.PictureBoxVisibleOrNot(pictureBoxError, true);
             }
             else
             {
-                lblError.Text = "";
-                pictureBoxError.Visible = false;
+                lib.Control.SetLblText(lblError, "");
+                lib.Control.PictureBoxVisibleOrNot(pictureBoxError, false);
             }
         }
 
@@ -497,9 +502,10 @@ namespace RFC_shippingHistory
                                         shippingInfo.ShipperNo = xlRange.Cells[i, 2].Value2.ToString();
                                         break;
                                     case 3:
-                                        shippingInfo.ShipDate = xlRange.Cells[i, 3].Text;
+                                        string[] dateF = {"MM/dd/yy", "MM/d/yy"};
+                                        shippingInfo.ShipDate = xlRange.Cells[i, 3].Text.ToString().Substring(2);
                                         // 解析原始日期
-                                        if (DateTime.TryParseExact(xlRange.Cells[i, 3].Text, "MM/dd/yy", null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
+                                        if (DateTime.TryParseExact(shippingInfo.ShipDate, dateF, null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
                                         {
                                             // 將日期格式化為 "yyyy/MM/dd"
                                             string formattedDate = parsedDate.ToString("yyyy/MM/dd");
@@ -533,7 +539,7 @@ namespace RFC_shippingHistory
                     listDropDown.Distinct().OrderBy(s => s).ToList();
                     foreach (string s in listDropDown)
                     {
-                        comboSearch.Items.Add(s);
+                        lib.Control.AddComboBoxItem(comboSearch, s);
                     }
                 }
                 else
@@ -551,6 +557,8 @@ namespace RFC_shippingHistory
                         lib.Control.ShowPgbar(pgBar, rowCount, i);
                     }
                 }
+                // 進度條跑滿
+                lib.Control.ShowPgbar(pgBar, rowCount, rowCount);
 
                 // 清除資源
                 GC.Collect();
@@ -571,7 +579,7 @@ namespace RFC_shippingHistory
                 //lib.Control.ShowLog(tbLog, $"成功匯出Sap Excel \r\n");
                 //lib.Control.ShowLog(tbLog, $"----------------------------------------------------------------------------------------------------\r\n");
             }
-            pgBar.Value = 0;
+            lib.Control.ShowPgbar(pgBar, 0, 0);
             xlWorkbook.Close(true);
             Marshal.ReleaseComObject(xlWorkbook);
             xlApp.Quit();
