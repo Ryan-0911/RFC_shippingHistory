@@ -49,7 +49,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>jMprwmbIXzotgb76nSH+0cRRLbNYOCXNRDMcg/zppAg=</dsig:DigestValue>
+        <dsig:DigestValue>dcP6oBsoHlSXMqaGH6lkmpPQijKZPkUA2ZH5BuXW8ko=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -71,13 +71,13 @@
       <dsig:DigestValue>vOqFyMPrYFMw8WegXRV704LMaP6nUDJ3dhPdPqwdAMY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="RFC_shippingHistory.exe.config" size="487">
+  <file name="RFC_shippingHistory.exe.config" size="495">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>JaoKJxfzAg2EmHMt4C0R0AqADZTJQ9tHXdQl41yvnjc=</dsig:DigestValue>
+      <dsig:DigestValue>JunuM/An4iSXtMMP4KUmhXT2xIOa7+c1DjBX4mgnN78=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

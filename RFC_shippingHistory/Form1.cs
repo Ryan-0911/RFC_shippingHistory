@@ -502,7 +502,7 @@ namespace RFC_shippingHistory
                                         shippingInfo.ShipperNo = xlRange.Cells[i, 2].Value2.ToString();
                                         break;
                                     case 3:
-                                        string[] dateF = {"MM/dd/yy", "MM/d/yy"};
+                                        string[] dateF = {"MM/dd/yy", "MM/d/yy", "M/dd/yy", "M/d/yy"};
                                         shippingInfo.ShipDate = xlRange.Cells[i, 3].Text.ToString().Substring(2);
                                         // 解析原始日期
                                         if (DateTime.TryParseExact(shippingInfo.ShipDate, dateF, null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
